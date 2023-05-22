@@ -1,0 +1,30 @@
+name: git_action
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  git_action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: exit 0
+        run: |
+          exit 0
+
+################# Git action for check coding style #################
+#      - name: Launch .sh
+#        run: ./.github/coding-style.sh . .
+
+#          if [[ -s coding-style-reports.log ]]
+#          then
+#            echo "Coding Style dans le report.log"
+#            exit 1
+#          else
+#            echo "Aucune Coding Style dans le report.log"
+#            exit 0
+#          fi
+####################################################################
