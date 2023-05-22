@@ -9,7 +9,7 @@ SR	=	src/
 
 SRC	=	$(shell cat make/zappy.txt | tr '\n' ' ')						\
 
-#SRC_UT		=	tests/Unit_tests.cpp									\
+SRC_UT		=	tests/Unit_tests.cpp									\
 
 BUILDDIR = build
 
@@ -83,9 +83,9 @@ re:	fclean all
 play_re: re
 	./$(NAME)
 
-#tests_run: fclean
-#		$(CC) -o $(UT) $(SRC_UT) $(CFLAGS_UT) $(CPPFLAGS_UT) \
-#			$(LCRITERION) $(CPPFLAGS_UT)
-#		./$(UT)
+tests_run: fclean
+		$(CC) -o $(UT) $(SRC_UT) $(CFLAGS_UT) $(CPPFLAGS_UT) \
+			$(LCRITERION) $(CPPFLAGS_UT)
+		./$(UT)
 
-.PHONY: all debug debug_play fclean clean play re play_re #tests_run
+.PHONY: all debug debug_play fclean clean play re play_re tests_run
