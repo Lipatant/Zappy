@@ -1,13 +1,14 @@
 ##
 ## EPITECH PROJECT, 2022
-## IA
+## AI
 ## File description:
 ## main.py
 ##
 
-from IA.Arguments import Arguments
+from AI.Arguments import Arguments
 
-def parse_args(argc, argv, args):
+def parse_args(argc, argv):
+    args = Arguments.Arguments()
     for i in range(1, argc):
         if argv[i] == "-p":
             args.port = int(argv[i + 1])
@@ -18,8 +19,8 @@ def parse_args(argc, argv, args):
         i+=1
     if args.port == 0 or args.name == "" or args.machine == "":
         print("Error: invalid parser")
-        return 84
-    return 0
+        exit(84)
+    return args
 
 
 def print_h():
@@ -30,7 +31,7 @@ def print_h():
     return 1
 
 def error_handling(argc, argv):
-    if (argc == 2 and argv[1] == "-help"):
+    if argc == 2 and argv[1] == "-help":
         return print_h()
     if argc != 5 and argc != 7:
         print("error: invalid number of arguments")
@@ -39,11 +40,9 @@ def error_handling(argc, argv):
 
 def main(argc, argv):
     value_return = error_handling(argc, argv)
-    args = Arguments.Arguments()
     if (value_return == 84):
         return 84
     if (value_return == 1):
         return 0
-    if parse_args(argc, argv, args) == 84:
-        return 84
+    args = parse_args(argc, argv)
     return 0

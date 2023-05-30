@@ -1,6 +1,6 @@
 ##
 ## EPITECH PROJECT, 2022
-## IA
+## AI
 ## File description:
 ## Arguments.py
 ##

@@ -7,7 +7,7 @@
 ## it's yamsin time
 ##
 
-from IA import main
+from AI import main
 import sys
 
 argv = sys.argv
