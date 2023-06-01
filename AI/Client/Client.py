@@ -5,9 +5,15 @@
 ## AI/Client/Client.py
 ##
 
+## @file Client.py
+
 from AI.Arguments import Arguments
 import socket
 
+## @author Damien Benais-Captal
+## @brief Cette fonction permet ...
+## @param a ...
+## @return None
 def connect_to_server(args: Arguments) -> None:
     server_ip = args.machine
     server_port = args.port
