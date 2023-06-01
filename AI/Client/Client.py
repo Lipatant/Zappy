@@ -1,8 +1,8 @@
 ##
-## EPITECH PROJECT, 2022
-## zappy
+## EPITECH PROJECT, 2023
+## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## Client.py
+## AI/Client/Client.py
 ##
 
 from AI.Arguments import Arguments
@@ -15,20 +15,20 @@ def connect_to_server(args: Arguments):
 
     try:
         client_socket.connect((server_ip, server_port))
-        print('Connected to the server.')
-    except socket.error as e:
-        print("Error:", e)
+        print("Connected to the server.")
+    except socket.error as error:
+        print("Error:", error)
         exit(84)
 
     received_data = client_socket.recv(1024).decode()
-    print('Received from server:', received_data)
+    print("Received from server:", received_data)
 
-    to_send = args.name + '\n'
+    to_send = args.name + "\n"
     client_socket.send(to_send.encode())
-    print('Sent to server:', to_send)
+    print("Sent to server:", to_send)
 
     received_data = client_socket.recv(1024).decode()
-    print('Received from server:', received_data)
+    print("Received from server:", received_data)
 
     client_socket.close()
-    print('Connection closed.')
+    print("Connection closed.")

@@ -2,9 +2,9 @@
 
 ##
 ## EPITECH PROJECT, 2023
-## 201yams
+## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## it's yamsin time
+## zappy_ai
 ##
 
 from AI import main

@@ -1,8 +1,8 @@
 ##
-## EPITECH PROJECT, 2022
-## AI
+## EPITECH PROJECT, 2023
+## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## main.py
+## AI/main.py
 ##
 
 from AI.Arguments import Arguments

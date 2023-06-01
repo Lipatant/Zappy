@@ -1,8 +1,17 @@
+##
+## EPITECH PROJECT, 2023
+## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
+## File description:
+## .github/workflows/git_action.yml
+##
+
+# Check if git_action fonctionnent avec header
+
 name: git_action
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   git_action:
@@ -15,10 +24,10 @@ jobs:
         run: |
           exit 0
 
-################# Git action for check coding style #################
+################## Git action for check Coding Style in C ##################
 #      - name: Launch .sh
 #        run: ./.github/coding-style.sh . .
-
+#
 #          if [[ -s coding-style-reports.log ]]
 #          then
 #            echo "Coding Style dans le report.log"
@@ -27,4 +36,4 @@ jobs:
 #            echo "Aucune Coding Style dans le report.log"
 #            exit 0
 #          fi
-####################################################################
+###########################################################################

@@ -1,8 +1,8 @@
 ##
-## EPITECH PROJECT, 2022
+## EPITECH PROJECT, 2023
 ## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## Trantorians.py
+## AI/Trantorians/Trantorians.py
 ##
 
 # 0=up | 1=right | 2=down | 3=left
@@ -18,10 +18,12 @@ class Trantorians:
 
     def forward(self):
         print("forward")
+
     def left(self):
         self.direction -= 1
         if self.direction < 0:
             self.direction = 3
+
     def right(self):
         self.direction += 1
         if self.direction > 3:
@@ -29,17 +31,22 @@ class Trantorians:
 
     def look(self):
         print(f"look for {self.fov} squares")
+
     def inventory(self):
         print(self.inventory)
+
     def broadcast_text(self, text):
         print(text)
 
     def connect_nbr(self):
         print("slot")
+
     def fork(self):
         print("fork")
+
     def eject(self):
         print(" eject")
+
     def dead(self):
         if (self.food < 0):
             print("dead")
@@ -48,7 +55,9 @@ class Trantorians:
 
     def take_object(self):
         print("take_object")
+
     def set_object(self):
         print("set_object")
+
     def incantation(self):
         print("incantation")
