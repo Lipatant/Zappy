@@ -10,6 +10,19 @@
 from AI.Arguments import Arguments
 from AI.Error import print_error_exit
 import socket
+import re
+
+## @author Pierre-Louis
+## @brief Parse the received data of server
+## @param received_data is give by the server
+## @return None
+def parsing_data(str_nb):
+    nb = re.findall(r'\d+', str_nb)
+    nb_bot = int(nb[0])
+    map_x = int(nb[1])
+    map_y = int(nb[2])
+
+    print(">>>", nb_bot, map_x, map_y, "<<<")
 
 ## @author Damien and Pierre-Louis
 ## @brief Connact to the server, sent and received message
@@ -35,6 +48,7 @@ def connect_to_server(args: Arguments) -> None:
 
     received_data = client_socket.recv(1024).decode()
     print("Received from server:", received_data)
+    parsing_data(received_data)
 
     client_socket.close()
     print("Connection closed.")
