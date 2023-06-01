@@ -9,7 +9,7 @@
 
 # 0=up | 1=right | 2=down | 3=left
 
-## @author Damien et Pierre-Louis
+## @author Damien and Pierre-Louis
 ## @brief contain function and variable for Trantorians
 ## @details The name Trantorians refers to bots that do not collaborate with each other to evolve.
 class Trantorians:

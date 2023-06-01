@@ -7,6 +7,8 @@
 
 ## @file Arguments.py
 
+from AI.Main import print_error_exit
+
 ## @author Damien and Pierre-Louis
 ## @brief Contains server variables and the function to parse arguments of argv
 class Arguments:
@@ -39,8 +41,6 @@ class Arguments:
             elif argv[i] == "-h":
                 self.machine = argv[i]
             else:
-                print(f"error: invalid parser parameter: {argv[i]}")
-                exit(84)
+                print_error_exit(f"error: invalid parser parameter: {argv[i]}")
         if self.port == 0 or self.name == "" or self.machine == "":
-            print("Error: invalid parser")
-            exit(84)
+            print_error_exit("Error: invalid parser")

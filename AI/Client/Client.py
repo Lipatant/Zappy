@@ -8,9 +8,10 @@
 ## @file Client.py
 
 from AI.Arguments import Arguments
+from AI.Main import print_error_exit
 import socket
 
-## @author Damien
+## @author Damien and Pierre-Louis
 ## @brief Connact to the server, sent and received message
 ## @param args contain the machine's port, name and machine address
 ## @return None or exit 84 in case of error
@@ -23,8 +24,7 @@ def connect_to_server(args: Arguments) -> None:
         client_socket.connect((server_ip, server_port))
         print("Connected to the server.")
     except socket.error as error:
-        print("Error:", error)
-        exit(84)
+        print_error_exit("Error:", error)
 
     received_data = client_socket.recv(1024).decode()
     print("Received from server:", received_data)
