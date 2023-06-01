@@ -10,7 +10,7 @@
 from AI.Arguments import Arguments
 from AI.Client import Client
 
-## @author Damien Benais-Captal
+## @author Damien BENAIS-CAPTAL
 ## @brief Cette fonction permet ...
 ## @param a ...
 ## @return None
@@ -21,7 +21,7 @@ def print_h() -> int:
 \tmachine\tis the name of the machine; localhost by default""")
     return 1
 
-## @author Damien Benais-Captal
+## @author Damien BENAIS-CAPTAL
 ## @brief Cette fonction permet ...
 ## @param a ...
 ## @return None
@@ -33,7 +33,7 @@ def error_handling(argc: int, argv: list[str]) -> int:
         return 84
     return 0
 
-## @author Damien Benais-Captal
+## @author Damien BENAIS-CAPTAL
 ## @brief Cette fonction permet ...
 ## @param a ...
 ## @return None

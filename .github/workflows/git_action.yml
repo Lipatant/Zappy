@@ -5,8 +5,10 @@
 ## .github/workflows/git_action.yml
 ##
 
-# Check if git_action fonctionnent avec header
+# @file git_action.yml
 
+## @author Pierre-Louis LEROY
+## @brief Ce github action permet pour l'instant exit sucess à chaque push sur la branche main
 name: git_action
 
 on:

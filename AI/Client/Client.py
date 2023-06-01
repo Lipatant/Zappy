@@ -10,9 +10,9 @@
 from AI.Arguments import Arguments
 import socket
 
-## @author Damien Benais-Captal
-## @brief Cette fonction permet ...
-## @param a ...
+## @author Damien BENAIS-CAPTAL
+## @brief Cette fonction permet de se connecter au serveur
+## @param args contient les arguments du serveur a parser
 ## @return None
 def connect_to_server(args: Arguments) -> None:
     server_ip = args.machine

@@ -7,16 +7,14 @@
 
 ## @file Arguments.py
 
-## @author Damien Benais-Captal
-## @brief Cette fonction permet d'initier la variable self
-## @param self stock le port, le name et la machine donné par le serveur
-## @return None
+## @author Damien BENAIS-CAPTAL
+## @brief La classe "Arguments" permet de stocker les arguments donné par le serveur
 class Arguments:
     port: int
     name: str
     machine: str
 
-    ## @author Damien Benais-Captal
+    ## @author Damien BENAIS-CAPTAL
     ## @brief Cette fonction permet d'initier la variable self
     ## @param self stock le port, le name et la machine donné par le serveur
     ## @return None
@@ -25,9 +23,11 @@ class Arguments:
         self.name = ""
         self.machine = "127.0.0.1"
 
-    ## @author Damien Benais-Captal
-    ## @brief Cette fonction permet ...
-    ## @param a ...
+    ## @author Damien BENAIS-CAPTAL
+    ## @brief Cette fonction permet de parser les arguments
+    ## @param self permet de stocker les infos du serveur
+    ## @param argc est la taille de argv
+    ## @param argv contient une list de str
     ## @return None
     def parse_args(self, argc: int, argv: list[str]) -> None:
         for i in range(1, argc, 2):
