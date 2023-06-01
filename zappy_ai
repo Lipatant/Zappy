@@ -9,11 +9,32 @@
 
 # @file zappy_ai
 
-from AI import main
+from AI import Main
 import sys
+
+## @author Pierre-Louis LEROY
+## @brief La fonction permet de supprimer le nom de l'executable qui est inutile
+## @return len(sys.argv) est la longueur de argv et sys.argv contient les arguments donné après l'éxécutable
+def remove_executable_name() -> int:
+    a = len(sys.argv) - 1
+    b = sys.argv[1:]
+    return b #len(sys.argv) - 1, sys.argv[1:]
+
+
+
+#len(sys.argv) - 1, sys.argv[1:]))
+
+
+#    argv = sys.argv
+#    print(argv)
+#    print(argv.pop(0))
+#    print(len(argv) - 1, argv.pop(0))
+#    print("111")
 
 ## @author Damien BENAIS-CAPTAL
 ## @brief cet exit permet d'appeler le main du fichier Main.py
 ## @param len(sys.argv) est la longueur de argv
 ## @param sys.argv contient les arguments donné après l'éxécutable
-exit(main.main(len(sys.argv), sys.argv))
+exit(Main.main(len(sys.argv) - 1, remove_executable_name()))
+
+#    len(sys.argv), sys.argv

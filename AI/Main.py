@@ -26,9 +26,9 @@ def print_h() -> int:
 ## @param a ...
 ## @return None
 def error_handling(argc: int, argv: list[str]) -> int:
-    if argc == 2 and argv[1] == "-help":
+    if argc == 1 and argv[0] == "-help":
         return print_h()
-    if argc != 5 and argc != 7:
+    if argc != 4 and argc != 6:
         print("error: invalid number of arguments")
         return 84
     return 0
