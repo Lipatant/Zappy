@@ -29,6 +29,7 @@ def main(argc: int, argv: list[str]):
         return 84
     if (value_return == 1):
         return 0
-    args = Arguments.parse_args(argc, argv)
+    args = Arguments.Arguments()
+    args.parse_args(argc, argv)
     Client.connect_to_server(args)
     return 0
