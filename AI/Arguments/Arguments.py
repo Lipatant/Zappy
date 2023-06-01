@@ -10,12 +10,12 @@ class Arguments:
     name: str
     machine: str
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.port = 0
         self.name = ""
         self.machine = "127.0.0.1"
 
-    def parse_args(self, argc: int, argv: list[str]):
+    def parse_args(self, argc: int, argv: list[str]) -> None:
         for i in range(1, argc, 2):
             if argv[i] == "-p":
                 self.port = int(argv[i + 1])

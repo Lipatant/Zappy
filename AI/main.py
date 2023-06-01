@@ -8,14 +8,14 @@
 from AI.Arguments import Arguments
 from AI.Client import Client
 
-def print_h():
+def print_h() -> int:
     print("""USAGE: ./zappy_ai -p port -n name -h machine
 \tport\tis the port number
 \tname\tis the name of the team
 \tmachine\tis the name of the machine; localhost by default""")
     return 1
 
-def error_handling(argc: int, argv: list[str]):
+def error_handling(argc: int, argv: list[str]) -> int:
     if argc == 2 and argv[1] == "-help":
         return print_h()
     if argc != 5 and argc != 7:
@@ -23,7 +23,7 @@ def error_handling(argc: int, argv: list[str]):
         return 84
     return 0
 
-def main(argc: int, argv: list[str]):
+def main(argc: int, argv: list[str]) -> int:
     value_return = error_handling(argc, argv)
     if (value_return == 84):
         return 84

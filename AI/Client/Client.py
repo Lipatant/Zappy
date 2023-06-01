@@ -8,7 +8,7 @@
 from AI.Arguments import Arguments
 import socket
 
-def connect_to_server(args: Arguments):
+def connect_to_server(args: Arguments) -> None:
     server_ip = args.machine
     server_port = args.port
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
