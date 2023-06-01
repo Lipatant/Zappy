@@ -9,14 +9,7 @@
 
 from AI.Arguments import Arguments
 from AI.Client import Client
-
-## @author Pierre-Louis
-## @brief Print error message and exit 84
-## @param error_message error message to display
-## @return 84 because it's a error case
-def print_error_exit(error_message) -> int:
-    print(error_message)
-    exit(84)
+from AI.Error import print_error_exit
 
 ## @author Damien and Pierre-Louis
 ## @brief Print the message explaining how to use it

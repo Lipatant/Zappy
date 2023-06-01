@@ -8,7 +8,7 @@
 ## @file Client.py
 
 from AI.Arguments import Arguments
-from AI.Main import print_error_exit
+from AI.Error import print_error_exit
 import socket
 
 ## @author Damien and Pierre-Louis

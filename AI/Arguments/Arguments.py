@@ -7,7 +7,7 @@
 
 ## @file Arguments.py
 
-from AI.Main import print_error_exit
+from AI.Error import print_error_exit
 
 ## @author Damien and Pierre-Louis
 ## @brief Contains server variables and the function to parse arguments of argv
@@ -35,11 +35,11 @@ class Arguments:
         ## @detail (start, fin, acrementation)
         for i in range(0, argc, 2):
             if argv[i] == "-p":
-                self.port = int(argv[i])
+                self.port = int(argv[i + 1])
             elif argv[i] == "-n":
-                self.name = argv[i]
+                self.name = argv[i + 1]
             elif argv[i] == "-h":
-                self.machine = argv[i]
+                self.machine = argv[i + 1]
             else:
                 print_error_exit(f"error: invalid parser parameter: {argv[i]}")
         if self.port == 0 or self.name == "" or self.machine == "":
