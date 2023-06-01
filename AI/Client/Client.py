@@ -5,22 +5,27 @@
 ## Client.py
 ##
 
+from AI.Arguments import Arguments
 import socket
 
-def connect_to_server(port, name, machine):
-    server_ip = machine
-    server_port = port
+def connect_to_server(args: Arguments):
+    server_ip = args.machine
+    server_port = args.port
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    client_socket.connect((server_ip, server_port))
-    print('Connected to the server.')
+    try:
+        client_socket.connect((server_ip, server_port))
+        print('Connected to the server.')
+    except socket.error as e:
+        print("Error:", e)
+        exit(84)
 
     received_data = client_socket.recv(1024).decode()
     print('Received from server:', received_data)
 
-    test = name + '\n'
-    client_socket.send(test.encode())
-    print('Sent to server:', test)
+    to_send = args.name + '\n'
+    client_socket.send(to_send.encode())
+    print('Sent to server:', to_send)
 
     received_data = client_socket.recv(1024).decode()
     print('Received from server:', received_data)
