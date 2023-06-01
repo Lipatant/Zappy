@@ -7,30 +7,30 @@
 
 ## @file Arguments.py
 
-## @author Damien BENAIS-CAPTAL and Pierre-Louis LEROY
-## @brief La classe "Arguments" permet de stocker les arguments donné par le serveur + fonctions
+## @author Damien and Pierre-Louis
+## @brief Contains server variables and the function to parse arguments of argv
 class Arguments:
     port: int
     name: str
     machine: str
 
-    ## @author Damien BENAIS-CAPTAL
-    ## @brief Cette fonction permet d'initier la variable self
-    ## @param self stock le port, le name et la machine donné par le serveur
+    ## @author Damien
+    ## @brief Initiates variables server
+    ## @param self will contain the machine's port, name and machine address
     ## @return None
     def __init__(self) -> None:
         self.port = 0
         self.name = ""
         self.machine = "127.0.0.1"
 
-    ## @author Damien BENAIS-CAPTAL and Pierre-Louis LEROY
-    ## @brief Cette fonction permet de parser les arguments
-    ## @param self permet de stocker les infos du serveur
-    ## @param argc est la taille de argv
-    ## @param argv contient une list de str
+    ## @author Damien and Pierre-Louis
+    ## @brief Parsing argv's argument
+    ## @param self contain the machine's port, name and machine address
+    ## @param argc is the length of argv
+    ## @param argv contain argument given by the user
     ## @return None
     def parse_args(self, argc: int, argv: list[str]) -> None:
-        ## @detail (start, fin, acrémentation)
+        ## @detail (start, fin, acrementation)
         for i in range(0, argc, 2):
             if argv[i] == "-p":
                 self.port = int(argv[i])

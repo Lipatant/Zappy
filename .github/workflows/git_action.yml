@@ -7,8 +7,8 @@
 
 # @file git_action.yml
 
-## @author Pierre-Louis LEROY
-## @brief Ce github action permet pour l'instant exit sucess à chaque push sur la branche main
+## @author Pierre-Louis
+## @brief This github action currently enables exit sucess for each push on the main branch.
 name: git_action
 
 on:

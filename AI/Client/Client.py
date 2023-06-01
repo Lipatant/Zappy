@@ -10,10 +10,10 @@
 from AI.Arguments import Arguments
 import socket
 
-## @author Damien BENAIS-CAPTAL
-## @brief Cette fonction permet de se connecter au serveur
-## @param args contient les arguments du serveur a parser
-## @return None
+## @author Damien
+## @brief Connact to the server, sent and received message
+## @param args contain the machine's port, name and machine address
+## @return None or exit 84 in case of error
 def connect_to_server(args: Arguments) -> None:
     server_ip = args.machine
     server_port = args.port
