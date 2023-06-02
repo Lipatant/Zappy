@@ -1,1 +1,2 @@
-make/main.txt
+make/Main.txt
+make/Mortymere.txt
