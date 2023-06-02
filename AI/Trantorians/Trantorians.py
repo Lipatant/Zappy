@@ -8,11 +8,31 @@
 ## @file Trantorians.py
 
 # 0=up | 1=right | 2=down | 3=left
+tmp_map = [
+          [0],
+        [0,0,1],
+      [0,2,0,0,0],
+    [0,1,0,0,0,0,0],
+]
+
+
+
+
+
 
 ## @author Damien and Pierre-Louis
 ## @brief contain function and variable for Trantorians
 ## @details The name Trantorians refers to bots that do not collaborate with each other to evolve.
 class Trantorians:
+    direction: int
+    food: int
+    found: list[int]####temporary
+    fov: int
+    inventory: dict
+    sound: int###temporary, need to know what this is
+
+
+
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
@@ -41,6 +61,8 @@ class Trantorians:
         if self.direction < 0:
             self.direction = 3
 
+
+
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
@@ -50,12 +72,21 @@ class Trantorians:
         if self.direction > 3:
             self.direction = 0
 
+
+
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def look(self) -> None:
-        print(f"look for {self.fov} squares")
+        for i in range(0, 3 + self.fov):
+            for k in range(0, i):#left
+                print(tmp_map[i][k], end="")
+            print(tmp_map[i][i], end="")#middle
+            for k in range(i + 1, i * 2 + 1):#right
+                print(tmp_map[i][k], end="")
+            print()
+
 
     ## @author Damien
     ## @brief
@@ -64,12 +95,16 @@ class Trantorians:
     def inventory(self) -> None:
         print(self.inventory)
 
+
+
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def broadcast_text(self, text) -> None:
         print(text)
+
+
 
     ## @author Damien
     ## @brief
@@ -78,6 +113,8 @@ class Trantorians:
     def connect_nbr(self) -> None:
         print("slot")
 
+
+
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
@@ -85,12 +122,16 @@ class Trantorians:
     def fork(self) -> None:
         print("fork")
 
+
+
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def eject(self) -> None:
         print(" eject")
+
+
 
     ## @author Damien
     ## @brief
@@ -102,6 +143,8 @@ class Trantorians:
             return True
         return False
 
+
+
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
@@ -109,12 +152,16 @@ class Trantorians:
     def take_object(self) -> None:
         print("take_object")
 
+
+
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def set_object(self) -> None:
         print("set_object")
+
+
 
     ## @author Damien
     ## @brief

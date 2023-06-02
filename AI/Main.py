@@ -8,6 +8,7 @@
 ## @file Main.py
 
 from AI.Arguments import Arguments
+from AI.Trantorians import Trantorians
 from AI.Client import Client
 from AI.Error import print_error_exit
 
@@ -49,5 +50,7 @@ def main(argc: int, argv: list[str]) -> int:
     client.connect_to_server()
     msg = client.communicate()
     Client.parsing_data(msg)
+    trant = Trantorians.Trantorians()
+    trant.look()
     client.disconnect_from_server()
     return 0
