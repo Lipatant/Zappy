@@ -21,6 +21,8 @@ def print_h() -> int:
 \tmachine\tis the name of the machine; localhost by default""")
     exit(0)
 
+
+
 ## @author Damien and Pierre-Louis
 ## @brief Argument error handling
 ## @param argc is the length of argv
@@ -32,6 +34,8 @@ def error_handling(argc: int, argv: list[str]) -> int:
     if argc != 4 and argc != 6:
         print_error_exit("error: invalid number of arguments")
 
+
+
 ## @author Damien and Pierre-Louis
 ## @brief Start function for ia launches error handling and connection to server
 ## @param argc is the length of argv
@@ -41,5 +45,9 @@ def main(argc: int, argv: list[str]) -> int:
     error_handling(argc, argv)
     args = Arguments.Arguments()
     args.parse_args(argc, argv)
-    Client.connect_to_server(args)
+    client = Client.Client(args)
+    client.connect_to_server()
+    msg = client.communicate()
+    Client.parsing_data(msg)
+    client.disconnect_from_server()
     return 0

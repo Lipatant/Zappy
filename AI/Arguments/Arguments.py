@@ -13,8 +13,8 @@ from AI.Error import print_error_exit
 ## @brief Contains server variables and the function to parse arguments of argv
 class Arguments:
     port: int
-    name: str
-    machine: str
+    team: str
+    ip: str
 
     ## @author Damien
     ## @brief Initiates variables server
@@ -22,8 +22,8 @@ class Arguments:
     ## @return None
     def __init__(self) -> None:
         self.port = 0
-        self.name = ""
-        self.machine = "127.0.0.1"
+        self.team = ""
+        self.ip = "127.0.0.1"
 
     ## @author Damien and Pierre-Louis
     ## @brief Parsing argv's argument
@@ -37,10 +37,10 @@ class Arguments:
             if argv[i] == "-p":
                 self.port = int(argv[i + 1])
             elif argv[i] == "-n":
-                self.name = argv[i + 1]
+                self.team = argv[i + 1]
             elif argv[i] == "-h":
-                self.machine = argv[i + 1]
+                self.ip = argv[i + 1]
             else:
                 print_error_exit(f"error: invalid parser parameter: {argv[i]}")
-        if self.port == 0 or self.name == "" or self.machine == "":
+        if self.port == 0 or self.team == "" or self.ip == "":
             print_error_exit("Error: invalid parser")
