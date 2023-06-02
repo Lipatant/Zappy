@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Include.hpp
+** Flags.hpp
 ** File description:
 ** -
 */
@@ -9,3 +9,5 @@
 /// @brief
 
 #pragma once
+
+#define FLAG_UNUSED __attribute__((unused))

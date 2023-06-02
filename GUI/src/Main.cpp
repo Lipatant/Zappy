@@ -1,13 +1,13 @@
 /*
 ** EPITECH PROJECT, 2023
-** B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
+** Main.cpp
 ** File description:
 ** src/Main.cpp
 */
 
-#include <iostream>
+#include "Flags.hpp"
 
-int main(int const ac, char const * const * const av)
+int main(FLAG_UNUSED int const ac, FLAG_UNUSED char const * const * const av)
 {
     return 0;
 }
