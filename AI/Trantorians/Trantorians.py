@@ -59,7 +59,7 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def __init__(self) -> None:
-        self.direction = 0
+        self.direction = 1
         self.food = 126
         self.found = []
         self.level = 1
@@ -139,19 +139,21 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def loop_left(self, level: int) -> None:
-        self.x = 0
-        self.y = 4 - 1
+        self.x = 4 - 1
+        self.y = 3
 
         for i in range(0, level):
             j = i
-            while (j > 0):
-                print(tmp_map_left[self.x + i][self.y - j], end = "")
+            while j > 0:
+                if self.x - j >= 0 and self.y + i < len(tmp_map_left):
+                    print(tmp_map_left[self.x - j][self.y - i], end="")
                 j -= 1
-            print(tmp_map_left[self.x + i][self.y], end = "")
+            if self.x >= 0 and self.y - i < len(tmp_map_left):
+                print(tmp_map_left[self.x][self.y - i], end="")
             for k in range(1, i + 1):
-                print(tmp_map_left[self.x + i][self.y + k], end = "")
+                if self.x + k < len(tmp_map_left) and self.y - i < len(tmp_map_left):
+                    print(tmp_map_left[self.x + k][self.y - i], end="")
             print()
-
     ## @author Pierre-Louis
     ## @brief
     ## @param self Contains trantorian values
