@@ -74,7 +74,16 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def forward(self) -> None:
-        print("forward")
+        if self.direction == 0:
+            self.x -= 1
+        elif self.direction == 1:
+            self.y += 1
+        elif self.direction == 2:
+            self.x += 1
+        elif self.direction == 3:
+            self.y -= 1
+
+
 
     ## @author Damien
     ## @brief
