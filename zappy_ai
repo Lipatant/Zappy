@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+
+##
+## EPITECH PROJECT, 2023
+## 201yams
+## File description:
+## it's yamsin time
+##
+
+from AI import main
+import sys
+
+argv = sys.argv
+argc = len(argv)
+exit(main.main(argc, argv))
