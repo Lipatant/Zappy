@@ -51,6 +51,6 @@ def main(argc: int, argv: list[str]) -> int:
     msg = client.communicate()
     Client.parsing_data(msg)
     trant = Trantorians.Trantorians()
-    trant.look()
+    trant.look(4)
     client.disconnect_from_server()
     return 0

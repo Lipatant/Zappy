@@ -8,17 +8,47 @@
 ## @file Trantorians.py
 
 # 0=up | 1=right | 2=down | 3=left
-tmp_map = [
-          [0],
-        [0,0,1],
-      [0,2,0,0,0],
+tmp_map_down = [
+    [3,3,3,0,3,3,3],
+    [3,3,0,0,1,3,3],
+    [3,0,2,0,0,0,3],
     [0,1,0,0,0,0,0],
 ]
 
+tmp_map_up = [
+    [0,1,0,0,0,0,0],
+    [3,0,2,0,0,0,3],
+    [3,3,0,0,1,3,3],
+    [3,3,3,0,3,3,3],
+]
+
+tmp_map_right = [
+    [3,3,3,0],
+    [3,3,0,1],
+    [3,0,2,0],
+    [0,0,0,0],
+    [3,1,0,0],
+    [3,3,0,0],
+    [3,3,3,0],
+]
+
+tmp_map_up = [
+    [0,1,0,0,0,0,0],
+    [3,0,2,0,0,0,3],
+    [3,3,0,0,1,3,3],
+    [3,3,3,0,3,3,3],
+]
 
 
-
-
+tmp_map_right = [
+    [0,3,3,3],
+    [0,1,3,3],
+    [0,2,0,3],
+    [0,0,0,0],
+    [1,0,0,3],
+    [0,0,3,3],
+    [0,3,3,3],
+]
 
 ## @author Damien and Pierre-Louis
 ## @brief contain function and variable for Trantorians
@@ -38,7 +68,7 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def __init__(self) -> None:
-        self.direction = 0
+        self.direction = 2
         self.food = 126
         self.found = []
         self.fov = 1
@@ -72,21 +102,44 @@ class Trantorians:
         if self.direction > 3:
             self.direction = 0
 
+    def loop_up(self, level: int) -> None:
+        print("up")
+
+    def loop_right(self, level: int) -> None:
+        print("right")
+
+    def loop_down(self, level: int) -> None:
+        x = 0#x of the player
+        y = 4 - 1#y - 1 of the player
+        for i in range(0, level):
+            j = i
+            while (j > 0):
+                print(tmp_map_down[x + i][y - j], end="")
+                j -= 1
+            print(tmp_map_down[x + i][y], end="")#middle
+            for k in range(1, i + 1):
+                print(tmp_map_down[x + i][y + k], end="")
+            print()
+
+    def loop_left(self, level: int) -> None:
+        print("left")
+
 
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def look(self) -> None:
-        for i in range(0, 3 + self.fov):
-            for k in range(0, i):#left
-                print(tmp_map[i][k], end="")
-            print(tmp_map[i][i], end="")#middle
-            for k in range(i + 1, i * 2 + 1):#right
-                print(tmp_map[i][k], end="")
-            print()
-
+    def look(self, level: int) -> None:
+        if (self.direction == 0):
+            self.loop_up(level)
+        if (self.direction == 1):
+            self.loop_left(level)
+        if (self.direction == 2):
+            self.loop_down(level)
+        if (self.direction == 3):
+            self.loop_right(level)
+# 0=up | 1=right | 2=down | 3=left
 
     ## @author Damien
     ## @brief
