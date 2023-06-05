@@ -32,14 +32,7 @@ tmp_map_right = [
     [3,3,3,0]
 ]
 
-tmp_map_up = [
-    [0,1,0,0,0,0,0],
-    [3,0,2,0,0,0,3],
-    [3,3,0,0,1,3,3],
-    [3,3,3,0,3,3,3]
-]
-
-tmp_map_right = [
+tmp_map_left = [
     [0,3,3,3],
     [0,1,3,3],
     [0,2,0,3],
@@ -101,15 +94,52 @@ class Trantorians:
         if self.direction > 3:
             self.direction = 0
 
+    ## @author Pierre-Louis
+    ## @brief
+    ## @param self Contains trantorian values
+    ## @return None
     def loop_up(self, level: int) -> None:
-        print("up")
+        x = 0                          # x of the player
+        y = 4 - 1                      # y - 1 of the player
 
+        for i in range(0, level):
+            j = i
+            while (j > 0):             # MODIFIER ALGO
+                print(tmp_map_up[x + i][y - j], end="")
+                j -= 1
+            print(tmp_map_up[x + i][y], end="") # middle
+            for k in range(1, i + 1):
+                print(tmp_map_up[x + i][y + k], end="")
+            print()
+                                       # print("up")
+
+    ## @author Pierre-Louis
+    ## @brief
+    ## @param self Contains trantorian values
+    ## @return None
     def loop_right(self, level: int) -> None:
-        print("right")
+        x = 0                          # x of the player
+        y = 4 - 1                      # y - 1 of the player
 
+        for i in range(0, level):
+            j = i
+            while (j > 0):             # MODIFIER ALGO
+                print(tmp_map_right[x + i][y - j], end="")
+                j -= 1
+            print(tmp_map_right[x + i][y], end="") # middle
+            for k in range(1, i + 1):
+                print(tmp_map_right[x + i][y + k], end="")
+            print()
+                                       # print("right")
+
+    ## @author Damien
+    ## @brief
+    ## @param self Contains trantorian values
+    ## @return None
     def loop_down(self, level: int) -> None:
         x = 0#x of the player
         y = 4 - 1#y - 1 of the player
+
         for i in range(0, level):
             j = i
             while (j > 0):
@@ -120,10 +150,24 @@ class Trantorians:
                 print(tmp_map_down[x + i][y + k], end="")
             print()
 
+    ## @author Pierre-Louis
+    ## @brief
+    ## @param self Contains trantorian values
+    ## @return None
     def loop_left(self, level: int) -> None:
-        print("left")
+        x = 0                          # x of the player
+        y = 4 - 1                      # y - 1 of the player
 
-
+        for i in range(0, level):
+            j = i
+            while (j > 0):             # MODIFIER ALGO
+                print(tmp_map_left[x + i][y - j], end="")
+                j -= 1
+            print(tmp_map_left[x + i][y], end="") # middle
+            for k in range(1, i + 1):
+                print(tmp_map_left[x + i][y + k], end="")
+            print()
+                                       # print("left")
 
     ## @author Damien
     ## @brief
