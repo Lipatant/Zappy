@@ -7,14 +7,6 @@
 
 ## @file Trantorians.py
 
-# 0=up | 1=right | 2=down | 3=left
-tmp_map_down = [
-    [3,3,3,0,3,3,3],
-    [3,3,0,0,1,3,3],
-    [3,0,2,0,0,0,3],
-    [0,1,0,0,0,0,0]
-]
-
 tmp_map_up = [
     [0,1,0,0,0,0,0],
     [3,0,2,0,0,0,3],
@@ -22,14 +14,11 @@ tmp_map_up = [
     [3,3,3,0,3,3,3]
 ]
 
-tmp_map_right = [
-    [3,3,3,0],
-    [3,3,0,1],
-    [3,0,2,0],
-    [0,0,0,0],
-    [3,1,0,0],
-    [3,3,0,0],
-    [3,3,3,0]
+tmp_map_down = [
+    [3,3,3,0,3,3,3],
+    [3,3,0,0,1,3,3],
+    [3,0,2,0,0,0,3],
+    [0,1,0,0,0,0,0]
 ]
 
 tmp_map_left = [
@@ -40,6 +29,16 @@ tmp_map_left = [
     [1,0,0,3],
     [0,0,3,3],
     [0,3,3,3]
+]
+
+tmp_map_right = [
+    [3,3,3,0],
+    [3,3,0,1],
+    [3,0,2,0],
+    [0,0,0,0],
+    [3,1,0,0],
+    [3,3,0,0],
+    [3,3,3,0]
 ]
 
 ## @author Damien and Pierre-Louis
@@ -54,8 +53,6 @@ class Trantorians:
     sound: int###temporary, need to know what this is
     x: int
     y: int
-
-
 
     ## @author Damien
     ## @brief
@@ -83,8 +80,6 @@ class Trantorians:
         elif self.direction == 3:
             self.y -= 1
 
-
-
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
@@ -93,8 +88,6 @@ class Trantorians:
         self.direction -= 1
         if self.direction < 0:
             self.direction = 3
-
-
 
     ## @author Damien
     ## @brief
@@ -116,12 +109,11 @@ class Trantorians:
         for i in range(0, level + 1):
             j = i
             while (j > 0):
-                print(tmp_map_up[self.x - i][self.y - j], end="")
+                print(tmp_map_up[self.x - i][self.y - j], end = "")
                 j -= 1
-            print(tmp_map_up[self.x - i][self.y], end="") # middle
-                                       # print("up")
+            print(tmp_map_up[self.x - i][self.y], end = "")
             for k in range(1, i + 1):
-                print(tmp_map_up[self.x - i][self.y + k], end="")
+                print(tmp_map_up[self.x - i][self.y + k], end = "")
             print()
 
     ## @author Pierre-Louis
@@ -157,7 +149,7 @@ class Trantorians:
                 print(tmp_map_down[self.x + i][self.y + k], end="")
             print(tmp_map_down[self.x + i][self.y], end="")#middle
             while (j > 0):
-                print(tmp_map_down[self.x + i][self.y - j], end="")
+                print(tmp_map_down[self.x + i][self.y - j], end = "")
                 j -= 1
             print()
 
@@ -171,14 +163,31 @@ class Trantorians:
 
         for i in range(0, level + 1):
             j = i
-            while (j > 0):             # MODIFIER ALGO
-                print(tmp_map_left[self.x + i][self.y - j], end="")
+            while (j > 0):
+                print(tmp_map_left[self.x + i][self.y - j], end = "")
                 j -= 1
-            print(tmp_map_left[self.x + i][self.y], end="") # middle
+            print(tmp_map_left[self.x + i][self.y], end = "")
             for k in range(1, i + 1):
-                print(tmp_map_left[self.x + i][self.y + k], end="")
+                print(tmp_map_left[self.x + i][self.y + k], end = "")
             print()
-                                       # print("left")
+
+    ## @author Pierre-Louis
+    ## @brief
+    ## @param self Contains trantorian values
+    ## @return None
+    def loop_right(self, level: int) -> None:
+        self.x = 0
+        self.y = 4 - 1
+
+        for i in range(0, level):
+            j = i
+            while (j > 0):
+                print(tmp_map_right[self.x + i][self.y - j], end = "")
+                j -= 1
+            print(tmp_map_right[self.x + i][self.y], end = "")
+            for k in range(1, i + 1):
+                print(tmp_map_right[self.x + i][self.y + k], end = "")
+            print()
 
     ## @author Damien
     ## @brief
@@ -202,16 +211,12 @@ class Trantorians:
     def inventory(self) -> None:
         print(self.inventory)
 
-
-
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def broadcast_text(self, text) -> None:
         print(text)
-
-
 
     ## @author Damien
     ## @brief
@@ -220,8 +225,6 @@ class Trantorians:
     def connect_nbr(self) -> None:
         print("slot")
 
-
-
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
@@ -229,16 +232,12 @@ class Trantorians:
     def fork(self) -> None:
         print("fork")
 
-
-
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def eject(self) -> None:
         print(" eject")
-
-
 
     ## @author Damien
     ## @brief
@@ -250,8 +249,6 @@ class Trantorians:
             return True
         return False
 
-
-
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
@@ -259,16 +256,12 @@ class Trantorians:
     def take_object(self) -> None:
         print("take_object")
 
-
-
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def set_object(self) -> None:
         print("set_object")
-
-
 
     ## @author Damien
     ## @brief
