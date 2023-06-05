@@ -41,6 +41,8 @@ tmp_map_right = [
     [3,3,3,0]
 ]
 
+
+
 ## @author Damien and Pierre-Louis
 ## @brief contain function and variable for Trantorians
 ## @details The name Trantorians refers to bots that do not collaborate with each other to evolve.
@@ -59,7 +61,7 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def __init__(self) -> None:
-        self.direction = 2
+        self.direction = 3
         self.food = 126
         self.found = []
         self.level = 1
@@ -158,20 +160,20 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def look_left(self, level: int) -> None:
-        self.x = 0                          # x of the player
+        self.x = 3                          # x of the player
         self.y = 4 - 1                      # y - 1 of the player
 
         for i in range(0, level + 1):
             j = i
-            while j > 0:
-                if self.x - j >= 0 and self.y + i < len(tmp_map_left):
-                    print(tmp_map_left[self.x - j][self.y - i], end="")
+
+            while (j > 0):
+                print(tmp_map_left[self.x + j][self.y - i], end="")
                 j -= 1
-            if self.x >= 0 and self.y - i < len(tmp_map_left):
-                print(tmp_map_left[self.x][self.y - i], end="")
+
+            print(tmp_map_left[self.x][self.y - i], end="")
+
             for k in range(1, i + 1):
-                if self.x + k < len(tmp_map_left) and self.y - i < len(tmp_map_left):
-                    print(tmp_map_left[self.x + k][self.y - i], end="")
+                print(tmp_map_left[self.x - k][self.y - i], end="")
             print()
     ## @author Pierre-Louis
     ## @brief
@@ -181,7 +183,7 @@ class Trantorians:
         self.x = 0
         self.y = 4 - 1
 
-        for i in range(0, level):
+        for i in range(0, level + 1):
             j = i
             while (j > 0):
                 print(tmp_map_right[self.x + i][self.y - j], end = "")
