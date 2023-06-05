@@ -62,7 +62,7 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def __init__(self) -> None:
-        self.direction = 0
+        self.direction = 2
         self.food = 126
         self.found = []
         self.level = 1
@@ -109,7 +109,7 @@ class Trantorians:
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def loop_up(self, level: int) -> None:
+    def look_up(self, level: int) -> None:
         self.x = 3                          # x of the player
         self.y = 4 - 1                      # y - 1 of the player
 
@@ -128,11 +128,11 @@ class Trantorians:
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def loop_right(self, level: int) -> None:
-        self.x = 0                          # x of the player
+    def look_right(self, level: int) -> None:
+        self.x = 4 - 1                          # x of the player
         self.y = 4 - 1                      # y - 1 of the player
 
-        for i in range(0, level):
+        for i in range(0, level + 1):
             j = i
             while (j > 0):             # MODIFIER ALGO
                 print(tmp_map_right[self.x + i][self.y - j], end="")
@@ -147,29 +147,29 @@ class Trantorians:
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def loop_down(self, level: int) -> None:
+    def look_down(self, level: int) -> None:
         self.x = 0#x of the player
         self.y = 4 - 1#y - 1 of the player
 
-        for i in range(0, level):
+        for i in range(0, level + 1):
             j = i
+            for k in range(1, i + 1):
+                print(tmp_map_down[self.x + i][self.y + k], end="")
+            print(tmp_map_down[self.x + i][self.y], end="")#middle
             while (j > 0):
                 print(tmp_map_down[self.x + i][self.y - j], end="")
                 j -= 1
-            print(tmp_map_down[self.x + i][self.y], end="")#middle
-            for k in range(1, i + 1):
-                print(tmp_map_down[self.x + i][self.y + k], end="")
             print()
 
     ## @author Pierre-Louis
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def loop_left(self, level: int) -> None:
+    def look_left(self, level: int) -> None:
         self.x = 0                          # x of the player
         self.y = 4 - 1                      # y - 1 of the player
 
-        for i in range(0, level):
+        for i in range(0, level + 1):
             j = i
             while (j > 0):             # MODIFIER ALGO
                 print(tmp_map_left[self.x + i][self.y - j], end="")
@@ -186,13 +186,13 @@ class Trantorians:
     ## @return None
     def look(self, level: int) -> None:
         if (self.direction == 0):
-            self.loop_up(level)
+            self.look_up(level)
         if (self.direction == 1):
-            self.loop_left(level)
+            self.look_right(level)
         if (self.direction == 2):
-            self.loop_down(level)
+            self.look_down(level)
         if (self.direction == 3):
-            self.loop_right(level)
+            self.look_left(level)
 # 0=up | 1=right | 2=down | 3=left
 
     ## @author Damien
