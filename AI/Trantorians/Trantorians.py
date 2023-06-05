@@ -60,7 +60,7 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def __init__(self) -> None:
-        self.direction = 2
+        self.direction = 0
         self.food = 126
         self.found = []
         self.fov = 1
@@ -99,19 +99,19 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def loop_up(self, level: int) -> None:
-        x = 0                          # x of the player
+        x = 3                          # x of the player
         y = 4 - 1                      # y - 1 of the player
 
         for i in range(0, level):
             j = i
-            while (j > 0):             # MODIFIER ALGO
-                print(tmp_map_up[x + i][y - j], end="")
+            while (j > 0):
+                print(tmp_map_up[x - i][y - j], end="")
                 j -= 1
-            print(tmp_map_up[x + i][y], end="") # middle
-            for k in range(1, i + 1):
-                print(tmp_map_up[x + i][y + k], end="")
-            print()
+            print(tmp_map_up[x - i][y], end="") # middle
                                        # print("up")
+            for k in range(1, i + 1):
+                print(tmp_map_up[x - i][y + k], end="")
+            print()
 
     ## @author Pierre-Louis
     ## @brief
