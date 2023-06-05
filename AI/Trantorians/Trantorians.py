@@ -52,6 +52,8 @@ class Trantorians:
     fov: int
     inventory: dict
     sound: int###temporary, need to know what this is
+    x: int
+    y: int
 
 
 
@@ -63,7 +65,7 @@ class Trantorians:
         self.direction = 0
         self.food = 126
         self.found = []
-        self.fov = 1
+        self.level = 1
         self.inventory = {}
         self.sound = 0
 
@@ -99,18 +101,18 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def loop_up(self, level: int) -> None:
-        x = 3                          # x of the player
-        y = 4 - 1                      # y - 1 of the player
+        self.x = 3                          # x of the player
+        self.y = 4 - 1                      # y - 1 of the player
 
-        for i in range(0, level):
+        for i in range(0, level + 1):
             j = i
             while (j > 0):
-                print(tmp_map_up[x - i][y - j], end="")
+                print(tmp_map_up[self.x - i][self.y - j], end="")
                 j -= 1
-            print(tmp_map_up[x - i][y], end="") # middle
+            print(tmp_map_up[self.x - i][self.y], end="") # middle
                                        # print("up")
             for k in range(1, i + 1):
-                print(tmp_map_up[x - i][y + k], end="")
+                print(tmp_map_up[self.x - i][self.y + k], end="")
             print()
 
     ## @author Pierre-Louis
@@ -118,17 +120,17 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def loop_right(self, level: int) -> None:
-        x = 0                          # x of the player
-        y = 4 - 1                      # y - 1 of the player
+        self.x = 0                          # x of the player
+        self.y = 4 - 1                      # y - 1 of the player
 
         for i in range(0, level):
             j = i
             while (j > 0):             # MODIFIER ALGO
-                print(tmp_map_right[x + i][y - j], end="")
+                print(tmp_map_right[self.x + i][self.y - j], end="")
                 j -= 1
-            print(tmp_map_right[x + i][y], end="") # middle
+            print(tmp_map_right[self.x + i][self.y], end="") # middle
             for k in range(1, i + 1):
-                print(tmp_map_right[x + i][y + k], end="")
+                print(tmp_map_right[self.x + i][self.y + k], end="")
             print()
                                        # print("right")
 
@@ -137,17 +139,17 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def loop_down(self, level: int) -> None:
-        x = 0#x of the player
-        y = 4 - 1#y - 1 of the player
+        self.x = 0#x of the player
+        self.y = 4 - 1#y - 1 of the player
 
         for i in range(0, level):
             j = i
             while (j > 0):
-                print(tmp_map_down[x + i][y - j], end="")
+                print(tmp_map_down[self.x + i][self.y - j], end="")
                 j -= 1
-            print(tmp_map_down[x + i][y], end="")#middle
+            print(tmp_map_down[self.x + i][self.y], end="")#middle
             for k in range(1, i + 1):
-                print(tmp_map_down[x + i][y + k], end="")
+                print(tmp_map_down[self.x + i][self.y + k], end="")
             print()
 
     ## @author Pierre-Louis
@@ -155,17 +157,17 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def loop_left(self, level: int) -> None:
-        x = 0                          # x of the player
-        y = 4 - 1                      # y - 1 of the player
+        self.x = 0                          # x of the player
+        self.y = 4 - 1                      # y - 1 of the player
 
         for i in range(0, level):
             j = i
             while (j > 0):             # MODIFIER ALGO
-                print(tmp_map_left[x + i][y - j], end="")
+                print(tmp_map_left[self.x + i][self.y - j], end="")
                 j -= 1
-            print(tmp_map_left[x + i][y], end="") # middle
+            print(tmp_map_left[self.x + i][self.y], end="") # middle
             for k in range(1, i + 1):
-                print(tmp_map_left[x + i][y + k], end="")
+                print(tmp_map_left[self.x + i][self.y + k], end="")
             print()
                                        # print("left")
 
