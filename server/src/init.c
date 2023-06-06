@@ -7,6 +7,15 @@
 
 #include "my.h"
 
+static void free_struct(player_t *player, map_t *maps)
+{
+    for (int i = 0; i < maps->max_y; i++)
+        free(maps->map[i]);
+    free(maps->map);
+    free(player);
+    free(maps);
+}
+
 int init_tab(map_t *maps)
 {
     maps->map = malloc(sizeof(char *) * (maps->max_y + 1));
