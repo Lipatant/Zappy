@@ -6,15 +6,23 @@
 */
 
 #include "Mortymere/Instance.hpp"
-#include "Mortymere/Sprites.hpp"
+#include "Mortymere/Sprite.hpp"
+#include "Mortymere/Sprites/Character.hpp"
 
 #define INSTANCE Mortymere::Instance
 
-#define ANCHOR_UNIT 0.05
-sf::Vector3f daAnchor = {0, 0, 0};
-
-INSTANCE::Instance(void) : camera(window), _sprite(Mortymere::createSprite<Mortymere::Sprites::Character>("graphics/charact/Morty/Base.png"))
+INSTANCE::Instance(void) : camera(window)
 { }
+
+void INSTANCE::addObject(Mortymere::SpritePtr objectPtr)
+{
+    _objects.push_back(objectPtr);
+}
+
+void INSTANCE::operator<<(Mortymere::SpritePtr objectPtr)
+{
+    _objects.push_back(objectPtr);
+}
 
 bool INSTANCE::udpate(void)
 {
@@ -28,22 +36,6 @@ bool INSTANCE::udpate(void)
         if (event.type == sf::Event::GainedFocus)
             window.hasFocus = true;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        _sprite->setCharacterRotation(Mortymere::CharacterRotation::Left);
-        daAnchor.x -= ANCHOR_UNIT;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        _sprite->setCharacterRotation(Mortymere::CharacterRotation::Right);
-        daAnchor.x += ANCHOR_UNIT;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        _sprite->setCharacterRotation(Mortymere::CharacterRotation::Down);
-        daAnchor.z += ANCHOR_UNIT;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        _sprite->setCharacterRotation(Mortymere::CharacterRotation::Up);
-        daAnchor.z -= ANCHOR_UNIT;
-    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         window.close();
     if (!window.isFullscreen()) {
@@ -55,8 +47,13 @@ bool INSTANCE::udpate(void)
     window.clear(sf::Color::Black);
     _ground.drawOn(camera, window);
     window.draw(_ground);
-    _sprite->anchor() = daAnchor;
-    _sprite->drawOn(*this);
+    for (auto object = _objects.begin(); object != _objects.end();) {
+        if (Mortymere::Sprite sprite = object->lock())
+            sprite->drawOn(*this);
+        else
+            _objects.erase(object++);
+        object++;
+    }
     window.display();
     return window.isOpen();
 }

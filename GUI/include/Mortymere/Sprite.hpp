@@ -6,7 +6,7 @@
 */
 
 /// @file
-/// @brief Pointer to an Sprite
+/// @brief Shared pointer to a ISprite
 
 #pragma once
 
@@ -17,6 +17,7 @@ namespace Mortymere {
 
 class ISprite;
 
+/// @brief Shared pointer to a ISprite, can be used alongside SpritePtr
 using Sprite = std::shared_ptr<Mortymere::ISprite>;
 
 template <typename T, typename... _Args>

@@ -6,7 +6,7 @@
 */
 
 /// @file
-/// @brief Includes all headers from the Mortymere directory
+/// @brief Includes all headers from the **Mortymere** directory
 
 #pragma once
 
@@ -17,5 +17,6 @@
 #include "Mortymere/ISprite.hpp"
 #include "Mortymere/Maths.hpp"
 #include "Mortymere/Sprite.hpp"
+#include "Mortymere/SpritePtr.hpp"
 #include "Mortymere/Sprites.hpp"
 #include "Mortymere/Window.hpp"
