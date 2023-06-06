@@ -10,8 +10,12 @@
 
 #pragma once
 
+#include "Mortymere/ASprite.hpp"
 #include "Mortymere/Camera.hpp"
 #include "Mortymere/Ground.hpp"
 #include "Mortymere/Instance.hpp"
+#include "Mortymere/ISprite.hpp"
 #include "Mortymere/Maths.hpp"
+#include "Mortymere/Sprite.hpp"
+#include "Mortymere/Sprites.hpp"
 #include "Mortymere/Window.hpp"

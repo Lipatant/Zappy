@@ -1,6 +1,10 @@
+Mortymere/ASprite.cpp
 Mortymere/Camera.cpp
 Mortymere/Ground.cpp
 Mortymere/Instance.cpp
 Mortymere/Maths/Matrix.cpp
 Mortymere/Maths/Matrix/Create.cpp
+Mortymere/ISprite.cpp
+Mortymere/Sprites/Character.cpp
+Mortymere/Sprites/Object.cpp
 Mortymere/Window.cpp

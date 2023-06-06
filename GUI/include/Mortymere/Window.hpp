@@ -45,6 +45,8 @@ public: // PUBLIC FUNCTIONS
     ///     (true) or windowed (false) (optional, inverted by default)
     /// @return true, or false if a problem is encountered
     bool setFullscreen(void);
+    /// @brief
+    void update(void);
 
 public: // CONSTRUCTORS
     /// @brief Default constructor

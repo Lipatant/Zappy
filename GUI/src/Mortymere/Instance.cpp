@@ -6,10 +6,14 @@
 */
 
 #include "Mortymere/Instance.hpp"
+#include "Mortymere/Sprites.hpp"
 
 #define INSTANCE Mortymere::Instance
 
-INSTANCE::Instance(void) : _camera(window)
+#define ANCHOR_UNIT 0.05
+sf::Vector3f daAnchor = {0, 0, 0};
+
+INSTANCE::Instance(void) : camera(window), _sprite(Mortymere::createSprite<Mortymere::Sprites::Character>("graphics/charact/Morty/OffTheGrid.png"))
 { }
 
 bool INSTANCE::udpate(void)
@@ -24,6 +28,22 @@ bool INSTANCE::udpate(void)
         if (event.type == sf::Event::GainedFocus)
             window.hasFocus = true;
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        _sprite->setCharacterRotation(Mortymere::CharacterRotation::Left);
+        daAnchor.x -= ANCHOR_UNIT;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        _sprite->setCharacterRotation(Mortymere::CharacterRotation::Right);
+        daAnchor.x += ANCHOR_UNIT;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        _sprite->setCharacterRotation(Mortymere::CharacterRotation::Down);
+        daAnchor.z += ANCHOR_UNIT;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        _sprite->setCharacterRotation(Mortymere::CharacterRotation::Up);
+        daAnchor.z -= ANCHOR_UNIT;
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         window.close();
     if (!window.isFullscreen()) {
@@ -31,9 +51,12 @@ bool INSTANCE::udpate(void)
             window.setFullscreen(true);
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
         window.setFullscreen(false);
+    window.update();
     window.clear(sf::Color::Black);
-    _ground.drawOn(_camera, window);
+    _ground.drawOn(camera, window);
     window.draw(_ground);
+    _sprite->anchor() = daAnchor;
+    _sprite->drawOn(*this);
     window.display();
     return window.isOpen();
 }
