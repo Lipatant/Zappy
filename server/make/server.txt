@@ -2,5 +2,6 @@ main.c
 server.c
 error.c
 in_loop.c
+init.c
 utils_client.c
 utils_server.c

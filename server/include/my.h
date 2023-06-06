@@ -17,24 +17,27 @@
     #include <netinet/in.h>
 
 typedef struct player_s {
-    int id;
-    int x;
-    int y;
+    char *name;
+    int posx;
+    int posy;
     int level;
-    int inventory[7];
-    int orientation;
-    int team;
+    int life;
+    int linemate;
+    int deraumere;
+    int sibur;
+    int mendiane;
+    int phiras;
+    int thystame;
 } player_t;
 
 typedef struct map_s {
+    int max_x;
+    int max_y;
     int x;
     int y;
-    int **map;
+    char **map;
 } map_t;
 
-typedef struct server_s {
-    player_s *players;
-    map_s *map;
-} server_t;
+init_struct(char **av, player_t *players, map_t *map);
 
 #endif /* !MY_H_ */

@@ -26,6 +26,12 @@ static int help(void)
 
 int main(int argc, char **argv)
 {
+    server_t *server = malloc(sizeof(server_t));
+    map_t *map = malloc(sizeof(map_t));
+
+    if (map == NULL || server == NULL)
+        return 84;
+    init_struct(argv, server, map);
     if (argc == 2 && strcmp(argv[1], "-help") == 0)
         return help();
     return server(argc, argv);
