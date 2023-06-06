@@ -7,6 +7,14 @@
 
 ## @file Trantorians.py
 
+tmp_map = [
+    [0,0,0,0,0],
+    [1,1,1,1,1],
+    [2,2,2,2,2],
+    [3,3,3,3,3],
+    [4,4,4,4,4],
+]
+
 tmp_map_up = [
     [0,1,0,0,0,0,0],
     [3,0,2,0,0,0,3],
@@ -61,12 +69,16 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def __init__(self) -> None:
-        self.direction = 1
+        self.direction = 0
         self.food = 126
         self.found = []
         self.level = 1
         self.inventory = {}
         self.sound = 0
+        #temporary values ###
+        self.x = 2
+        self.y = 2
+        #####################
 
     ## @author Damien
     ## @brief
@@ -104,111 +116,86 @@ class Trantorians:
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def look_up(self, level: int) -> None:
-        self.x = 3                          # x of the player
-        self.y = 4 - 1                      # y - 1 of the player
-
-        for i in range(0, level + 1):
+    def look_up(self) -> None:
+        for i in range(0, self.level + 1):
             j = i
             while (j > 0):
-                print(tmp_map_up[self.x - i][self.y - j], end = "")
+                print(tmp_map[self.x - i][self.y - j], end = "")
                 j -= 1
-            print(tmp_map_up[self.x - i][self.y], end = "")
+            print(tmp_map[self.x - i][self.y], end = "")
             for k in range(1, i + 1):
-                print(tmp_map_up[self.x - i][self.y + k], end = "")
+                print(tmp_map[self.x - i][self.y + k], end = "")
+            print()
+
+
+
+    ## @author Damien
+    ## @brief
+    ## @param self Contains trantorian values
+    ## @return None
+    def look_down(self) -> None:
+        for i in range(0, self.level + 1):
+            j = i
+            for k in range(1, i + 1):
+                print(tmp_map[self.x + i][self.y + k], end="")
+            print(tmp_map[self.x + i][self.y], end="")#middle
+            while (j > 0):
+                print(tmp_map[self.x + i][self.y - j], end = "")
+                j -= 1
             print()
 
     ## @author Pierre-Louis
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def look_right(self, level: int) -> None:
-        self.x = 0                     # x of the player
-        self.y = 4 - 1                      # y - 1 of the player
+    def look_left(self) -> None:
+        for i in range(0, self.level + 1):
+            j = i
 
-        for i in range(0, level + 1):
+            while (j > 0):
+                print(tmp_map[self.x + j][self.y - i], end="")
+                j -= 1
+
+            print(tmp_map[self.x][self.y - i], end="")
+
+            for k in range(1, i + 1):
+                print(tmp_map[self.x - k][self.y - i], end="")
+            print()
+
+
+
+    ## @author Pierre-Louis
+    ## @brief
+    ## @param self Contains trantorian values
+    ## @return None
+    def look_right(self) -> None:
+        for i in range(0, self.level + 1):
             j = i
             while j > 0:
-                print(tmp_map_right[self.x + j][self.y - i], end="")
+                if self.y - j >= 0 and self.x + i < len(tmp_map[self.y - j]):
+                    print(tmp_map[self.y - j][self.x + i], end="")
                 j -= 1
-            print(tmp_map_right[self.x][self.y - i], end="")
+            if self.y >= 0 and self.x + i < len(tmp_map[self.y]):
+                print(tmp_map[self.y][self.x + i], end="")
             for k in range(1, i + 1):
-                print(tmp_map_right[self.x][self.y + k], end="")
+                if self.y + k < len(tmp_map) and self.x + i < len(tmp_map[self.y + k]):
+                    print(tmp_map[self.y + k][self.x + i], end="")
             print()
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def look_down(self, level: int) -> None:
-        self.x = 0#x of the player
-        self.y = 4 - 1#y - 1 of the player
-
-        for i in range(0, level + 1):
-            j = i
-            for k in range(1, i + 1):
-                print(tmp_map_down[self.x + i][self.y + k], end="")
-            print(tmp_map_down[self.x + i][self.y], end="")#middle
-            while (j > 0):
-                print(tmp_map_down[self.x + i][self.y - j], end = "")
-                j -= 1
-            print()
-
-    ## @author Pierre-Louis
-    ## @brief
-    ## @param self Contains trantorian values
-    ## @return None
-    def look_left(self, level: int) -> None:
-        self.x = 3                          # x of the player
-        self.y = 4 - 1                      # y - 1 of the player
-
-        for i in range(0, level + 1):
-            j = i
-
-            while (j > 0):
-                print(tmp_map_left[self.x + j][self.y - i], end="")
-                j -= 1
-
-            print(tmp_map_left[self.x][self.y - i], end="")
-
-            for k in range(1, i + 1):
-                print(tmp_map_left[self.x - k][self.y - i], end="")
-            print()
-    ## @author Pierre-Louis
-    ## @brief
-    ## @param self Contains trantorian values
-    ## @return None
-    def look_right(self, level: int) -> None:
-        self.x = 0                          # x of the player
-        self.y = 4 - 1                      # y - 1 of the player
-
-        for i in range(0, level + 1):
-            j = i
-            while j > 0:
-                if self.y - j >= 0 and self.x + i < len(tmp_map_right[self.y - j]):
-                    print(tmp_map_right[self.y - j][self.x + i], end="")
-                j -= 1
-            if self.y >= 0 and self.x + i < len(tmp_map_right[self.y]):
-                print(tmp_map_right[self.y][self.x + i], end="")
-            for k in range(1, i + 1):
-                if self.y + k < len(tmp_map_right) and self.x + i < len(tmp_map_right[self.y + k]):
-                    print(tmp_map_right[self.y + k][self.x + i], end="")
-            print()
-
-    ## @author Damien
-    ## @brief
-    ## @param self Contains trantorian values
-    ## @return None
-    def look(self, level: int) -> None:
+    def look(self) -> None:
         if (self.direction == 0):
-            self.look_up(level)
+            self.look_up()
         if (self.direction == 1):
-            self.look_right(level)
+            self.look_right()
         if (self.direction == 2):
-            self.look_down(level)
+            self.look_down()
         if (self.direction == 3):
-            self.look_left(level)
-# 0=up | 1=right | 2=down | 3=left
+            self.look_left()
+
 
     ## @author Damien
     ## @brief
