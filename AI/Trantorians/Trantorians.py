@@ -7,6 +7,8 @@
 
 ## @file Trantorians.py
 
+####    temporary map, it is used as a global variable for now but will soon be
+####    replaced by the one from the server
 tmp_map = [
     [0,0,0,0,0],
     [1,1,1,1,1],
@@ -15,41 +17,7 @@ tmp_map = [
     [4,4,4,4,4],
 ]
 
-tmp_map_up = [
-    [0,1,0,0,0,0,0],
-    [3,0,2,0,0,0,3],
-    [3,3,0,0,1,3,3],
-    [3,3,3,0,3,3,3]
-]
-
-tmp_map_down = [
-    [3,3,3,0,3,3,3],
-    [3,3,0,0,1,3,3],
-    [3,0,2,0,0,0,3],
-    [0,1,0,0,0,0,0]
-]
-
-tmp_map_left = [
-    [0,3,3,3],
-    [0,1,3,3],
-    [0,2,0,3],
-    [0,0,0,0],
-    [1,0,0,3],
-    [0,0,3,3],
-    [0,3,3,3]
-]
-
-tmp_map_right = [
-    [3,3,3,0],
-    [3,3,0,1],
-    [3,0,2,0],
-    [0,0,0,0],
-    [3,1,0,0],
-    [3,3,0,0],
-    [3,3,3,0]
-]
-
-
+import os
 
 ## @author Damien and Pierre-Louis
 ## @brief contain function and variable for Trantorians
@@ -223,7 +191,16 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def fork(self) -> None:
-        print("fork")
+        pid: int = os.fork()
+
+        if pid > 0:
+            print("I am parent process:")
+            print("Process ID:", os.getpid())
+            print("Child's process ID:", pid)
+        else:
+            print("\nI am child process:")
+            print("Process ID:", os.getpid())
+            print("Parent's process ID:", os.getppid())
 
     ## @author Damien
     ## @brief
