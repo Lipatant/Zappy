@@ -61,7 +61,7 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def __init__(self) -> None:
-        self.direction = 3
+        self.direction = 1
         self.food = 126
         self.found = []
         self.level = 1
@@ -123,19 +123,18 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def look_right(self, level: int) -> None:
-        self.x = 4 - 1                          # x of the player
+        self.x = 0                     # x of the player
         self.y = 4 - 1                      # y - 1 of the player
 
         for i in range(0, level + 1):
             j = i
-            while (j > 0):             # MODIFIER ALGO
-                print(tmp_map_right[self.x + i][self.y - j], end="")
+            while j > 0:
+                print(tmp_map_right[self.x + j][self.y - i], end="")
                 j -= 1
-            print(tmp_map_right[self.x + i][self.y], end="") # middle
+            print(tmp_map_right[self.x][self.y - i], end="")
             for k in range(1, i + 1):
-                print(tmp_map_right[self.x + i][self.y + k], end="")
+                print(tmp_map_right[self.x][self.y + k], end="")
             print()
-                                       # print("right")
 
     ## @author Damien
     ## @brief
@@ -179,18 +178,21 @@ class Trantorians:
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def loop_right(self, level: int) -> None:
-        self.x = 0
-        self.y = 4 - 1
+    def look_right(self, level: int) -> None:
+        self.x = 0                          # x of the player
+        self.y = 4 - 1                      # y - 1 of the player
 
         for i in range(0, level + 1):
             j = i
-            while (j > 0):
-                print(tmp_map_right[self.x + i][self.y - j], end = "")
+            while j > 0:
+                if self.y - j >= 0 and self.x + i < len(tmp_map_right[self.y - j]):
+                    print(tmp_map_right[self.y - j][self.x + i], end="")
                 j -= 1
-            print(tmp_map_right[self.x + i][self.y], end = "")
+            if self.y >= 0 and self.x + i < len(tmp_map_right[self.y]):
+                print(tmp_map_right[self.y][self.x + i], end="")
             for k in range(1, i + 1):
-                print(tmp_map_right[self.x + i][self.y + k], end = "")
+                if self.y + k < len(tmp_map_right) and self.x + i < len(tmp_map_right[self.y + k]):
+                    print(tmp_map_right[self.y + k][self.x + i], end="")
             print()
 
     ## @author Damien
