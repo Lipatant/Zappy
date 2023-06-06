@@ -21,13 +21,21 @@ int init_tab(map_t *maps)
             maps->map[i][j] = '0';
         maps->map[i][maps->max_x] = '\0';
     }
+    return 0;
 }
 
-void init_struct(char **av, player_t *players, map_t *maps)
+void init_struct(char **av, player_t *player, map_t *maps)
 {
     maps->max_x = atoi(av[4]);
     maps->max_y = atoi(av[6]);
+    player->linemate = 0;
+    player->deraumere = 0;
+    player->sibur = 0;
+    player->mendiane = 0;
+    player->phiras = 0;
+    player->thystame = 0;
 
+    // give_name_to_player(player, av);
     init_tab(maps);
 }
 

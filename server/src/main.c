@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "server.h"
+#include "my.h"
 
 static int help(void)
 {
@@ -26,12 +27,12 @@ static int help(void)
 
 int main(int argc, char **argv)
 {
-    server_t *server = malloc(sizeof(server_t));
+    player_t *player = malloc(sizeof(player_t));
     map_t *map = malloc(sizeof(map_t));
 
-    if (map == NULL || server == NULL)
+    if (map == NULL || player == NULL)
         return 84;
-    init_struct(argv, server, map);
+    init_struct(argv, player, map);
     if (argc == 2 && strcmp(argv[1], "-help") == 0)
         return help();
     return server(argc, argv);
