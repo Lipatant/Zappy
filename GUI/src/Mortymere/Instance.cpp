@@ -13,7 +13,7 @@
 #define ANCHOR_UNIT 0.05
 sf::Vector3f daAnchor = {0, 0, 0};
 
-INSTANCE::Instance(void) : camera(window), _sprite(Mortymere::createSprite<Mortymere::Sprites::Character>("graphics/charact/Morty/OffTheGrid.png"))
+INSTANCE::Instance(void) : camera(window), _sprite(Mortymere::createSprite<Mortymere::Sprites::Character>("graphics/charact/Morty/Base.png"))
 { }
 
 bool INSTANCE::udpate(void)
