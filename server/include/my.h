@@ -38,6 +38,7 @@ typedef struct map_s {
     char **map;
 } map_t;
 
-init_struct(char **av, player_t *players, map_t *map);
+void init_struct(char **av, player_t *players, map_t *map);
+int init_tab(map_t *maps);
 
 #endif /* !MY_H_ */
