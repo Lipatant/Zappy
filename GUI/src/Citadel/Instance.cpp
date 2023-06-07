@@ -13,12 +13,17 @@
 #define REGEX_INT "^([1-9]\\d*|\\d)$"
 #define REGEX_UNINT "^-?([1-9]\\d*|\\d)$"
 
+#define REGEX_EGG_NUMBER REGEX_UNINT
+#define REGEX_LEVEL REGEX_UNINT
+#define REGEX_MESSAGE ""
 #define REGEX_NUMBER REGEX_UNINT
 #define REGEX_ORIENTATION "^[1-4]$"
 #define REGEX_POSITION REGEX_INT
 #define REGEX_RESSOURCE REGEX_UNINT
-#define REGEX_LEVEL REGEX_UNINT
+#define REGEX_RESSOURCE_ID "^[0-6]$"
 #define REGEX_TEAM ""
+#define REGEX_TIME REGEX_UNINT
+#define REGEX_INCANTATION_RESULT ""
 
 #define INSTANCE Citadel::Instance
 #define INSTANCECMD Citadel::InstanceCmd
@@ -45,11 +50,14 @@ template <class T>
 static T toNumber(std::string const &str)
 {
     T returned = 0;
+    short sign = 1;
 
     for (char const c: str) {
+        if (c == '-')
+            sign *= -1;
         if (c < '0' || c > '9')
             continue;
-        returned = returned * 10 + c - '0';
+        returned = returned * 10 + (c - '0') * 1;
     }
     return returned;
 }
@@ -85,11 +93,70 @@ INSTANCECMD_FUNCTION(instanceCmdPpo)
 }
 
 static const struct Command_s COMMANDS[] = {
+    // Map size
+    {"msz", 2, {REGEX_POSITION, REGEX_POSITION}, 0},
+    // Content of a tile
+    {"btc", 9, {REGEX_POSITION, REGEX_POSITION, REGEX_RESSOURCE, \
+        REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE, \
+        REGEX_RESSOURCE, REGEX_RESSOURCE}, 0},
+    // Name of a team
+    {"tna", 1, {REGEX_TEAM}, 0},
+    // Connection of a new player
     {"pnw", 6, {REGEX_NUMBER, REGEX_POSITION, REGEX_POSITION, \
         REGEX_ORIENTATION, REGEX_LEVEL, REGEX_TEAM}, instanceCmdPnw},
+    // Player's position
     {"ppo", 4, {REGEX_NUMBER, REGEX_POSITION, REGEX_POSITION, \
-        REGEX_ORIENTATION}, instanceCmdPpo}
+        REGEX_ORIENTATION}, instanceCmdPpo},
+    // Player's level
+    {"plv", 2, {REGEX_NUMBER, REGEX_LEVEL}, 0},
+    // Player's inventory
+    {"pin", 8, {REGEX_NUMBER, REGEX_RESSOURCE, REGEX_RESSOURCE, \
+        REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE, \
+        REGEX_RESSOURCE}, 0},
+    // Expulsion
+    {"pex", 1, {REGEX_NUMBER}, 0},
+    // Broadcast
+    {"pbc", 2, {REGEX_NUMBER, REGEX_MESSAGE}, 0},
+    // Start of incantation (by the first player)
+    {"pic", 4, {REGEX_POSITION, REGEX_POSITION, REGEX_LEVEL, REGEX_NUMBER}, 0},
+    {"pic", 5, {REGEX_POSITION, REGEX_POSITION, REGEX_LEVEL, REGEX_NUMBER, \
+        REGEX_NUMBER}, 0},
+    {"pic", 7, {REGEX_POSITION, REGEX_POSITION, REGEX_LEVEL, REGEX_NUMBER, \
+        REGEX_NUMBER, REGEX_NUMBER, REGEX_NUMBER}, 0},
+    {"pic", 9, {REGEX_POSITION, REGEX_POSITION, REGEX_LEVEL, REGEX_NUMBER, \
+        REGEX_NUMBER, REGEX_NUMBER, REGEX_NUMBER, REGEX_NUMBER, \
+        REGEX_NUMBER}, 0},
+    // End of incantation
+    {"pie", 3, {REGEX_POSITION, REGEX_POSITION, REGEX_INCANTATION_RESULT}, 0},
+    // Egg layed by the player
+    {"pfk", 1, {REGEX_NUMBER}, 0},
+    // Ressource dropping
+    {"pdr", 2, {REGEX_NUMBER, REGEX_RESSOURCE_ID}, 0},
+    // Ressource collecting
+    {"pgt", 2, {REGEX_NUMBER, REGEX_RESSOURCE_ID}, 0},
+    // Death of a player
+    {"pdi", 1, {REGEX_NUMBER}, 0},
+    // An egg was layed by a player
+    {"enw", 4, {REGEX_EGG_NUMBER, REGEX_NUMBER, REGEX_POSITION, \
+        REGEX_POSITION}, 0},
+    // Player connection to an egg
+    {"ebo", 1, {REGEX_EGG_NUMBER}, 0},
+    // Death of an egg
+    {"edi", 1, {REGEX_EGG_NUMBER}, 0},
+    // Time unit request
+    {"sgt", 1, {REGEX_TIME}, 0},
+    // Time unit modfication
+    {"sst", 1, {REGEX_TIME}, 0},
+    // End of the game
+    {"seg", 1, {REGEX_TEAM}, 0},
+    // Message from the server
+    {"smg", 1, {REGEX_MESSAGE}, 0},
+    // Unknown command
+    {"suc", 0, {}, 0},
+    // Command parameter
+    {"sbp", 0, {}, 0},
 };
+
 static const std::size_t COMMANDS_LENGTH = \
     sizeof(COMMANDS) / sizeof(COMMANDS[0]);
 
@@ -131,6 +198,7 @@ Mortymere::Instance &INSTANCE::engine(void)
 void INSTANCE::enterCommand(std::string const &cmd)
 {
     size_t ac = 0;
+    bool invalidAmountArguments = false;
     std::vector<std::string> av = {};
 
     convertCommand(cmd, ac, av);
@@ -139,8 +207,10 @@ void INSTANCE::enterCommand(std::string const &cmd)
     for (std::size_t i = 0; i < COMMANDS_LENGTH; i++) {
         if (!COMMANDS[i].function || av[0] != COMMANDS[i].name)
             continue;
-        if ((ac - 1) < COMMANDS[i].arguments)
-            throw Citadel::Exception::Command::InvalidAmountArguments();
+        if ((ac - 1) != COMMANDS[i].arguments) {
+            invalidAmountArguments = true;
+            continue;
+        }
         for (std::size_t j = 0; j < COMMANDS[i].arguments; j++) {
             if (COMMANDS[i].argumentExpressions[j].empty())
                 continue;
@@ -149,7 +219,10 @@ void INSTANCE::enterCommand(std::string const &cmd)
                 throw Citadel::Exception::Command::InvalidArgument();
         }
         COMMANDS[i].function(*this, av);
+        return;
     }
+    if (invalidAmountArguments)
+        throw Citadel::Exception::Command::InvalidAmountArguments();
 }
 
 void INSTANCE::operator<<(std::string const &cmd)
