@@ -16,6 +16,8 @@ class Client:
     port: int
     ip: str
     team: str
+    x: int
+    y: int
     socket: socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def __init__(self, args: Arguments):
@@ -46,6 +48,9 @@ class Client:
 
         received_data = self.socket.recv(1024).decode()
         print("Received from server:", received_data)
+        if (received_data == "ko\n"):
+            print("error server")
+            exit(84)
         return received_data
 
 
@@ -61,10 +66,12 @@ class Client:
 ## @brief Parse the received data of server
 ## @param received_data is give by the server
 ## @return None
-def parsing_data(str_nb):
-    nb = re.findall(r'\d+', str_nb)
-    nb_bot = int(nb[0])
-    map_x = int(nb[1])
-    map_y = int(nb[2])
+    def parsing_data(self, str_nb):
+        nb = re.findall(r'\d+', str_nb)
+        if (int(nb[0]) <= 0):
+            print("error: too many trantorians in this team")
+            exit(84)
+        self.x = int(nb[1])
+        self.y = int(nb[2])
 
-    print(">>>", nb_bot, map_x, map_y, "<<<")
+        print(">>>", self.x, self.y, "<<<")

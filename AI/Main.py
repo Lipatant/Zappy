@@ -49,7 +49,7 @@ def main(argc: int, argv: list[str]) -> int:
     client = Client.Client(args)
     client.connect_to_server()
     msg = client.communicate()
-    Client.parsing_data(msg)
+    client.parsing_data(msg)
     trant = Trantorians.Trantorians()
     attributes = dir(trant)
 
