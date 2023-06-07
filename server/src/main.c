@@ -27,12 +27,13 @@ static int help(void)
 
 int main(int argc, char **argv)
 {
+    team_t *team = malloc(sizeof(team_t));
     player_t *player = malloc(sizeof(player_t));
     map_t *map = malloc(sizeof(map_t));
 
     if (map == NULL || player == NULL)
         return 84;
-    init_struct(argv, player, map);
+    init_struct(argv, team, map, player);
     if (argc == 2 && strcmp(argv[1], "-help") == 0)
         return help();
     return server(argc, argv);

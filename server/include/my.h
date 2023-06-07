@@ -17,7 +17,7 @@
     #include <netinet/in.h>
 
 typedef struct player_s {
-    char *name;
+    int food;
     int posx;
     int posy;
     int level;
@@ -28,17 +28,29 @@ typedef struct player_s {
     int mendiane;
     int phiras;
     int thystame;
+    int lvl;
 } player_t;
 
 typedef struct map_s {
     int max_x;
     int max_y;
-    int x;
-    int y;
     char **map;
 } map_t;
 
-void init_struct(char **av, player_t *players, map_t *map);
+typedef struct team_s {
+    char *name;
+    player_t *players;
+} team_t;
+
+void init_struct(char **av, team_t *team, map_t *map, player_t *player);
 int init_tab(map_t *maps);
+void make_elevation(team_t *team);
+void elevation_lvl2(team_t *team);
+void elevation_lvl3(team_t *team);
+void elevation_lvl4(team_t *team);
+void elevation_lvl5(team_t *team);
+void elevation_lvl6(team_t *team);
+void elevation_lvl7(team_t *team);
+void elevation_lvl8(team_t *team);
 
 #endif /* !MY_H_ */

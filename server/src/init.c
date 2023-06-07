@@ -7,13 +7,15 @@
 
 #include "my.h"
 
-static void free_struct(player_t *player, map_t *maps)
+static void free_struct(player_t *player, map_t *maps, team_t *team)
 {
     for (int i = 0; i < maps->max_y; i++)
         free(maps->map[i]);
+    free(team->players);
     free(maps->map);
     free(player);
     free(maps);
+    free(team);
 }
 
 int init_tab(map_t *maps)
@@ -33,18 +35,18 @@ int init_tab(map_t *maps)
     return 0;
 }
 
-void init_struct(char **av, player_t *player, map_t *maps)
+void init_struct(char **av, team_t *team, map_t *maps, player_t *player)
 {
     maps->max_x = atoi(av[4]);
     maps->max_y = atoi(av[6]);
-    player->linemate = 0;
-    player->deraumere = 0;
-    player->sibur = 0;
-    player->mendiane = 0;
-    player->phiras = 0;
-    player->thystame = 0;
+    team->players->linemate = 0;
+    team->players->deraumere = 0;
+    team->players->sibur = 0;
+    team->players->mendiane = 0;
+    team->players->phiras = 0;
+    team->players->thystame = 0;
+    team->players->level = 1;
 
     // give_name_to_player(player, av);
     init_tab(maps);
 }
-
