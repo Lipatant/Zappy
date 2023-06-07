@@ -9,6 +9,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * @brief the init function for the server
+ *
+ * @param s the server structure
+ * @param argv the arguments
+ * @return int the return value
+ */
+
 static int init_server(server_t *s, char **argv)
 {
     int opt = 1;
@@ -32,6 +40,14 @@ static int init_server(server_t *s, char **argv)
     return 0;
 }
 
+/**
+ * @brief the function for starting the server
+ *
+ * @param s the server structure
+ * @param c the client structure
+ * @return int the return value
+ */
+
 static int start_server(server_t *s, client_t *c)
 {
     c->data = NULL;
@@ -48,6 +64,14 @@ static int start_server(server_t *s, client_t *c)
     }
     return 0;
 }
+
+/**
+ * @brief the main function for the server
+ *
+ * @param argc the number of arguments
+ * @param argv the arguments
+ * @return int the return value
+ */
 
 int server(int argc, char **argv)
 {

@@ -6,7 +6,7 @@
 */
 
 #ifndef MY_H_
-#define MY_H_
+    #define MY_H_
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -52,5 +52,6 @@ void elevation_lvl5(team_t *team);
 void elevation_lvl6(team_t *team);
 void elevation_lvl7(team_t *team);
 void elevation_lvl8(team_t *team);
+void free_struct(player_t *player, map_t *maps, team_t *team);
 
 #endif /* !MY_H_ */

@@ -13,6 +13,15 @@
 
 #include "server.h"
 
+/**
+ * @brief the function for finding the client
+ *
+ * @param data the data structure
+ * @param nbr the number of client
+ * @param fd the fd
+ * @return int the return value
+ */
+
 int find_client(data_t **data, int nbr, int fd)
 {
     int i = 0;
@@ -22,6 +31,15 @@ int find_client(data_t **data, int nbr, int fd)
             break;
     return i;
 }
+
+/**
+ * @brief the function for checking if the client exist
+ *
+ * @param data the data structure
+ * @param fd the fd
+ * @param nbr the number of client
+ * @return int the return value
+ */
 
 static int check_exist(data_t **data, int fd, int nbr)
 {
@@ -33,6 +51,14 @@ static int check_exist(data_t **data, int fd, int nbr)
     return 0;
 }
 
+/**
+ * @brief the function for filling the client structure
+ *
+ * @param c the client structure
+ * @param s the server structure
+ * @param fd the fd
+ */
+
 static void fill_client(client_t *c, server_t *s, int fd)
 {
     c->data[s->client - 1]->args = NULL;
@@ -40,6 +66,15 @@ static void fill_client(client_t *c, server_t *s, int fd)
     c->data[s->client - 1]->port = -1;
     c->data[s->client - 1]->ip = inet_ntoa(c->addr.sin_addr);
 }
+
+/**
+ * @brief the function for adding a client
+ *
+ * @param s the server structure
+ * @param c the client structure
+ * @param fd the fd
+ * @return int the return value
+ */
 
 int add_client(server_t *s, client_t *c, int fd)
 {

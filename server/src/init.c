@@ -7,7 +7,7 @@
 
 #include "my.h"
 
-static void free_struct(player_t *player, map_t *maps, team_t *team)
+void free_struct(player_t *player, map_t *maps, team_t *team)
 {
     for (int i = 0; i < maps->max_y; i++)
         free(maps->map[i]);
