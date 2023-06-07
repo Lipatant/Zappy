@@ -11,4 +11,5 @@
 #pragma once
 
 #include "Citadel/Character.hpp"
+#include "Citadel/Exception.hpp"
 #include "Citadel/Instance.hpp"
