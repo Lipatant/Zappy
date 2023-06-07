@@ -6,7 +6,7 @@
 */
 
 #ifndef MY_H_
-#define MY_H_
+    #define MY_H_
 
     #include <stdio.h>
     #include <stdlib.h>
@@ -40,5 +40,6 @@ typedef struct map_s {
 
 void init_struct(char **av, player_t *players, map_t *map);
 int init_tab(map_t *maps);
+void free_struct(player_t *player, map_t *maps);
 
 #endif /* !MY_H_ */

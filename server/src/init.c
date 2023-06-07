@@ -7,7 +7,7 @@
 
 #include "my.h"
 
-static void free_struct(player_t *player, map_t *maps)
+void free_struct(player_t *player, map_t *maps)
 {
     for (int i = 0; i < maps->max_y; i++)
         free(maps->map[i]);
@@ -47,4 +47,3 @@ void init_struct(char **av, player_t *player, map_t *maps)
     // give_name_to_player(player, av);
     init_tab(maps);
 }
-

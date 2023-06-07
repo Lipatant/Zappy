@@ -38,6 +38,15 @@ typedef struct client_s {
     data_t **data;
 } client_t;
 
+typedef struct args_s {
+    int port;
+    int width;
+    int height;
+    char **names;
+    int clients;
+    int freq;
+} args_t;
+
 int server(int argc, char **argv);
 int error(char *msg);
 int find_client(data_t **data, int nbr, int fd);

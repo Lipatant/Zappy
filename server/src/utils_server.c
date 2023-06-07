@@ -8,6 +8,14 @@
 #include "server.h"
 #include <stdio.h>
 
+/**
+ * @brief the function for adding the client
+ *
+ * @param s the server structure
+ * @param c the client structure
+ * @return int the return value
+ */
+
 static int handle_new_connection(server_t *s, client_t *c)
 {
     c->fd = accept(s->fd, (struct sockaddr *)&c->addr, &s->size_sock);
@@ -15,10 +23,19 @@ static int handle_new_connection(server_t *s, client_t *c)
         perror("accept");
         return 84;
     }
-    //dprintf(c->fd, "220 Connect.\r\n");
+    dprintf(c->fd, "WELCOME\r\n");
     FD_SET(c->fd, &c->active_fd);
     return 0;
 }
+
+/**
+ * @brief the function for handling the existing connection
+ *
+ * @param s the server structure
+ * @param c the client structure
+ * @param i the index
+ * @return int the return value
+ */
 
 static int handle_existing_connection(server_t *s, client_t *c, int i)
 {
@@ -28,6 +45,15 @@ static int handle_existing_connection(server_t *s, client_t *c, int i)
     int current = find_client(c->data, s->client, i);
     return 0;
 }
+
+/**
+ * @brief the function for handling the client io
+ *
+ * @param s the server structure
+ * @param c the client structure
+ * @param i the index
+ * @return int the return value
+ */
 
 int handle_client_io(server_t *s, client_t *c, int i)
 {

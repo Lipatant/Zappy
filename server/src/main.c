@@ -6,10 +6,19 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "server.h"
 #include "my.h"
+
+/**
+ * @brief the function for displaying the help
+ *
+ * @return int the return value
+ *      return 0 if no error
+ */
 
 static int help(void)
 {
@@ -25,15 +34,124 @@ static int help(void)
     return 0;
 }
 
+/**
+ * @brief the function for parsing the names
+ *
+ * @param argc nb of arguments
+ * @param argv the arguments
+ * @param args the structure of the arguments
+ * @return args_t the structure of the arguments with the names inside
+ */
+
+static args_t parse_names(int argc, char **argv, args_t args)
+{
+    int i = 0;
+    if (optarg[0] != '-') {
+        args.names = realloc(args.names, (i + 2) * sizeof(char *));
+        args.names[i] = optarg;
+        args.names[i + 1] = NULL;
+        i++;
+    }
+    while (optind < argc && argv[optind][0] != '-') {
+        args.names = realloc(args.names, (i + 2) * sizeof(char *));
+        args.names[i] = argv[optind];
+        args.names[i + 1] = NULL;
+        i++;
+        optind++;
+    }
+    return args;
+}
+
+/**
+ * @brief the second function for checking the arguments
+ *
+ * @param argc the number of arguments
+ * @param argv the arguments
+ * @param args the structure of the arguments
+ * @param opt the option that is given by getopt
+ * @return args_t the structure of the arguments with the arguments inside
+ */
+
+static args_t check_args_2(int argc, char **argv, args_t args, int opt)
+{
+    switch (opt) {
+        case 'x':
+            args.width = atoi(optarg);
+            break;
+        case 'y':
+            args.height = atoi(optarg);
+            break;
+        case 'n':
+            args = parse_names(argc, argv, args);
+            break;
+        case 'c':
+            args.clients = atoi(optarg);
+            break;
+        case 'f':
+            args.freq = atoi(optarg);
+            break;
+        default:
+            return args;
+    }
+    return args;
+}
+
+/**
+ * @brief the function for checking the arguments
+ *
+ * @param argc the number of arguments
+ * @param argv the arguments
+ * @param args the structure of the arguments
+ * @return args_t the structure of the arguments with the arguments inside
+ */
+
+static args_t check_args(int argc, char **argv, args_t args)
+{
+    int opt = 0;
+
+    while (1) {
+        opt = getopt(argc, argv, "hp:x:y:n:c:f:");
+        if (opt == -1)
+            break;
+        switch (opt) {
+            case 'h':
+                help();
+                break;
+            case 'p':
+                args.port = atoi(optarg);
+                break;
+            default:
+                args = check_args_2(argc, argv, args, opt);
+                break;
+        }
+    }
+    return args;
+}
+
+/**
+ * @brief the main function
+ *
+ * @param argc the number of arguments
+ * @param argv the arguments
+ * @return int the return value
+ *      if 0 no error
+ *      if 84 an error occured
+ */
+
 int main(int argc, char **argv)
 {
     player_t *player = malloc(sizeof(player_t));
     map_t *map = malloc(sizeof(map_t));
+    args_t args;
 
     if (map == NULL || player == NULL)
         return 84;
     init_struct(argv, player, map);
-    if (argc == 2 && strcmp(argv[1], "-help") == 0)
-        return help();
-    return server(argc, argv);
+    args.names = malloc(sizeof(char *));
+    args.names[0] = NULL;
+    args = check_args(argc, argv, args);
+    if (server(argc, argv) == 84)
+        return 84;
+    free_struct(player, map);
+    return 0;
 }
