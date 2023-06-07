@@ -51,6 +51,18 @@ def main(argc: int, argv: list[str]) -> int:
     msg = client.communicate()
     Client.parsing_data(msg)
     trant = Trantorians.Trantorians()
-    trant.look()
+    attributes = dir(trant)
+
+    ######## functions in array  ################
+    functions = [attr for attr in attributes if callable(getattr(trant, attr))
+                and not attr.startswith('__') and not attr.startswith('look_')]
+
+    ######## print functions and their index#########
+    for i in range (len(functions)):
+        print(i, functions[i])
+
+    ######## call look ########
+    getattr(trant, functions[8])()
+
     client.disconnect_from_server()
     return 0
