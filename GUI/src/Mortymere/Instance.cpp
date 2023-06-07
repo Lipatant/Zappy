@@ -11,6 +11,18 @@
 
 #define INSTANCE Mortymere::Instance
 
+static bool sortObjects(Mortymere::SpritePtr const object1, \
+    Mortymere::SpritePtr const object2)
+{
+    if (Mortymere::Sprite sprite1 = object1.lock()) return true;
+    else {
+        if (Mortymere::Sprite sprite2 = object2.lock()) return false;
+        else {
+            return sprite1->anchor().z < sprite2->anchor().z;
+        }
+    }
+}
+
 INSTANCE::Instance(void) : camera(window)
 { }
 
@@ -36,17 +48,20 @@ bool INSTANCE::udpate(void)
         if (event.type == sf::Event::GainedFocus)
             window.hasFocus = true;
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-        window.close();
-    if (!window.isFullscreen()) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-            window.setFullscreen(true);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-        window.setFullscreen(false);
+    if (window.hasFocus || window.isFullscreen()) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            window.close();
+        if (!window.isFullscreen()) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+                window.setFullscreen(true);
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+            window.setFullscreen(false);
+    }
     window.update();
     window.clear(sf::Color::Black);
     _ground.drawOn(camera, window);
     window.draw(_ground);
+    _objects.sort(sortObjects);
     for (auto object = _objects.begin(); object != _objects.end();) {
         if (Mortymere::Sprite sprite = object->lock())
             sprite->drawOn(*this);

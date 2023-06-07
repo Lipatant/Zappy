@@ -26,8 +26,8 @@ namespace Citadel { namespace Exception { namespace Command {
 
 EXCEPTION(Empty, "Command is empty")
 EXCEPTION(InvalidAmountArguments, "Invalid amount of arguments in command")
+EXCEPTION(InvalidArgument, "Argument not matching the regular expression")
 EXCEPTION(TooFewArguments, "Too few arguments in command")
 EXCEPTION(TooManyArguments, "Too many arguments in command")
-EXCEPTION(InvalidArgument, "Argument not matching the regular expression")
 
 }}};

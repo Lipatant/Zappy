@@ -92,6 +92,15 @@ INSTANCECMD_FUNCTION(instanceCmdPpo)
         toRotation<Citadel::CharacterRotation>(av[4]));
 }
 
+INSTANCECMD_FUNCTION(instanceCmdPdi)
+{
+    Citadel::CharacterNumber characterNumber = toNumber<std::size_t>(av[1]);
+
+    if (instance.characters.find(characterNumber) == instance.characters.end())
+        return;
+    instance.characters.erase(characterNumber);
+}
+
 static const struct Command_s COMMANDS[] = {
     // Map size
     {"msz", 2, {REGEX_POSITION, REGEX_POSITION}, 0},
@@ -135,7 +144,7 @@ static const struct Command_s COMMANDS[] = {
     // Ressource collecting
     {"pgt", 2, {REGEX_NUMBER, REGEX_RESSOURCE_ID}, 0},
     // Death of a player
-    {"pdi", 1, {REGEX_NUMBER}, 0},
+    {"pdi", 1, {REGEX_NUMBER}, instanceCmdPdi},
     // An egg was layed by a player
     {"enw", 4, {REGEX_EGG_NUMBER, REGEX_NUMBER, REGEX_POSITION, \
         REGEX_POSITION}, 0},

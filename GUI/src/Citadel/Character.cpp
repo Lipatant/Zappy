@@ -37,7 +37,7 @@ void CHARACTER::setPosition(Citadel::CharacterPosition const positionX, \
     _positionX = positionX;
     _positionY = positionY;
     sprite->anchor().x = positionX;
-    sprite->anchor().y = positionY;
+    sprite->anchor().z = positionY;
 }
 
 void CHARACTER::setRotation(Citadel::CharacterRotation const rotation)
