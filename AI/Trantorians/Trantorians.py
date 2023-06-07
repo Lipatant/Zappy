@@ -81,7 +81,7 @@ class Trantorians:
             self.direction = 0
 
     ## @author Pierre-Louis
-    ## @brief
+    ## @brief function for the trantorian can looking up
     ## @param self Contains trantorian values
     ## @return None
     def look_up(self) -> None:
@@ -98,7 +98,7 @@ class Trantorians:
 
 
     ## @author Damien
-    ## @brief
+    ## @brief function for the trantorian can looking down
     ## @param self Contains trantorian values
     ## @return None
     def look_down(self) -> None:
@@ -112,8 +112,8 @@ class Trantorians:
                 j -= 1
             print()
 
-    ## @author Pierre-Louis
-    ## @brief
+    ## @author Cyprien
+    ## @brief function for the trantorian can looking to the left
     ## @param self Contains trantorian values
     ## @return None
     def look_left(self) -> None:
@@ -132,8 +132,8 @@ class Trantorians:
 
 
 
-    ## @author Pierre-Louis
-    ## @brief
+    ## @author Cyprien
+    ## @brief function for the trantorian can looking to the right
     ## @param self Contains trantorian values
     ## @return None
     def look_right(self) -> None:
