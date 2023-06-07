@@ -35,7 +35,11 @@ class Arguments:
         ## @detail (start, fin, acrementation)
         for i in range(0, argc, 2):
             if argv[i] == "-p":
-                self.port = int(argv[i + 1])
+                try:
+                    self.port = int(argv[i + 1])
+                except:
+                    print("Invalid argument for port", argv[i + 1])
+                    exit(84)
             elif argv[i] == "-n":
                 self.team = argv[i + 1]
             elif argv[i] == "-h":

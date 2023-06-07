@@ -10,11 +10,7 @@
 ####    temporary map, it is used as a global variable for now but will soon be
 ####    replaced by the one from the server
 tmp_map = [
-    [0,0,0,0,0],
-    [1,1,1,1,1],
-    [2,2,2,2,2],
-    [3,3,3,3,3],
-    [4,4,4,4,4],
+    [i for k in range(10)] for i in range(10)
 ]
 
 import os
@@ -190,7 +186,7 @@ class Trantorians:
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def fork(self) -> None:
+    def fork(self) -> None:###creer un oeuf
         pid: int = os.fork()
 
         if pid > 0:
