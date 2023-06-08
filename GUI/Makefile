@@ -17,8 +17,8 @@ IDIR	=	include
 DOCS	=	docs
 # Flags
 CPPFLAGS	=	-I./$(IDIR)
-CFLAGS	=	-W -Wall -Wextra
-LDFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system
+CFLAGS	=	-W -Wall -Wextra -std=c++20
+LDFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system -lpthread
 GCCFLAG	=	g++ -o
 DOXYGEN	=	doxygen docsressources/Doxyfile
 FDEBUG	=	-g3

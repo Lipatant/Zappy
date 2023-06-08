@@ -10,7 +10,10 @@
 #include "Flags.hpp"
 #include "Citadel/Instance.hpp"
 #include "Mortymere/Instance.hpp"
-
+#include <iostream>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
 #include <iostream>
 #include "Citadel/Exception.hpp"
 
@@ -28,11 +31,36 @@ struct Locks_s {
     std::mutex closeEngine;
 };
 
+void connectServer(const std::string& serverIP, int port)
+{
+    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    if (sockfd == -1) {
+        std::cerr << "Erreur lors de la création du socket." << std::endl;
+        exit(84);
+    }
+    struct sockaddr_in serverAddress{};
+    serverAddress.sin_family = AF_INET;
+    serverAddress.sin_port = htons(port);
+    serverAddress.sin_addr.s_addr = inet_addr(serverIP.c_str());
+    if (connect(sockfd, reinterpret_cast<struct sockaddr*>(&serverAddress), sizeof(serverAddress)) < 0) {
+        std::cerr << "Échec de la connexion au serveur." << std::endl;
+        close(sockfd);
+        exit(84);
+    }
+    close(sockfd);
+}
+
 static void engineThread(Citadel::Instance &citadel, bool &close, \
-    Locks_s &locks)
+    Locks_s &locks, char const * const * const av)
 {
     std::string userInput;
+    std::string ip = "127.0.0.1";
+    int port = std::stoi(av[1]);
 
+    if (av[2] != nullptr)
+        ip = av[2];
+    connectServer(ip, port);
     locks.citadel.lock();
     locks.citadel.unlock();
     while (1) {
@@ -59,14 +87,16 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
     locks.close.unlock();
 }
 
-int main(FLAG_UNUSED int const ac, FLAG_UNUSED char const * const * const av)
+int main(FLAG_UNUSED int const ac, char const * const * const av)
 {
     bool close = false;
     Mortymere::Instance engine;
+    if (ac < 2 || ac > 3)
+        return 84;
     Locks_s locks = {std::mutex(), std::mutex(), std::mutex()};
     Citadel::Instance citadel(engine);
     std::thread thread(engineThread, std::ref(citadel), std::ref(close), \
-        std::ref(locks));
+        std::ref(locks), av);
 
     while (engine.udpate()) {
         locks.close.lock();
