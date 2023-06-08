@@ -24,7 +24,6 @@ static int handle_new_connection(server_t *s, client_t *c)
         return 84;
     }
     dprintf(c->fd, "WELCOME\r\n");
-    FD_SET(c->fd, &c->active_fd);
     return 0;
 }
 
