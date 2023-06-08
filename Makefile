@@ -100,6 +100,8 @@ server_fclean:
 server_clean:
 	@cd server && make clean
 
+server_debug:
+	@cd server && make debug
 
 .PHONY: all debug debug_play fclean clean play re play_re tests_run server
-.PHONY: server_re server_fclean server_clean
+.PHONY: server_re server_fclean server_clean server_debug
