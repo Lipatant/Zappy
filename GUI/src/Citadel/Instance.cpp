@@ -5,6 +5,8 @@
 ** -
 */
 
+#include <stdlib.h>
+#include <time.h>
 #include <vector>
 #include "Citadel/Exception.hpp"
 #include "Citadel/Instance.hpp"
@@ -197,7 +199,9 @@ static void convertCommand(std::string const &cmd, size_t &ac, \
 }
 
 INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine)
-{ }
+{
+    srand(time(NULL));
+}
 
 Mortymere::Instance &INSTANCE::engine(void)
 {

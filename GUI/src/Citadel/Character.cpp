@@ -5,14 +5,31 @@
 ** -
 */
 
+#include <filesystem>
+#include <stdlib.h>
+#include <vector>
 #include "Citadel/Character.hpp"
 #include "Mortymere/Sprites/Character.hpp"
 
-#define CHARACTER Citadel::Character
+static const std::string VARIANCES[] = {
+    "Morty/",
+    "Rick/",
+    "Jerry/",
+};
+static const std::size_t VARIANCES_LENGTH = \
+    sizeof(VARIANCES) / sizeof(VARIANCES[0]);
 
+#define CHARACTER Citadel::Character
+#include <iostream>
 CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
 {
-    _filepath = "graphics/charact/Morty/Base.png";
+    std::vector<std::string> paths = {};
+
+    for (auto const &directory: VARIANCES)
+        for (auto const &file: std::filesystem::directory_iterator( \
+            "graphics/charact/" + directory))
+            paths.push_back(file.path());
+    _filepath = paths[rand() % paths.size()];
     sprite = Mortymere::createSprite<Mortymere::Sprites::Character>(_filepath);
     setLevel(l);
     setNumber(n);

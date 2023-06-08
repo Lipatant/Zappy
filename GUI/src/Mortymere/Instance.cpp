@@ -14,13 +14,11 @@
 static bool sortObjects(Mortymere::SpritePtr const object1, \
     Mortymere::SpritePtr const object2)
 {
-    if (Mortymere::Sprite sprite1 = object1.lock()) return true;
-    else {
-        if (Mortymere::Sprite sprite2 = object2.lock()) return false;
-        else {
+    if (Mortymere::Sprite sprite1 = object1.lock()) {
+        if (Mortymere::Sprite sprite2 = object2.lock()) {
             return sprite1->anchor().z < sprite2->anchor().z;
-        }
-    }
+        } else return false;
+    } else return true;
 }
 
 INSTANCE::Instance(void) : camera(window)
