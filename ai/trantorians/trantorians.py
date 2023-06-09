@@ -135,15 +135,18 @@ class trantorians:
     def _look_left(self) -> None:
         for i in range(0, self.level + 1):
             j = i
+            rank = self.y - i
+            while (rank < 0):
+                rank += self.client.y - 1
 
             while (j > 0):
-                print(tmp_map[self.x + j][self.y - i], end="")
+                print(tmp_map[self.x + j][rank], end="")
                 j -= 1
 
-            print(tmp_map[self.x][self.y - i], end="")
+            print(tmp_map[self.x][rank], end="")
 
             for k in range(1, i + 1):
-                print(tmp_map[self.x - k][self.y - i], end="")
+                print(tmp_map[self.x - k][rank], end="")
             print()
 
 
@@ -155,15 +158,15 @@ class trantorians:
     def _look_right(self) -> None:
         for i in range(0, self.level + 1):
             j = i
+            rank = self.y + i
+            while (rank >= self.client.y):
+                rank -= self.client.y
             while j > 0:
-                if self.y - j >= 0 and self.x + i < len(tmp_map[self.y - j]):
-                    print(tmp_map[self.y - j][self.x + i], end="")
+                print(tmp_map[self.x - j][rank], end="")
                 j -= 1
-            if self.y >= 0 and self.x + i < len(tmp_map[self.y]):
-                print(tmp_map[self.y][self.x + i], end="")
+            print(tmp_map[self.x][rank], end="")
             for k in range(1, i + 1):
-                if self.y + k < len(tmp_map) and self.x + i < len(tmp_map[self.y + k]):
-                    print(tmp_map[self.y + k][self.x + i], end="")
+                print(tmp_map[self.x + k][rank], end="")
             print()
 
     ## @author Damien

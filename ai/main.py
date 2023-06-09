@@ -58,12 +58,10 @@ def main(argc: int, argv: list[str]) -> int:
         print(i, functions[i])
 
     ######## call look ########
-    getattr(trant, functions[5])()
-    getattr(trant, functions[5])()
-    getattr(trant, functions[5])()
-    getattr(trant, functions[7])()
-    getattr(trant, functions[7])()
-    getattr(trant, functions[8])()
+    getattr(trant, functions[9])()
+    for i in range(10):
+        getattr(trant, functions[5])()
+        getattr(trant, functions[8])()
 
     client.disconnect_from_server()
     return 0
