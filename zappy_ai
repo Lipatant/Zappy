@@ -9,7 +9,7 @@
 
 # @file zappy_ai
 
-from AI import Main
+from ai import main
 import sys
 
 ## @author Pierre-Louis
@@ -19,7 +19,7 @@ def remove_executable_name() -> int:
     return sys.argv[1:]
 
 ## @author Damien
-## @brief Calls the main of the Main.py file
+## @brief Calls the main of the main.py file
 ## @param argc is the length of argv
 ## @param argv contain argument given by the user
-exit(Main.main(len(sys.argv) - 1, remove_executable_name()))
+exit(main.main(len(sys.argv) - 1, remove_executable_name()))

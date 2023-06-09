@@ -2,16 +2,16 @@
 ## EPITECH PROJECT, 2023
 ## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## AI/Arguments/Arguments.py
+## ai/arguments/arguments.py
 ##
 
-## @file Arguments.py
+## @file arguments.py
 
-from AI.Error import print_error_exit
+from ai.error import print_error_exit
 
 ## @author Damien and Pierre-Louis
 ## @brief Contains server variables and the function to parse arguments of argv
-class Arguments:
+class arguments:
     port: int
     team: str
     ip: str

@@ -2,17 +2,17 @@
 ## EPITECH PROJECT, 2023
 ## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## AI/Client/Client.py
+## ai/client/client.py
 ##
 
-## @file Client.py
+## @file client.py
 
-from AI.Arguments import Arguments
-from AI.Error import print_error_exit
+from ai.arguments import arguments
+from ai.error import print_error_exit
 import socket
 import re
 
-class Client:
+class client:
     port: int
     ip: str
     team: str
@@ -20,7 +20,7 @@ class Client:
     y: int
     socket: socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    def __init__(self, args: Arguments):
+    def __init__(self, args: arguments):
         self.ip = args.ip
         self.port = args.port
         self.team = args.team
@@ -58,9 +58,6 @@ class Client:
     def disconnect_from_server(self) -> None:
         self.socket.close()
         print("Connection closed.")
-
-
-
 
 ## @author Pierre-Louis
 ## @brief Parse the received data of server

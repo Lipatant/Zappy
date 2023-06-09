@@ -2,12 +2,12 @@
 ## EPITECH PROJECT, 2023
 ## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## AI/Trantorians/Trantorians.py
+## ai/trantorians/trantorians.py
 ##
 
-## @file Trantorians.py
+## @file trantorians.py
 
-from AI.Client import Client
+from ai.client import client
 
 ####    temporary map, it is used as a global variable for now but will soon be
 ####    replaced by the one from the server
@@ -18,9 +18,9 @@ tmp_map = [
 import os
 
 ## @author Damien and Pierre-Louis
-## @brief contain function and variable for Trantorians
-## @details The name Trantorians refers to bots that do not collaborate with each other to evolve.
-class Trantorians:
+## @brief contain function and variable for trantorians
+## @details The name trantorians refers to bots that do not collaborate with each other to evolve.
+class trantorians:
     direction: int
     food: int
     found: list[int]####temporary
@@ -29,13 +29,13 @@ class Trantorians:
     sound: int###temporary, need to know what this is
     x: int
     y: int
-    client: Client
+    client: client
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: client) -> None:
         self.direction = 0
         self.food = 126
         self.found = []
