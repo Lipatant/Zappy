@@ -31,13 +31,13 @@ struct Locks_s {
     std::mutex closeEngine;
 };
 
-void connectServer(const std::string& serverIP, int port)
+int connectServer(const std::string serverIP, int port)
 {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     if (sockfd == -1) {
         std::cerr << "Erreur lors de la création du socket." << std::endl;
-        exit(84);
+        return 1;
     }
     struct sockaddr_in serverAddress{};
     serverAddress.sin_family = AF_INET;
@@ -46,9 +46,10 @@ void connectServer(const std::string& serverIP, int port)
     if (connect(sockfd, reinterpret_cast<struct sockaddr*>(&serverAddress), sizeof(serverAddress)) < 0) {
         std::cerr << "Échec de la connexion au serveur." << std::endl;
         close(sockfd);
-        exit(84);
+        return 1;
     }
     close(sockfd);
+    return 0;
 }
 
 static void engineThread(Citadel::Instance &citadel, bool &close, \
@@ -60,7 +61,10 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
 
     if (av[2] != nullptr)
         ip = av[2];
-    connectServer(ip, port);
+    if (connectServer(ip, port) == 1) {
+        close = true;
+        return;
+    }
     locks.citadel.lock();
     locks.citadel.unlock();
     while (1) {
