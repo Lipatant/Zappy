@@ -9,7 +9,7 @@
 
 from ai.arguments import arguments
 from ai.trantorians import trantorians
-from ai.client import client
+from ai.client import Client
 from ai.error import print_error_exit
 
 ## @author Damien and Pierre-Louis
@@ -42,7 +42,7 @@ def main(argc: int, argv: list[str]) -> int:
     error_handling(argc, argv)
     args = arguments.arguments()
     args.parse_args(argc, argv)
-    client = client.client(args)
+    client = Client.Client(args)
     client.connect_to_server()
     msg = client.communicate()
     client.parsing_data(msg)

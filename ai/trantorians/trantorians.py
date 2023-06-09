@@ -7,7 +7,7 @@
 
 ## @file trantorians.py
 
-from ai.client import client
+from ai.client import Client
 
 ####    temporary map, it is used as a global variable for now but will soon be
 ####    replaced by the one from the server
@@ -29,13 +29,13 @@ class trantorians:
     sound: int###temporary, need to know what this is
     x: int
     y: int
-    client: client
+    client: Client
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def __init__(self, client: client) -> None:
+    def __init__(self, client: Client) -> None:
         self.direction = 0
         self.food = 126
         self.found = []

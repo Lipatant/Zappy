@@ -2,17 +2,17 @@
 ## EPITECH PROJECT, 2023
 ## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## ai/client/client.py
+## ai/Client/Client.py
 ##
 
-## @file client.py
+## @file Client.py
 
 from ai.arguments import arguments
 from ai.error import print_error_exit
 import socket
 import re
 
-class client:
+class Client:
     port: int
     ip: str
     team: str
