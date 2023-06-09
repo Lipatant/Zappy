@@ -1,0 +1,49 @@
+name: Epitech CI for the Zappy project server side
+
+on:
+  push:
+    branches-ignore:
+      - "ga-ignore-*"
+    paths:
+      - "server/**"
+
+  pull_request:
+    branches-ignore:
+      - "ga-ignore-*"
+    paths:
+      - "server/**"
+
+env:
+  SERVER: "zappy_server"
+  CHECKER: ".github/script/check_res_cs.sh"
+  CODING_STYLE: ".github/script/check.sh"
+
+jobs:
+  check_coding_style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: assign execution rights to $CODING_STYLE
+        run: chmod +x ./$CODING_STYLE
+      - name: run $CODING_STYLE_CHECKER
+        run: ./$CODING_STYLE $(pwd)/server $(pwd)/server
+      - name: checking the results
+        run: |
+          chmod +x ./$CHECKER
+          ./$CHECKER  && exit  $? || exit 1
+
+  check_program_compilation:
+    name : check_program_compilation
+    runs-on : ubuntu-latest
+    container : epitechcontent/epitest-docker
+    needs : check_coding_style
+    steps:
+    - uses : actions/checkout@v3
+    - run : make server
+      timeout-minutes: 2
+    - run : |
+        make server_clean
+        find -name "$SERVER" | grep -q . && exit 0 || exit 1
+      timeout-minutes: 2

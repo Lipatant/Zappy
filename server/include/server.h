@@ -33,7 +33,6 @@ typedef struct server_s {
 typedef struct client_s {
     int fd;
     struct sockaddr_in addr;
-    fd_set active_fd;
     fd_set read_fd;
     data_t **data;
 } client_t;

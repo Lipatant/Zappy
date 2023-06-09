@@ -51,10 +51,7 @@ static int init_server(server_t *s, char **argv)
 static int start_server(server_t *s, client_t *c)
 {
     c->data = NULL;
-    FD_ZERO(&c->active_fd);
-    FD_SET(s->fd, &c->active_fd);
     while (1) {
-        c->read_fd = c->active_fd;
         if (select(FD_SETSIZE, &c->read_fd, NULL, NULL, NULL) < 0) {
             perror("select");
             break;
