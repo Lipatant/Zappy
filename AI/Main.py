@@ -62,7 +62,7 @@ def main(argc: int, argv: list[str]) -> int:
         print(i, functions[i])
 
     ######## call look ########
-    getattr(trant, functions[8])()
+    getattr(trant, functions[12])()
 
     client.disconnect_from_server()
     return 0

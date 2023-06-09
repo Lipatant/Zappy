@@ -94,6 +94,8 @@ class Trantorians:
     def __look_up(self) -> None:
         for i in range(0, self.level + 1):
             j = i
+            if self.x - j < 0:
+                i += self.client.x
             while (j > 0):
                 print(tmp_map[self.x - i][self.y - j], end = "")
                 j -= 1
