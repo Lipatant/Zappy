@@ -51,14 +51,19 @@ def main(argc: int, argv: list[str]) -> int:
 
     ######## functions in array  ################
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
-                and not attr.startswith('__')]
+                and not attr.startswith('_')]
 
     ######## print functions and their index#########
     for i in range (len(functions)):
         print(i, functions[i])
 
     ######## call look ########
-    getattr(trant, functions[12])()
+    getattr(trant, functions[5])()
+    getattr(trant, functions[5])()
+    getattr(trant, functions[5])()
+    getattr(trant, functions[7])()
+    getattr(trant, functions[7])()
+    getattr(trant, functions[8])()
 
     client.disconnect_from_server()
     return 0

@@ -56,19 +56,20 @@ class trantorians:
         if self.direction == 0:
             self.x -= 1
             if self.x < 0:
-                self.x = self.client.x
+                self.x = self.client.x - 1
         elif self.direction == 1:
             self.y += 1
-            if self.y > self.client.y:
+            if self.y > self.client.y - 1:
                 self.y = 0
         elif self.direction == 2:
             self.x += 1
-            if self.x > self.client.x:
+            if self.x > self.client.x - 1:
                 self.x = 0
         elif self.direction == 3:
             self.y -= 1
             if self.y < 0:
-                self.y = self.client.y
+                self.y = self.client.y - 1
+
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
@@ -91,17 +92,18 @@ class trantorians:
     ## @brief function for the trantorian can looking up
     ## @param self Contains trantorian values
     ## @return None
-    def __look_up(self) -> None:
+    def _look_up(self) -> None:
         for i in range(0, self.level + 1):
             j = i
-            if self.x - j < 0:
-                i += self.client.x
+            rank = self.x - i
+            while (rank < 0):
+                rank += self.client.x
             while (j > 0):
-                print(tmp_map[self.x - i][self.y - j], end = "")
+                print(tmp_map[rank][self.y - j], end = "")
                 j -= 1
-            print(tmp_map[self.x - i][self.y], end = "")
+            print(tmp_map[rank][self.y], end = "")
             for k in range(1, i + 1):
-                print(tmp_map[self.x - i][self.y + k], end = "")
+                print(tmp_map[rank][self.y + k], end = "")
             print()
 
 
@@ -110,14 +112,19 @@ class trantorians:
     ## @brief function for the trantorian can looking down
     ## @param self Contains trantorian values
     ## @return None
-    def __look_down(self) -> None:
+    def _look_down(self) -> None:
         for i in range(0, self.level + 1):
             j = i
+            rank = self.x + i
+            while (rank >= self.client.x):
+                rank -= self.client.x
+            while (rank < 0):
+                rank += self.client.x
             for k in range(1, i + 1):
-                print(tmp_map[self.x + i][self.y + k], end="")
-            print(tmp_map[self.x + i][self.y], end="")#middle
+                print(tmp_map[rank][self.y + k], end="")
+            print(tmp_map[rank][self.y], end="")#middle
             while (j > 0):
-                print(tmp_map[self.x + i][self.y - j], end = "")
+                print(tmp_map[rank][self.y - j], end = "")
                 j -= 1
             print()
 
@@ -125,7 +132,7 @@ class trantorians:
     ## @brief function for the trantorian can looking to the left
     ## @param self Contains trantorian values
     ## @return None
-    def __look_left(self) -> None:
+    def _look_left(self) -> None:
         for i in range(0, self.level + 1):
             j = i
 
@@ -145,7 +152,7 @@ class trantorians:
     ## @brief function for the trantorian can looking to the right
     ## @param self Contains trantorian values
     ## @return None
-    def __look_right(self) -> None:
+    def _look_right(self) -> None:
         for i in range(0, self.level + 1):
             j = i
             while j > 0:
@@ -165,13 +172,13 @@ class trantorians:
     ## @return None
     def look(self) -> None:
         if (self.direction == 0):
-            self.__look_up()
+            self._look_up()
         if (self.direction == 1):
-            self.__look_right()
+            self._look_right()
         if (self.direction == 2):
-            self.__look_down()
+            self._look_down()
         if (self.direction == 3):
-            self.__look_left()
+            self._look_left()
 
 
     ## @author Damien
