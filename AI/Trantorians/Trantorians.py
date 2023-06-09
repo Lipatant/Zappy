@@ -7,6 +7,8 @@
 
 ## @file Trantorians.py
 
+from AI.Client import Client
+
 ####    temporary map, it is used as a global variable for now but will soon be
 ####    replaced by the one from the server
 tmp_map = [
@@ -27,12 +29,13 @@ class Trantorians:
     sound: int###temporary, need to know what this is
     x: int
     y: int
+    client: Client
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def __init__(self) -> None:
+    def __init__(self, client: Client) -> None:
         self.direction = 0
         self.food = 126
         self.found = []
@@ -42,6 +45,7 @@ class Trantorians:
         #temporary values ###
         self.x = 2
         self.y = 2
+        self.client = client
         #####################
 
     ## @author Damien
@@ -51,13 +55,20 @@ class Trantorians:
     def forward(self) -> None:
         if self.direction == 0:
             self.x -= 1
+            if self.x < 0:
+                self.x = self.client.x
         elif self.direction == 1:
             self.y += 1
+            if self.y > self.client.y:
+                self.y = 0
         elif self.direction == 2:
             self.x += 1
+            if self.x > self.client.x:
+                self.x = 0
         elif self.direction == 3:
             self.y -= 1
-
+            if self.y < 0:
+                self.y = self.client.y
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
@@ -80,7 +91,7 @@ class Trantorians:
     ## @brief function for the trantorian can looking up
     ## @param self Contains trantorian values
     ## @return None
-    def look_up(self) -> None:
+    def __look_up(self) -> None:
         for i in range(0, self.level + 1):
             j = i
             while (j > 0):
@@ -97,7 +108,7 @@ class Trantorians:
     ## @brief function for the trantorian can looking down
     ## @param self Contains trantorian values
     ## @return None
-    def look_down(self) -> None:
+    def __look_down(self) -> None:
         for i in range(0, self.level + 1):
             j = i
             for k in range(1, i + 1):
@@ -112,7 +123,7 @@ class Trantorians:
     ## @brief function for the trantorian can looking to the left
     ## @param self Contains trantorian values
     ## @return None
-    def look_left(self) -> None:
+    def __look_left(self) -> None:
         for i in range(0, self.level + 1):
             j = i
 
@@ -132,7 +143,7 @@ class Trantorians:
     ## @brief function for the trantorian can looking to the right
     ## @param self Contains trantorian values
     ## @return None
-    def look_right(self) -> None:
+    def __look_right(self) -> None:
         for i in range(0, self.level + 1):
             j = i
             while j > 0:
@@ -152,13 +163,13 @@ class Trantorians:
     ## @return None
     def look(self) -> None:
         if (self.direction == 0):
-            self.look_up()
+            self.__look_up()
         if (self.direction == 1):
-            self.look_right()
+            self.__look_right()
         if (self.direction == 2):
-            self.look_down()
+            self.__look_down()
         if (self.direction == 3):
-            self.look_left()
+            self.__look_left()
 
 
     ## @author Damien

@@ -50,12 +50,12 @@ def main(argc: int, argv: list[str]) -> int:
     client.connect_to_server()
     msg = client.communicate()
     client.parsing_data(msg)
-    trant = Trantorians.Trantorians()
+    trant = Trantorians.Trantorians(client)
     attributes = dir(trant)
 
     ######## functions in array  ################
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
-                and not attr.startswith('__') and not attr.startswith('look_')]
+                and not attr.startswith('__')]
 
     ######## print functions and their index#########
     for i in range (len(functions)):
