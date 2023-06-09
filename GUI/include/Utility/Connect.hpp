@@ -14,15 +14,15 @@
 
 class Connect {
     public:
-        Connect(char *ip, int port);
+        Connect(std::string ip, int port);
         ~Connect();
-        char *getIp() const { return _ip; };
+        std::string getIp() const { return _ip; };
         int getPort() const { return _port; };
         std::string receive();
 
     protected:
     private:
-        char *_ip;
+        std::string _ip;
         int _port;
         int _sockfd;
         int _connect;

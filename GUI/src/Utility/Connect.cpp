@@ -9,11 +9,11 @@
 #include <iostream>
 #include <unistd.h>
 
-Connect::Connect(char *ip, int port) : _ip(ip), _port(port)
+Connect::Connect(std::string ip, int port) : _ip(ip), _port(port)
 {
     _serverAddress.sin_family = AF_INET;
     _serverAddress.sin_port = htons(_port);
-    _serverAddress.sin_addr.s_addr = inet_addr(_ip);
+    _serverAddress.sin_addr.s_addr = inet_addr(_ip.c_str());
     _sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (_sockfd == -1) {
         close(_sockfd);

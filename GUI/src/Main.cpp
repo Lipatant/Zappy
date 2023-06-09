@@ -7,14 +7,11 @@
 
 #include <mutex>
 #include <thread>
+#include <iostream>
 #include "Flags.hpp"
 #include "Citadel/Instance.hpp"
 #include "Mortymere/Instance.hpp"
-#include <iostream>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <iostream>
+#include "Utility/Connect.hpp"
 #include "Citadel/Exception.hpp"
 
 //    citadel << "pnw 1 0 0 3 0 0\n";
@@ -31,27 +28,6 @@ struct Locks_s {
     std::mutex closeEngine;
 };
 
-int connectServer(const std::string serverIP, int port)
-{
-    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-
-    if (sockfd == -1) {
-        std::cerr << "Erreur lors de la création du socket." << std::endl;
-        return 1;
-    }
-    struct sockaddr_in serverAddress{};
-    serverAddress.sin_family = AF_INET;
-    serverAddress.sin_port = htons(port);
-    serverAddress.sin_addr.s_addr = inet_addr(serverIP.c_str());
-    if (connect(sockfd, reinterpret_cast<struct sockaddr*>(&serverAddress), sizeof(serverAddress)) < 0) {
-        std::cerr << "Échec de la connexion au serveur." << std::endl;
-        close(sockfd);
-        return 1;
-    }
-    close(sockfd);
-    return 0;
-}
-
 static void engineThread(Citadel::Instance &citadel, bool &close, \
     Locks_s &locks, char const * const * const av)
 {
@@ -61,7 +37,10 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
 
     if (av[2] != nullptr)
         ip = av[2];
-    if (connectServer(ip, port) == 1) {
+    try {
+        Connect connection(ip, port);
+    } catch (std::exception e) {
+        std::cerr << e.what();
         close = true;
         return;
     }
