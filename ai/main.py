@@ -39,29 +39,41 @@ def error_handling(argc: int, argv: list[str]) -> int:
 ## @param argv contain argument given by the user
 ## @return 84 in case of error otherwise 0 or 1 in case of sucess
 def main(argc: int, argv: list[str]) -> int:
+
+    # error handling exit if an error occured
     error_handling(argc, argv)
+
+    # argument parser, see arguments/arguments.py
     args = arguments.arguments()
     args.parse_args(argc, argv)
+
+    # create the client, see client/Client.py
     client = Client.Client(args)
     client.connect_to_server()
+
+    # this part initializes with the server
     msg = client.communicate()
     client.parsing_data(msg)
     trant = trantorians.trantorians(client)
     attributes = dir(trant)
 
-    ######## functions in array  ################
+    # list of the callable functions
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
                 and not attr.startswith('_')]
 
-    ######## print functions and their index#########
+    # print functions and their index
+    # TEMPORARY VALUR
     for i in range (len(functions)):
         print(i, functions[i])
 
-    ######## call look ########
+    # this part should be replaced by the command gestion. It must be able to
+    # listen to the server, change the data and execute the commands
+    # TEMPORARY VALUR
     getattr(trant, functions[9])()
     for i in range(10):
         getattr(trant, functions[5])()
         getattr(trant, functions[8])()
 
+    # disconnect
     client.disconnect_from_server()
     return 0

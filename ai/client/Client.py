@@ -37,7 +37,7 @@ class Client:
             print_error_exit("Error:", error)
 
 
-
+    # this method is the initialization with the server
     def communicate(self) -> str:
         received_data = self.socket.recv(1024).decode()
         print("Received from server:", received_data)
@@ -70,5 +70,4 @@ class Client:
             exit(84)
         self.x = int(nb[1])
         self.y = int(nb[2])
-
-        print(">>>", self.x, self.y, "<<<")
+    # no need to make error handling here, since the server can't be wrong

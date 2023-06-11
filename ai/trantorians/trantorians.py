@@ -258,3 +258,5 @@ class trantorians:
     ## @return None
     def incantation(self) -> None:
         print("incantation")
+
+# things to do are updated on the trello, do not hesitate
