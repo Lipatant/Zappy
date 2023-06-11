@@ -12,6 +12,13 @@
     #include <stddef.h>
     #include <stdbool.h>
 
+enum {
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST
+};
+
 typedef struct data_s {
     int fd;
     int socket;
