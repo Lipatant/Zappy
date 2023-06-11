@@ -140,18 +140,21 @@ static args_t check_args(int argc, char **argv, args_t args)
 
 int main(int argc, char **argv)
 {
+    team_t *team = malloc(sizeof(team_t));
     player_t *player = malloc(sizeof(player_t));
     map_t *map = malloc(sizeof(map_t));
     args_t args;
 
     if (map == NULL || player == NULL)
         return 84;
-    init_struct(argv, player, map);
+    init_struct(argv, team, map, player);
+    if (argc == 2 && strcmp(argv[1], "-help") == 0)
+        return help();
     args.names = malloc(sizeof(char *));
     args.names[0] = NULL;
     args = check_args(argc, argv, args);
     if (server(argc, argv) == 84)
         return 84;
-    free_struct(player, map);
+    free_struct(player, map, team);
     return 0;
 }
