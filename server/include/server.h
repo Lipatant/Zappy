@@ -11,13 +11,7 @@
     #include <netinet/in.h>
     #include <stddef.h>
     #include <stdbool.h>
-
-enum {
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST
-};
+    #include "my.h"
 
 typedef struct data_s {
     int fd;
@@ -25,6 +19,8 @@ typedef struct data_s {
     int port;
     char **args;
     char *ip;
+    bool connect;
+    player_t *player;
 } data_t;
 
 typedef struct server_s {

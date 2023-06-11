@@ -16,6 +16,8 @@
     #include <sys/socket.h>
     #include <netinet/in.h>
 
+enum orientation { NORTH, EAST, SOUTH, WEST };
+
 typedef struct player_s {
     int food;
     int posx;
@@ -29,6 +31,7 @@ typedef struct player_s {
     int phiras;
     int thystame;
     int lvl;
+    int orientation;
 } player_t;
 
 typedef struct map_s {
