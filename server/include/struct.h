@@ -40,11 +40,17 @@ typedef struct team_s {
     player_t *player;
 } team_t;
 
+typedef struct buffer_s {
+    char *cmd;
+    struct buffer_s *next;
+} buffer_t;
+
 typedef struct data_s {
     int fd;
     int socket;
     int port;
-    char **args;
+    buffer_t *buffer; // size of the buffer is 10
+    char **args; // need to be remove to use buffer
     char *ip;
     bool connect;
     player_t *player;

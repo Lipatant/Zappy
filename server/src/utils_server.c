@@ -17,6 +17,10 @@
  * @return int the return value
  */
 
+// TODO: add give the user the size of the team and x, y
+// *add a read to wait for the client to send the name of the team
+// *and check if the team exist and if the team is full
+
 static int handle_new_connection(server_t *s, client_t *c)
 {
     c->fd = accept(s->fd, (struct sockaddr *)&c->addr, &s->size_sock);

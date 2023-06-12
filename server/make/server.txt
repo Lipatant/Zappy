@@ -16,3 +16,4 @@ command.c
 split.c
 utils_split.c
 cmd/quit.c
+linked_list.c

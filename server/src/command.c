@@ -64,12 +64,22 @@ static char *get_command(data_t *data)
     return clean_str(buff);
 }
 
+// *pour le buffer est-ce que l'on attend que le buffer soit plein pour envoyer
+// *la command ou on envoie la commande dès qu'elle est reçue ?
+
+// *mon programe de base execute la commande dès qu'elle est reçue
+// *pareil pour toutes les instances du serveur
+
 int command(server_t *s, client_t *c, data_t *data)
 {
     char *command = get_command(data);
+    if (size_list(data->buffer) < 10) {
+        insert_at_end(&data->buffer, command);
+    }
     int ret = (command == NULL) ? 84 : cmd(data, command);
 
     free(command);
+    delete_at_begining(&data->buffer);
     if (ret == 1) {
         return manage_quit(s, data);
     }

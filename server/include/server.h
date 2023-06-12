@@ -25,5 +25,9 @@ int count_parts(const char *command, char sep);
 int cmd(data_t *data, char *command);
 char **split(const char *command, char sep);
 int command(server_t *s, client_t *c, data_t *data);
+buffer_t *create_node(char *str);
+void delete_at_begining(buffer_t **head);
+void insert_at_end(buffer_t **head, char *str);
+int size_list(buffer_t *head);
 
 #endif /* !SERVER_H_ */

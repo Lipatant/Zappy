@@ -62,6 +62,7 @@ static int check_exist(data_t **data, int fd, int nbr)
 static void fill_client(client_t *c, server_t *s, int fd)
 {
     c->data[s->client - 1]->args = NULL;
+    c->data[s->client - 1]->buffer = malloc(sizeof(char*) * 10);
     c->data[s->client - 1]->fd = fd;
     c->data[s->client - 1]->port = -1;
     c->data[s->client - 1]->ip = inet_ntoa(c->addr.sin_addr);
