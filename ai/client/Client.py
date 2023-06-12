@@ -18,6 +18,7 @@ class Client:
     team: str
     x: int
     y: int
+    receive: str = ""
     socket: socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def __init__(self, args: arguments):

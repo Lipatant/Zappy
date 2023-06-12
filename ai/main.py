@@ -12,6 +12,8 @@ from ai.trantorians import trantorians
 from ai.client import Client
 from ai.error import print_error_exit
 
+import threading
+
 ## @author Damien and Pierre-Louis
 ## @brief Print the message explaining how to use it
 ## @return always 0
@@ -32,6 +34,17 @@ def error_handling(argc: int, argv: list[str]) -> int:
         print_h()
     if argc != 4 and argc != 6:
         print_error_exit("error: invalid number of arguments")
+
+
+
+
+def receive_data(client: Client.Client):
+    while True:
+        data = client.socket.recv(1024)
+        if not data:
+            break
+        client.receive = data.decode()
+
 
 ## @author Damien and Pierre-Louis
 ## @brief Start function for ia launches error handling and connection to server
@@ -69,10 +82,17 @@ def main(argc: int, argv: list[str]) -> int:
     # this part should be replaced by the command gestion. It must be able to
     # listen to the server, change the data and execute the commands
     # TEMPORARY VALUR
-    getattr(trant, functions[9])()
-    for i in range(10):
-        getattr(trant, functions[5])()
-        getattr(trant, functions[8])()
+    receive_thread = threading.Thread(target=receive_data, args=(client,))
+    receive_thread.start()
+    while 1:
+        if client.receive != "":
+            print(client.receive)
+            break
+        else:
+            getattr(trant, functions[9])()
+            for i in range(10):
+                getattr(trant, functions[5])()
+                getattr(trant, functions[8])()
 
     # disconnect
     client.disconnect_from_server()
