@@ -62,7 +62,7 @@ clean:
 	$(RM) -f $(OBJ) > $(LOGSFILE)
 
 fclean: clean
-	$(RM) -f $(NAME) >> $(LOGSFILE)
+	$(RM) -f ../$(NAME) >> $(LOGSFILE)
 	@$(RM) -f $(NAME)
 	@$(RM) -f $(UT)
 	@$(RM) -f unit_tests
