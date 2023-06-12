@@ -13,6 +13,7 @@ from ai.client import Client
 from ai.error import print_error_exit
 
 import threading
+import sys
 
 ## @author Damien and Pierre-Louis
 ## @brief Print the message explaining how to use it
@@ -40,8 +41,9 @@ def error_handling(argc: int, argv: list[str]) -> int:
 
 def receive_data(client: Client.Client):
     while True:
-        data = client.socket.recv(1024)
-        if not data:
+        try:
+            data = client.socket.recv(1024)
+        except:
             break
         client.receive = data.decode()
 
@@ -84,15 +86,13 @@ def main(argc: int, argv: list[str]) -> int:
     # TEMPORARY VALUR
     receive_thread = threading.Thread(target=receive_data, args=(client,))
     receive_thread.start()
+
     while 1:
         if client.receive != "":
-            print(client.receive)
+            print("received:", client.receive)
             break
         else:
-            getattr(trant, functions[9])()
-            for i in range(10):
-                getattr(trant, functions[5])()
-                getattr(trant, functions[8])()
+            getattr(trant, functions[5])()
 
     # disconnect
     client.disconnect_from_server()
