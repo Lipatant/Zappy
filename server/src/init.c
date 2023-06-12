@@ -12,7 +12,7 @@ void free_struct(player_t *player, map_t *maps, team_t *team)
 {
     for (int i = 0; i < maps->max_y; i++)
         free(maps->map[i]);
-    free(team->players);
+    free(team->player);
     free(maps->map);
     free(player);
     free(maps);
@@ -36,28 +36,35 @@ int init_tab(map_t *maps)
     return 0;
 }
 
+static player_t init_player(player_t player, args_t args)
+{
+    player.food = 10;
+    player.linemate = 0;
+    player.deraumere = 0;
+    player.sibur = 0;
+    player.mendiane = 0;
+    player.phiras = 0;
+    player.thystame = 0;
+    player.posx = rand() % args.width;
+    player.posy = rand() % args.height;
+
+    return player;
+}
+
 void init_struct(args_t args, team_t *team, map_t *maps, player_t *player)
 {
-    printf("a\n");
+    int i = 0;
+    for (i = 0; args.names[i] != '\0'; i++);
+    maps = malloc(sizeof(map_t));
+    team = malloc(sizeof(team_t) * i);
+    player = malloc(sizeof(player_t) * (args.clients + 1));
+    for (int j = 0; j <= i ; i++) {
+        team[j].player = malloc(sizeof(player_t) * (args.clients + 1));
+        for (int k = 0; k <= args.clients; k++)
+            team[j].player[k] = init_player(team[j].player[k], args);
+    }
     maps->max_x = args.width;
-    printf("b\n");
     maps->max_y = args.height;
-    printf("c\n");
-    team->players->linemate = 0; // crash
-    printf("d\n");
-    team->players->deraumere = 0;
-    printf("e\n");
-    team->players->sibur = 0;
-    printf("f\n");
-    team->players->mendiane = 0;
-    printf("h\n");
-    team->players->phiras = 0;
-    printf("i\n");
-    team->players->thystame = 0;
-    printf("j\n");
-    team->players->level = 1;
-    printf("k\n");
-
-    // give_name_to_player(player, av);
     init_tab(maps);
 }
+

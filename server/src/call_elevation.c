@@ -9,18 +9,18 @@
 
 void make_elevation(team_t *team)
 {
-    if (team->players->lvl == 1)
+    if (team->player->lvl == 1)
         elevation_lvl2(team);
-    if (team->players->lvl == 2)
+    if (team->player->lvl == 2)
         elevation_lvl3(team);
-    if (team->players->lvl == 3)
+    if (team->player->lvl == 3)
         elevation_lvl4(team);
-    if (team->players->lvl == 4)
+    if (team->player->lvl == 4)
         elevation_lvl5(team);
-    if (team->players->lvl == 5)
+    if (team->player->lvl == 5)
         elevation_lvl6(team);
-    if (team->players->lvl == 6)
+    if (team->player->lvl == 6)
         elevation_lvl7(team);
-    if (team->players->lvl == 7)
+    if (team->player->lvl == 7)
         elevation_lvl8(team);
 }

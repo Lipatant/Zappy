@@ -9,46 +9,46 @@
 
 void elevation_lvl2(team_t *team)
 {
-    if (team->players->linemate >= 1 && team->players->deraumere >= 1
-    && team->players->sibur >= 1) {
-        team->players->linemate -= 1;
-        team->players->deraumere -= 1;
-        team->players->sibur -= 1;
-        team->players->lvl = 2;
+    if (team->player->linemate >= 1 && team->player->deraumere >= 1
+    && team->player->sibur >= 1) {
+        team->player->linemate -= 1;
+        team->player->deraumere -= 1;
+        team->player->sibur -= 1;
+        team->player->lvl = 2;
     }
 }
 
 void elevation_lvl3(team_t *team)
 {
-    if (team->players->linemate >= 2 && team->players->sibur >= 1
-    && team->players->phiras >= 2) {
-        team->players->linemate -= 2;
-        team->players->sibur -= 1;
-        team->players->phiras -= 2;
-        team->players->lvl = 3;
+    if (team->player->linemate >= 2 && team->player->sibur >= 1
+    && team->player->phiras >= 2) {
+        team->player->linemate -= 2;
+        team->player->sibur -= 1;
+        team->player->phiras -= 2;
+        team->player->lvl = 3;
     }
 }
 
 void elevation_lvl4(team_t *team)
 {
-    if (team->players->linemate >= 1 && team->players->deraumere >= 1
-    && team->players->sibur >= 2 && team->players->phiras >= 1) {
-        team->players->linemate -= 1;
-        team->players->deraumere -= 1;
-        team->players->sibur -= 2;
-        team->players->phiras -= 1;
-        team->players->lvl = 4;
+    if (team->player->linemate >= 1 && team->player->deraumere >= 1
+    && team->player->sibur >= 2 && team->player->phiras >= 1) {
+        team->player->linemate -= 1;
+        team->player->deraumere -= 1;
+        team->player->sibur -= 2;
+        team->player->phiras -= 1;
+        team->player->lvl = 4;
     }
 }
 
 void elevation_lvl5(team_t *team)
 {
-    if (team->players->linemate >= 1 && team->players->deraumere >= 2
-    && team->players->sibur >= 1 && team->players->mendiane >= 3) {
-        team->players->linemate -= 1;
-        team->players->deraumere -= 2;
-        team->players->sibur -= 1;
-        team->players->mendiane -= 3;
-        team->players->lvl = 5;
+    if (team->player->linemate >= 1 && team->player->deraumere >= 2
+    && team->player->sibur >= 1 && team->player->mendiane >= 3) {
+        team->player->linemate -= 1;
+        team->player->deraumere -= 2;
+        team->player->sibur -= 1;
+        team->player->mendiane -= 3;
+        team->player->lvl = 5;
     }
 }
