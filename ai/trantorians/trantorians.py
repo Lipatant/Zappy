@@ -69,6 +69,8 @@ class trantorians:
             self.y -= 1
             if self.y < 0:
                 self.y = self.client.y - 1
+        to_send = "forward\n"
+        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
@@ -78,6 +80,8 @@ class trantorians:
         self.direction -= 1
         if self.direction < 0:
             self.direction = 3
+        to_send = "left\n"
+        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
@@ -87,6 +91,8 @@ class trantorians:
         self.direction += 1
         if self.direction > 3:
             self.direction = 0
+        to_send = "right\n"
+        self.client.socket.send(to_send.encode())
 
     ## @author Pierre-Louis
     ## @brief function for the trantorian can looking up
@@ -182,6 +188,8 @@ class trantorians:
             self._look_down()
         if (self.direction == 3):
             self._look_left()
+        to_send = "look\n"
+        self.client.socket.send(to_send.encode())
 
 
     ## @author Damien
@@ -190,6 +198,8 @@ class trantorians:
     ## @return None
     def inventory(self) -> None:
         print(self.inventory)
+        to_send = "inventory\n"
+        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
@@ -197,6 +207,8 @@ class trantorians:
     ## @return None
     def broadcast_text(self, text) -> None:
         print(text)
+        to_send = "broadcast " + text + "\n"
+        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
@@ -204,6 +216,8 @@ class trantorians:
     ## @return None
     def connect_nbr(self) -> None:
         print("slot")
+        to_send = "connect\n"
+        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
@@ -211,6 +225,8 @@ class trantorians:
     ## @return None
     def fork(self) -> None:###creer un oeuf
         pid: int = os.fork()
+        to_send = "fork\n"
+        self.client.socket.send(to_send.encode())
 
         if pid > 0:
             print("I am parent process:")
@@ -227,6 +243,8 @@ class trantorians:
     ## @return None
     def eject(self) -> None:
         print(" eject")
+        to_send = "eject\n"
+        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
@@ -235,6 +253,8 @@ class trantorians:
     def dead(self) -> bool:
         if (self.food < 0):
             print("dead")
+            to_send = "dead\n"
+            self.client.socket.send(to_send.encode())
             return True
         return False
 
@@ -244,6 +264,8 @@ class trantorians:
     ## @return None
     def take_object(self) -> None:
         print("take_object")
+        to_send = "take_object\n"
+        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
@@ -251,6 +273,8 @@ class trantorians:
     ## @return None
     def set_object(self) -> None:
         print("set_object")
+        to_send = "set_object\n"
+        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
@@ -258,5 +282,6 @@ class trantorians:
     ## @return None
     def incantation(self) -> None:
         print("incantation")
-
+        to_send = "incantation\n"
+        self.client.socket.send(to_send.encode())
 # things to do are updated on the trello, do not hesitate
