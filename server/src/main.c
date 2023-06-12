@@ -140,9 +140,9 @@ static args_t check_args(int argc, char **argv, args_t args)
 
 int main(int argc, char **argv)
 {
-    team_t *team = malloc(sizeof(team_t));
-    player_t *player = malloc(sizeof(player_t));
-    map_t *map = malloc(sizeof(map_t));
+    team_t *team;
+    player_t *player;
+    map_t *map;
     args_t args;
 
     if (map == NULL || player == NULL)
