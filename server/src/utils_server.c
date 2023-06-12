@@ -7,6 +7,7 @@
 
 #include "server.h"
 #include <stdio.h>
+#include <sys/select.h>
 
 /**
  * @brief the function for adding the client
@@ -24,6 +25,7 @@ static int handle_new_connection(server_t *s, client_t *c)
         return 84;
     }
     dprintf(c->fd, "WELCOME\r\n");
+    FD_SET(c->fd, &c->active_fd);
     return 0;
 }
 
@@ -42,6 +44,7 @@ static int handle_existing_connection(server_t *s, client_t *c, int i)
         return 84;
     }
     int current = find_client(c->data, s->client, i);
+    printf("current: %d\n", current);
     return command(s, c, c->data[current]);
 }
 

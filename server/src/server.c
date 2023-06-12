@@ -9,6 +9,7 @@
 #include "struct.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 /**
  * @brief the init function for the server
@@ -52,7 +53,10 @@ static int init_server(server_t *s, args_t args)
 static int start_server(server_t *s, client_t *c)
 {
     c->data = NULL;
+    FD_ZERO(&c->active_fd);
+    FD_SET(s->fd, &c->active_fd);
     while (1) {
+        c->read_fd = c->active_fd;
         if (select(FD_SETSIZE, &c->read_fd, NULL, NULL, NULL) < 0) {
             perror("select");
             break;
@@ -60,6 +64,7 @@ static int start_server(server_t *s, client_t *c)
         if (in_loop(c, s) == 84)
             break;
     }
+    close(s->fd);
     return 0;
 }
 

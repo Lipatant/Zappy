@@ -62,7 +62,7 @@ int cmd(data_t *data, char *command)
         }
     }
     if (ret == -1)
-        dprintf(data->fd, "Commande inconnue");
+        dprintf(data->fd, "ko\n");
     free_split(data->args);
     return 0;
 }

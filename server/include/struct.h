@@ -64,6 +64,7 @@ typedef struct client_s {
     int fd;
     struct sockaddr_in addr;
     fd_set read_fd;
+    fd_set active_fd;
     data_t **data;
 } client_t;
 

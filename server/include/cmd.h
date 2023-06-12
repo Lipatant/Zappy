@@ -18,6 +18,7 @@ typedef struct cmd_s {
 int forward(data_t *data);
 int right(data_t *data);
 int left(data_t *data);
+int quit(data_t *data);
 //int look(data_t *data);
 //int inventory(data_t *data);
 //int broadcast(data_t *data);
@@ -41,6 +42,7 @@ static const cmd_t cmds[] = {
     //{"take", &take},
     //{"set", &set},
     //{"incantation", &incantation}, // send to all client on tile
+    {"quit\0", &quit},
     {NULL, NULL}
 };
 

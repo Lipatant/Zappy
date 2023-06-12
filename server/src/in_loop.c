@@ -5,8 +5,8 @@
 ** in_loop
 */
 
+#include <stdio.h>
 #include <unistd.h>
-
 #include "server.h"
 
 /**
@@ -39,8 +39,9 @@ static int in_in_loop(int i, client_t *c, server_t *s)
 
 int in_loop(client_t *c, server_t *s)
 {
-    for (int i = 0; i != FD_SETSIZE; i++)
-            if (in_in_loop(i, c, s) == 84)
+    for (int i = 0; i != FD_SETSIZE; i++) {
+        if (in_in_loop(i, c, s) == 84)
             return 84;
+    }
     return 0;
 }

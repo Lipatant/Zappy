@@ -58,11 +58,11 @@ void init_struct(args_t args, team_t *team, map_t *maps, player_t *player)
     maps = malloc(sizeof(map_t));
     team = malloc(sizeof(team_t) * i);
     player = malloc(sizeof(player_t) * (args.clients + 1));
-    for (int j = 0; j <= i ; i++) {
+    for (int j = 0; j <= i ; j++)
         team[j].player = malloc(sizeof(player_t) * (args.clients + 1));
+    for (int j = 0; j <= i; j++)
         for (int k = 0; k <= args.clients; k++)
-            team[j].player[k] = init_player(team[j].player[k], args);
-    }
+            team[j].player[k] = init_player(player[k], args);
     maps->max_x = args.width;
     maps->max_y = args.height;
     init_tab(maps);
