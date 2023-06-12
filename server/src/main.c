@@ -147,13 +147,13 @@ int main(int argc, char **argv)
 
     if (map == NULL || player == NULL)
         return 84;
-    init_struct(argv, team, map, player);
     if (argc == 2 && strcmp(argv[1], "-help") == 0)
         return help();
     args.names = malloc(sizeof(char *));
     args.names[0] = NULL;
     args = check_args(argc, argv, args);
-    if (server(argc, argv) == 84)
+    init_struct(args, team, map, player);
+    if (server(args) == 84)
         return 84;
     free_struct(player, map, team);
     return 0;

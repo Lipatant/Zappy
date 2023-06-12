@@ -15,37 +15,13 @@
     #include <stdbool.h>
     #include <sys/socket.h>
     #include <netinet/in.h>
+    #include "struct.h"
 
 enum orientation { NORTH, EAST, SOUTH, WEST };
 
-typedef struct player_s {
-    int food;
-    int posx;
-    int posy;
-    int level;
-    int life;
-    int linemate;
-    int deraumere;
-    int sibur;
-    int mendiane;
-    int phiras;
-    int thystame;
-    int lvl;
-    int orientation;
-} player_t;
 
-typedef struct map_s {
-    int max_x;
-    int max_y;
-    char **map;
-} map_t;
 
-typedef struct team_s {
-    char *name;
-    player_t *players;
-} team_t;
-
-void init_struct(char **av, team_t *team, map_t *map, player_t *player);
+void init_struct(args_t args, team_t *team, map_t *maps, player_t *player);
 int init_tab(map_t *maps);
 void make_elevation(team_t *team);
 void elevation_lvl2(team_t *team);

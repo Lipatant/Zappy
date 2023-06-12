@@ -6,6 +6,7 @@
 */
 
 #include "server.h"
+#include "struct.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,10 +18,10 @@
  * @return int the return value
  */
 
-static int init_server(server_t *s, char **argv)
+static int init_server(server_t *s, args_t args)
 {
     int opt = 1;
-    s->port = atoi(argv[1]);
+    s->port = args.port;
     s->client = 0;
     s->fd = socket(PF_INET, SOCK_STREAM, 0);
     setsockopt(s->fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
@@ -70,14 +71,12 @@ static int start_server(server_t *s, client_t *c)
  * @return int the return value
  */
 
-int server(int argc, char **argv)
+int server(args_t args)
 {
     server_t server;
     client_t *client = malloc(sizeof(client_t));
 
-    if (argc != 2)
-        return error("See usage with ./server -h");
-    if (init_server(&server, argv) == 84)
+    if (init_server(&server, args) == 84)
         return 84;
     start_server(&server, client);
     free(client);

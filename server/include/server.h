@@ -10,50 +10,20 @@
 
     #include <netinet/in.h>
     #include <stddef.h>
-    #include <stdbool.h>
-    #include "my.h"
+    #include "struct.h"
 
-typedef struct data_s {
-    int fd;
-    int socket;
-    int port;
-    char **args;
-    char *ip;
-    bool connect;
-    player_t *player;
-} data_t;
-
-typedef struct server_s {
-    int port;
-    int fd;
-    int queue;
-    int client;
-    struct sockaddr_in addr;
-    socklen_t size_addr;
-    socklen_t size_sock;
-} server_t;
-
-typedef struct client_s {
-    int fd;
-    struct sockaddr_in addr;
-    fd_set read_fd;
-    data_t **data;
-} client_t;
-
-typedef struct args_s {
-    int port;
-    int width;
-    int height;
-    char **names;
-    int clients;
-    int freq;
-} args_t;
-
-int server(int argc, char **argv);
+int server(args_t args);
 int error(char *msg);
 int find_client(data_t **data, int nbr, int fd);
 int add_client(server_t *s, client_t *c, int fd);
 int handle_client_io(server_t *s, client_t *c, int i);
 int in_loop(client_t *c, server_t *s);
+char **simple_split(const char *command);
+char **create_split(int nbr, const char *command);
+char *convert_to_lowercase(char *to_convert);
+int count_parts(const char *command, char sep);
+int cmd(data_t *data, char *command);
+char **split(const char *command, char sep);
+int command(server_t *s, client_t *c, data_t *data);
 
 #endif /* !SERVER_H_ */

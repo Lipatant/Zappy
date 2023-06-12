@@ -9,7 +9,7 @@
 #include "server.h"
 #include "cmd.h"
 
-int right(data_t *data, char *arg)
+int right(data_t *data)
 {
     if (!data->connect)
         return 84;

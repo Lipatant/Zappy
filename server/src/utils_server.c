@@ -42,7 +42,7 @@ static int handle_existing_connection(server_t *s, client_t *c, int i)
         return 84;
     }
     int current = find_client(c->data, s->client, i);
-    return 0;
+    return command(s, c, c->data[current]);
 }
 
 /**
