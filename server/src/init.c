@@ -38,6 +38,7 @@ int init_tab(map_t *maps)
 
 static player_t init_player(player_t player, args_t args)
 {   
+    player.life = 10;
     player.food = 200;
     player.linemate = 0;
     player.deraumere = 0;
@@ -47,6 +48,7 @@ static player_t init_player(player_t player, args_t args)
     player.thystame = 0;
     player.posx = rand() % args.width;
     player.posy = rand() % args.height;
+
     return player;
 }
 

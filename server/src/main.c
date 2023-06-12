@@ -145,8 +145,6 @@ int main(int argc, char **argv)
     map_t *map;
     args_t args;
 
-    if (map == NULL || player == NULL)
-        return 84;
     if (argc == 2 && strcmp(argv[1], "-help") == 0)
         return help();
     args.names = malloc(sizeof(char *));
