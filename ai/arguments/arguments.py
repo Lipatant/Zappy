@@ -32,7 +32,7 @@ class arguments:
     ## @param argv contain argument given by the user
     ## @return None
     def parse_args(self, argc: int, argv: list[str]) -> None:
-        ## @detail (start, fin, acrementation)
+        ## @details (start, fin, acrementation)
         for i in range(0, argc, 2):
             if argv[i] == "-p":
                 try:
