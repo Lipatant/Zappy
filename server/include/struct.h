@@ -13,18 +13,19 @@
     #include <stddef.h>
 
 typedef struct player_s {
-    int food;
-    int posx;
-    int posy;
-    int level;
-    int life;
-    int linemate;
-    int deraumere;
-    int sibur;
-    int mendiane;
-    int phiras;
-    int thystame;
-    int lvl;
+    size_t food;
+    size_t posx;
+    size_t posy;
+    size_t level;
+    size_t life;
+    size_t linemate;
+    size_t deraumere;
+    size_t sibur;
+    size_t mendiane;
+    size_t phiras;
+    size_t thystame;
+    size_t lvl;
+    size_t id;
     int orientation;
 } player_t;
 
