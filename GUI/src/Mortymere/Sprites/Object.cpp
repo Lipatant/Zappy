@@ -27,7 +27,7 @@ bool OBJECT::drawOn(Mortymere::Instance &instance, sf::RenderStates const \
     cornerB = instance.camera.inSpaceToOnScreen(cornerAnchorB);
     cornerA.x *= scale.x; cornerA.y *= scale.y;
     cornerB.x *= scale.x; cornerB.y *= scale.y;
-    _sprite.setPosition(cornerA);
+    _sprite.setPosition(cornerA + sf::Vector2f(-3, 5));
     _sprite.setSize(cornerB - cornerA);
     instance.window.draw(_sprite, states);
     return true;

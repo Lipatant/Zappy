@@ -11,7 +11,6 @@
 #define GROUND Citadel::Ground
 #define GROUND_TILE_COLOR \
     sf::Color::Blue, sf::Color::White, -2
-//    (((i + j) % 2 == 0) ? sf::Color::Blue : sf::Color::Red)
 
 bool GROUND::changeSize(size_t const x, size_t const y)
 {
@@ -27,7 +26,7 @@ bool GROUND::changeSize(size_t const x, size_t const y)
             sprites.back()->anchor().z = j;
         }
     }
-    for (Mortymere::Sprite &sprite: sprites)
-        sprite->layer() = -1;
+    _sizeX = x;
+    _sizeY = y;
     return true;
 }

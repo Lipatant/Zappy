@@ -12,33 +12,60 @@
 #include <vector>
 #include "Citadel/Character.hpp"
 #include "Mortymere/Sprites/Character.hpp"
+#include "Utility/Regex.hpp"
 
-static const std::string VARIANCES[] = {
-    "Morty/",
-    "Rick/",
-    "Jerry/",
+#define REGEX_BASE_VARIANCE "Base" //\\/[Bb][Aa][Ss][Ee]\\.\\w+[\"']?$
+
+struct Variance_s {
+    std::string name;
+    std::string path;
+    int weigth;
+};
+
+static const Variance_s VARIANCES[] = {
+    {"Rick", "Rick/", 55},
+    {"Morty", "Morty/", 25},
+    {"Jerry", "Jerry/", 10},
+    {"Summer", "Summer/", 8},
+    {"Beth", "Beth/", 2},
 };
 static const std::size_t VARIANCES_LENGTH = \
     sizeof(VARIANCES) / sizeof(VARIANCES[0]);
+static const int VARIANCES_TOTAL_WEIGTH = 100;
 
 #define CHARACTER Citadel::Character
 
 CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
 {
+    Variance_s variance = {"", "", 0};
+    bool variant;
+    int varianceWeigth = rand() % VARIANCES_TOTAL_WEIGTH;
+    int varianceWeigthCumulated = 0;
     std::vector<std::string> paths = {};
 
-    for (auto const &directory: VARIANCES) {
-        try {
-            for (auto const &file: std::filesystem::directory_iterator( \
-                "graphics/charact/" + directory))
-                paths.push_back(file.path());
-        } catch (...) { }
-        try {
-            for (auto const &file: std::filesystem::directory_iterator( \
-                "GUI/graphics/charact/" + directory))
-                paths.push_back(file.path());
-        } catch (...) { }
+    for (Variance_s const &selectedVariance: VARIANCES) {
+        variance = selectedVariance;
+        varianceWeigthCumulated += variance.weigth;
+        if (varianceWeigth < varianceWeigthCumulated)
+            break;
     }
+    variant = (rand() % 100 < 30);
+    try {
+        for (auto const &file: std::filesystem::directory_iterator( \
+            "graphics/charact/" + variance.path)) {
+            if (variant || file.path() == "graphics/charact/" + variance.path \
+                + "Base.png")
+                paths.push_back(file.path());
+        }
+    } catch (...) { }
+    try {
+        for (auto const &file: std::filesystem::directory_iterator( \
+            "GUI/graphics/charact/" + variance.path)) {
+            if (variant || file.path() == "GUI/graphics/charact/" + \
+                variance.path + "Base.png")
+                paths.push_back(file.path());
+        }
+    } catch (...) { }
     if (paths.size() >= 1) {
         _filepath = paths[rand() % paths.size()];
         sprite = Mortymere::createSprite<Mortymere::Sprites::Character>( \
