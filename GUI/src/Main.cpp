@@ -5,14 +5,15 @@
 ** src/Main.cpp
 */
 
-#include <mutex>
-#include <thread>
 #include <iostream>
-#include "Flags.hpp"
+#include <mutex>
+#include <string.h>
+#include <thread>
+#include "Citadel/Exception.hpp"
 #include "Citadel/Instance.hpp"
 #include "Mortymere/Instance.hpp"
 #include "Utility/Connect.hpp"
-#include "Citadel/Exception.hpp"
+#include "Utility/Regex.hpp"
 
 //    citadel << "pnw 1 0 0 3 0 0\n";
 //    citadel << "pnw 2 1 0 2 0 0\n";
@@ -29,19 +30,17 @@ struct Locks_s {
 };
 
 static void engineThread(Citadel::Instance &citadel, bool &close, \
-    Locks_s &locks, char const * const * const av)
+    Locks_s &locks, int const port, std::string const &ip)
 {
     std::string userInput;
-    std::string ip = "127.0.0.1";
-    int port = std::stoi(av[1]);
 
-    if (av[2] != nullptr)
-        ip = av[2];
     try {
         Connect connection(ip, port);
-    } catch (std::exception e) {
-        std::cerr << e.what();
+    } catch (std::exception const &e) {
+        std::cerr << e.what() << std::endl;
+        locks.close.lock();
         close = true;
+        locks.close.unlock();
         return;
     }
     locks.citadel.lock();
@@ -70,16 +69,14 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
     locks.close.unlock();
 }
 
-int main(FLAG_UNUSED int const ac, char const * const * const av)
+static bool start(int const port, std::string const &machine)
 {
     bool close = false;
     Mortymere::Instance engine;
-    if (ac < 2 || ac > 3)
-        return 84;
     Locks_s locks = {std::mutex(), std::mutex(), std::mutex()};
     Citadel::Instance citadel(engine);
     std::thread thread(engineThread, std::ref(citadel), std::ref(close), \
-        std::ref(locks), av);
+        std::ref(locks), port, std::ref(machine));
 
     while (engine.udpate()) {
         locks.close.lock();
@@ -93,5 +90,63 @@ int main(FLAG_UNUSED int const ac, char const * const * const av)
     close = true;
     locks.close.unlock();
     thread.join();
+    return true;
+}
+
+#define REGEX_MACHINE "^.+$"
+#define REGEX_PORT "^\\d+$"
+
+int main(int const ac, char const * const * const av)
+{
+    bool isPortDefined = false;
+    bool isMachineDefined = false;
+    int port = -1;
+    std::string machine = "127.0.0.1";
+
+    if (ac % 2 != 1) {
+        std::cerr << "Invalid amount of arguments" << std::endl;
+        return 84;
+    }
+    for (int i = 1; i < ac; i += 2) {
+        if (strcmp("-p", av[i]) == 0) {
+            if (isPortDefined) {
+                std::cerr << "-p is already defined as '" << port << '\'' << \
+                    std::endl;
+                return 84;
+            }
+            if (!utility::regex::quickTest(av[i + 1], REGEX_PORT)) {
+                std::cerr << '\'' << av[i + 1] << \
+                    "' doesn't match the expression '" << REGEX_PORT << '\'' \
+                    << std::endl;
+                return 84;
+            }
+            port = std::stoi(av[i + 1]);
+            isPortDefined = true;
+            continue;
+        }
+        if (strcmp("-m", av[i]) == 0) {
+            if (isMachineDefined) {
+                std::cerr << "-m is already defined as '" << machine << '\'' \
+                    << std::endl;
+                return 84;
+            }
+            if (!utility::regex::quickTest(av[i + 1], REGEX_MACHINE)) {
+                std::cerr << '\'' << av[i + 1] << \
+                    "' doesn't match the expression '" << REGEX_MACHINE << \
+                    '\'' << std::endl;
+                return 84;
+            }
+            machine = av[i + 1];
+            isMachineDefined = true;
+            continue;
+        }
+        std::cerr << "Unknown flag '" << av[i] << '\'' << std::endl;
+    }
+    if (!isPortDefined) {
+        std::cerr << "Port is undefined" << std::endl;
+        return 84;
+    }
+    if (!start(port, machine))
+        return 84;
     return 0;
 }
