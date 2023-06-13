@@ -12,6 +12,8 @@ from ai.trantorians import trantorians
 from ai.client import Client
 from ai.error import print_error_exit
 
+import time
+
 ## @author Damien and Pierre-Louis
 ## @brief Print the message explaining how to use it
 ## @return always 0
@@ -67,11 +69,16 @@ def main(argc: int, argv: list[str]) -> int:
         print(i, functions[i])
 
     # Here read commands of the server
-    while not trant.dead():
-        # this part should be replaced by the command gestion. It must be able to
-        # listen to the server, change the data and execute the commands
-        # TEMPORARY VALUE
+
+    # this part should be replaced by the command gestion. It must be able to
+    # listen to the server, change the data and execute the commands
+    # TEMPORARY VALUE
+    while 1:
         getattr(trant, functions[5])()
+        if (client.data == "dead\n"):
+            break
+        getattr(trant, functions[7])()
+        time.sleep(1)
 
     # disconnect
     client.disconnect_from_server()
