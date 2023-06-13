@@ -5,7 +5,9 @@
 ** -
 */
 
+#include <exception>
 #include <filesystem>
+#include <iostream>
 #include <stdlib.h>
 #include <vector>
 #include "Citadel/Character.hpp"
@@ -20,17 +22,27 @@ static const std::size_t VARIANCES_LENGTH = \
     sizeof(VARIANCES) / sizeof(VARIANCES[0]);
 
 #define CHARACTER Citadel::Character
-#include <iostream>
+
 CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
 {
     std::vector<std::string> paths = {};
 
-    for (auto const &directory: VARIANCES)
-        for (auto const &file: std::filesystem::directory_iterator( \
-            "graphics/charact/" + directory))
-            paths.push_back(file.path());
-    _filepath = paths[rand() % paths.size()];
-    sprite = Mortymere::createSprite<Mortymere::Sprites::Character>(_filepath);
+    try {
+        for (auto const &directory: VARIANCES)
+            for (auto const &file: std::filesystem::directory_iterator( \
+                "graphics/charact/" + directory))
+                paths.push_back(file.path());
+    } catch (std::exception const &e) {
+        std::cerr << e.what() << std::endl;
+    }
+    if (paths.size() >= 1) {
+        _filepath = paths[rand() % paths.size()];
+        sprite = Mortymere::createSprite<Mortymere::Sprites::Character>( \
+            _filepath);
+    } else {
+        std::cerr << "No file found for a character sprite" << std::endl;
+        sprite = nullptr;
+    }
     setLevel(l);
     setNumber(n);
     setPosition(x, y);
@@ -53,8 +65,10 @@ void CHARACTER::setPosition(Citadel::CharacterPosition const positionX, \
 {
     _positionX = positionX;
     _positionY = positionY;
-    sprite->anchor().x = positionX;
-    sprite->anchor().z = positionY;
+    if (sprite) {
+        sprite->anchor().x = positionX;
+        sprite->anchor().z = positionY;
+    }
 }
 
 void CHARACTER::setRotation(Citadel::CharacterRotation const rotation)
@@ -75,7 +89,8 @@ void CHARACTER::setRotation(Citadel::CharacterRotation const rotation)
             characterRotation = Mortymere::CharacterRotation::Down;
     }
     _rotation = rotation;
-    sprite->setCharacterRotation(characterRotation);
+    if (sprite)
+        sprite->setCharacterRotation(characterRotation);
 }
 
 void CHARACTER::setTeam(Citadel::CharacterTeam const &team)

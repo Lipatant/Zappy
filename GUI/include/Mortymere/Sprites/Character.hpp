@@ -30,6 +30,7 @@ public: // PUBLIC FUNCTIONS
         characterRotation) override;
 
 public: // CONSTRUCTOR
+    Character(void);
     Character(std::string const &filepath);
 
 };
