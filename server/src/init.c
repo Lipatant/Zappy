@@ -51,10 +51,20 @@ static player_t init_player(player_t player, args_t args)
     return player;
 }
 
+static void set_team(args_t args, team_t *team)
+{
+    int i = 0;
+    for (i = 0; args.names[i] != NULL; i++);
+
+    for (int j = 0; j < i; j++) {
+        team->name = args.names[j];
+    }
+}
+
 void init_struct(args_t args, team_t *team, map_t *maps, player_t *player)
 {
     int i = 0;
-    for (i = 0; args.names[i] != '\0'; i++);
+    for (i = 0; args.names[i] != NULL; i++);
     maps = malloc(sizeof(map_t));
     team = malloc(sizeof(team_t) * i);
     player = malloc(sizeof(player_t) * (args.clients + 1));
@@ -65,6 +75,8 @@ void init_struct(args_t args, team_t *team, map_t *maps, player_t *player)
             team[j].player[k] = init_player(player[k], args);
     maps->max_x = args.width;
     maps->max_y = args.height;
+    team->nb_client = args.clients;
     init_tab(maps);
+    set_team(args, team);
 }
 
