@@ -27,13 +27,17 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
 {
     std::vector<std::string> paths = {};
 
-    try {
-        for (auto const &directory: VARIANCES)
+    for (auto const &directory: VARIANCES) {
+        try {
             for (auto const &file: std::filesystem::directory_iterator( \
                 "graphics/charact/" + directory))
                 paths.push_back(file.path());
-    } catch (std::exception const &e) {
-        std::cerr << e.what() << std::endl;
+        } catch (...) { }
+        try {
+            for (auto const &file: std::filesystem::directory_iterator( \
+                "GUI/graphics/charact/" + directory))
+                paths.push_back(file.path());
+        } catch (...) { }
     }
     if (paths.size() >= 1) {
         _filepath = paths[rand() % paths.size()];
