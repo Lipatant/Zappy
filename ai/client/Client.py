@@ -41,8 +41,6 @@ class Client:
     # this method is the initialization with the server
     def communicate(self) -> str:
         self.data = self.socket.recv(1024).decode()
-        print("Received from server:", self.data)
-
         to_send = self.team + "\n"
         self.socket.send(to_send.encode())
         print("Sent to server:", to_send)

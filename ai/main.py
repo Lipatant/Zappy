@@ -63,21 +63,21 @@ def main(argc: int, argv: list[str]) -> int:
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
                 and not attr.startswith('_')]
 
-    # print functions and their index
-    # TEMPORARY VALUR
-    for i in range (len(functions)):
-        print(i, functions[i])
-
-    # Here read commands of the server
-
+    getattr(trant, functions[8])()
+    getattr(trant, functions[6])()
+    getattr(trant, functions[11])("food")
+    getattr(trant, functions[11])("food")
+    getattr(trant, functions[6])()
+    time.sleep(1)
     # this part should be replaced by the command gestion. It must be able to
     # listen to the server, change the data and execute the commands
     # TEMPORARY VALUE
     while 1:
-        getattr(trant, functions[5])()
+        getattr(trant, functions[4])()
+        time.sleep(1)
         if (client.data == "dead\n"):
             break
-        getattr(trant, functions[7])()
+        getattr(trant, functions[9])()
         time.sleep(1)
 
     # disconnect

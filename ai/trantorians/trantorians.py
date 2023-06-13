@@ -308,21 +308,14 @@ class trantorians:
 #        to_send = "eject\n"
 #        self.client.socket.send(to_send.encode())
 
-    ## @author Damien
-    ## @brief
-    ## @param self Contains trantorian values
-    ## @return True if he runs out of food else return False
-    def dead(self) -> bool:
-        if (self.food < 0):
-            return True
-        return False
+
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def take_object(self) -> None:
-        to_send = "Take object\n"
+    def take_object(self, object: str) -> None:
+        to_send = "Take " + object + "\n"################ DOES NOT WORK
         self.client.socket.send(to_send.encode())
         print("Sent to server:", to_send)
         self.client.data = self.client.socket.recv(1024).decode()
@@ -335,8 +328,8 @@ class trantorians:
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def set_object(self) -> None:
-        to_send = "Set object\n"
+    def set_object(self, object: str) -> None:
+        to_send = "Set " + object + "\n"
         self.client.socket.send(to_send.encode())
         print("Sent to server:", to_send)
         self.client.data = self.client.socket.recv(1024).decode()
