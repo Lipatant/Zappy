@@ -19,6 +19,10 @@ class Window : public sf::RenderWindow {
 private: // PRIVATE MEMBERS
     /// @brief
     bool _isFullscreen = false;
+    /// @brief Window's icon
+    sf::Image _icon;
+    /// @brief If _icon has been loaded
+    bool _iconIsLoaded = false;
 
 private: // PRIVATE FUNCTIONS
     /// @param fullscreen (bool const) If the window has to be fullscreen

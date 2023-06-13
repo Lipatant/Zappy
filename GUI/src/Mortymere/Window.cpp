@@ -15,6 +15,9 @@
 
 Mortymere::Window::Window(void)
 {
+    if (_icon.loadFromFile("GUI/graphics/Icon.png") || \
+        _icon.loadFromFile("graphics/Icon.png"))
+        _iconIsLoaded = true;
     _createWindow();
 }
 
@@ -24,6 +27,8 @@ bool Mortymere::Window::_createWindow(bool const fullscreen)
         create(WINDOW_CREATE_GENERIC, WINDOW_CREATE_FULLSCREEN);
     else
         create(WINDOW_CREATE_GENERIC, WINDOW_CREATE_WINDOWED);
+    if (_iconIsLoaded)
+        setIcon(_icon.getSize().x, _icon.getSize().y, _icon.getPixelsPtr());
     setFramerateLimit(60);
     _isFullscreen = fullscreen;
     return isOpen();
