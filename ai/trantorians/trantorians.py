@@ -62,6 +62,7 @@ class trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def forward(self) -> None:
+        self.food -= 1
         if self.direction == 0:
             self.x -= 1
             if self.x < 0:
@@ -206,7 +207,7 @@ class trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def inventory(self) -> None:
-        print(f"""
+        print(f"""    Inventory:
 Food: {self.bag[FOOD]}
 Linemate: {self.bag[LINEMATE]}
 Deraumere: {self.bag[DERAUMERE]}

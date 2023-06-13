@@ -66,10 +66,12 @@ def main(argc: int, argv: list[str]) -> int:
     for i in range (len(functions)):
         print(i, functions[i])
 
-    # this part should be replaced by the command gestion. It must be able to
-    # listen to the server, change the data and execute the commands
-    # TEMPORARY VALUR
-    getattr(trant, functions[7])()
+    # Here read commands of the server
+    while not trant.dead():
+        # this part should be replaced by the command gestion. It must be able to
+        # listen to the server, change the data and execute the commands
+        # TEMPORARY VALUE
+        getattr(trant, functions[5])()
 
     # disconnect
     client.disconnect_from_server()
