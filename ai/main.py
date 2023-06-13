@@ -69,10 +69,7 @@ def main(argc: int, argv: list[str]) -> int:
     # this part should be replaced by the command gestion. It must be able to
     # listen to the server, change the data and execute the commands
     # TEMPORARY VALUR
-    getattr(trant, functions[9])()
-    for i in range(10):
-        getattr(trant, functions[5])()
-        getattr(trant, functions[8])()
+    getattr(trant, functions[7])()
 
     # disconnect
     client.disconnect_from_server()

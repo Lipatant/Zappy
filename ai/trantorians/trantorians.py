@@ -9,6 +9,15 @@
 
 from ai.client import Client
 
+# inventory indexes
+FOOD = 0
+LINEMATE = 1
+DERAUMERE = 2
+SIBUR = 3
+MENDIANE = 4
+PHIRAS = 5
+THYSMATE = 6
+
 ####    temporary map, it is used as a global variable for now but will soon be
 ####    replaced by the one from the server
 tmp_map = [
@@ -25,7 +34,7 @@ class trantorians:
     food: int
     found: list[int]####temporary
     fov: int
-    inventory: dict
+    bag: list[int]
     sound: int###temporary, need to know what this is
     x: int
     y: int
@@ -40,8 +49,8 @@ class trantorians:
         self.food = 126
         self.found = []
         self.level = 1
-        self.inventory = {}
         self.sound = 0
+        self.bag = [0 for i in range(7)]
         #temporary values ###
         self.x = 2
         self.y = 2
@@ -197,9 +206,15 @@ class trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def inventory(self) -> None:
-        print(self.inventory)
-        to_send = "inventory\n"
-        self.client.socket.send(to_send.encode())
+        print(f"""
+Food: {self.bag[FOOD]}
+Linemate: {self.bag[LINEMATE]}
+Deraumere: {self.bag[DERAUMERE]}
+Sibur: {self.bag[SIBUR]}
+Mendiane: {self.bag[MENDIANE]}
+Phiras: {self.bag[PHIRAS]}
+Thysmate: {self.bag[THYSMATE]}
+""")
 
     ## @author Damien
     ## @brief
