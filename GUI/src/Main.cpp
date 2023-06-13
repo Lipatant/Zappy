@@ -43,8 +43,6 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
         locks.close.unlock();
         return;
     }
-    locks.citadel.lock();
-    locks.citadel.unlock();
     while (1) {
         locks.close.lock();
         if (close)
@@ -141,6 +139,7 @@ int main(int const ac, char const * const * const av)
             continue;
         }
         std::cerr << "Unknown flag '" << av[i] << '\'' << std::endl;
+        return 84;
     }
     if (!isPortDefined) {
         std::cerr << "Port is undefined" << std::endl;

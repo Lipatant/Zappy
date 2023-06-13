@@ -12,3 +12,4 @@
 
 #include "Mortymere/Sprites/Character.hpp"
 #include "Mortymere/Sprites/Object.hpp"
+#include "Mortymere/Sprites/Tile.hpp"

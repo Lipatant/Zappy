@@ -17,6 +17,7 @@
 namespace Mortymere {
 
 using SpritePositionType = sf::Vector3f;
+using SpriteLayerType = short;
 using SpriteRotation = float;
 enum class CharacterRotation {
     Down,
@@ -30,6 +31,8 @@ class ISprite {
 public: // PUBLIC FUNCTIONS
     virtual Mortymere::SpritePositionType anchor(void) const = 0;
     virtual Mortymere::SpritePositionType &anchor(void) = 0;
+    virtual Mortymere::SpriteLayerType layer(void) const = 0;
+    virtual Mortymere::SpriteLayerType &layer(void) = 0;
     virtual bool drawOn(Mortymere::Instance &instance) = 0;
     virtual bool drawOn(Mortymere::Instance &instance, \
         sf::RenderStates const &states) = 0;

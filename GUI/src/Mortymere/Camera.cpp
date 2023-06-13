@@ -29,7 +29,7 @@ sf::Vector2f CAMERA::inSpaceToOnScreen(sf::Vector3f const position) const
         windowSize.y / windowSize.x);
 
     returned.x *= pos.x * 1.5 + pos.z * 0.7;
-    returned.y *= pos.y * 1.5 + pos.z * 0.7;
+    returned.y *= 0 - pos.y * 1.5 + pos.z * 0.7;
 //    returned.x *= pos.z * 0.70710678118;
 //    returned.y *= pos.z * 0.70710678118;
 //    returned.x *= pos.x + pos.z * 0.70710678118;

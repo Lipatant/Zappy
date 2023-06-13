@@ -10,29 +10,25 @@
 #define OBJECT Mortymere::Sprites::Object
 
 OBJECT::Object(void)
-{
-    _convex.setPointCount(4);
-}
+{ }
 
 bool OBJECT::drawOn(Mortymere::Instance &instance, sf::RenderStates const \
     &states)
 {
     float height = 1.296;
-    float points[4][3] = \
-        {{-0.5, 0, 0}, {-0.5, height, 0}, {0.5, height, 0}, {0.5, 0, 0}};
-    sf::Vector2f scale = _convex.getScale();
-    sf::Vector2f point;
+    sf::Vector2f scale = _sprite.getScale();
+    Mortymere::SpritePositionType cornerAnchorA = _anchor;
+    Mortymere::SpritePositionType cornerAnchorB = _anchor;
+    sf::Vector2f cornerA;
+    sf::Vector2f cornerB;
 
-    for (unsigned char i = 0; i < 4; i++) {
-        point = instance.camera.inSpaceToOnScreen({ \
-            _anchor.x + points[i][0], \
-            _anchor.y + points[i][1], \
-            _anchor.z + points[i][2]});
-        point.x *= scale.x;
-        point.y *= scale.y;
-        _convex.setPoint(i, point);
-    }
-    _convex.setFillColor(sf::Color::White);
-    instance.window.draw(_convex, states);
+    cornerAnchorA.x -= 0.5; cornerAnchorB.x += 0.5; cornerAnchorB.y += height;
+    cornerA = instance.camera.inSpaceToOnScreen(cornerAnchorA);
+    cornerB = instance.camera.inSpaceToOnScreen(cornerAnchorB);
+    cornerA.x *= scale.x; cornerA.y *= scale.y;
+    cornerB.x *= scale.x; cornerB.y *= scale.y;
+    _sprite.setPosition(cornerA);
+    _sprite.setSize(cornerB - cornerA);
+    instance.window.draw(_sprite, states);
     return true;
 }

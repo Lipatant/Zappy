@@ -7,4 +7,5 @@ Mortymere/Maths/Matrix/Create.cpp
 Mortymere/ISprite.cpp
 Mortymere/Sprites/Character.cpp
 Mortymere/Sprites/Object.cpp
+Mortymere/Sprites/Tile.cpp
 Mortymere/Window.cpp

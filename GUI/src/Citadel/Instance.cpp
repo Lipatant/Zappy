@@ -103,9 +103,17 @@ INSTANCECMD_FUNCTION(instanceCmdPdi)
     instance.characters.erase(characterNumber);
 }
 
+INSTANCECMD_FUNCTION(instanceCmdMsz)
+{
+    instance.ground.changeSize(toNumber<std::size_t>(av[1]), \
+        toNumber<std::size_t>(av[2]));
+    for (Mortymere::Sprite tile: instance.ground.sprites)
+        instance.engine().addObject(tile);
+}
+
 static const struct Command_s COMMANDS[] = {
     // Map size
-    {"msz", 2, {REGEX_POSITION, REGEX_POSITION}, 0},
+    {"msz", 2, {REGEX_POSITION, REGEX_POSITION}, instanceCmdMsz},
     // Content of a tile
     {"btc", 9, {REGEX_POSITION, REGEX_POSITION, REGEX_RESSOURCE, \
         REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE, \

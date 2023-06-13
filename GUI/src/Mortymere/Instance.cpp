@@ -16,6 +16,8 @@ static bool sortObjects(Mortymere::SpritePtr const object1, \
 {
     if (Mortymere::Sprite sprite1 = object1.lock()) {
         if (Mortymere::Sprite sprite2 = object2.lock()) {
+            if (sprite1->layer() != sprite2->layer())
+                return sprite1->layer() < sprite2->layer();
             return sprite1->anchor().z < sprite2->anchor().z;
         } else return false;
     } else return true;
@@ -57,7 +59,6 @@ bool INSTANCE::udpate(void)
     }
     window.update();
     window.clear(sf::Color::Black);
-    _ground.drawOn(camera, window);
     window.draw(_ground);
     _objects.sort(sortObjects);
     for (auto object = _objects.begin(); object != _objects.end();) {

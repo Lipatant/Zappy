@@ -20,6 +20,16 @@ Mortymere::SpritePositionType &ASPRITE::anchor(void)
     return _anchor;
 }
 
+Mortymere::SpriteLayerType ASPRITE::layer(void) const
+{
+    return _layer;
+}
+
+Mortymere::SpriteLayerType &ASPRITE::layer(void)
+{
+    return _layer;
+}
+
 bool ASPRITE::drawOn(Mortymere::Instance &instance)
 {
     return drawOn(instance, sf::RenderStates::Default);

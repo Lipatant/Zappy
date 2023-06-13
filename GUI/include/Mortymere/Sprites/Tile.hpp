@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Mortymere/Sprites/Object.hpp
+** Mortymere/Sprites/Tile.hpp
 ** File description:
 ** -
 */
@@ -11,21 +11,24 @@
 #pragma once
 
 #include "Mortymere/ASprite.hpp"
-#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/ConvexShape.hpp>
 
 namespace Mortymere { namespace Sprites {
 
-class Object : public Mortymere::ASprite {
+class Tile : public Mortymere::ASprite {
 
 protected: // PROTECTED MEMBERS
-    sf::RectangleShape _sprite;
+    sf::ConvexShape _convex;
 
 public: // PUBLIC FUNCTIONS
     bool drawOn(Mortymere::Instance &instance, sf::RenderStates const \
         &states) override;
 
 public: // CONSTRUCTOR
-    Object(void);
+    Tile(void);
+    Tile(sf::Color const &color);
+    Tile(sf::Color const &fillColor, sf::Color const &outlineColor, \
+        float const colorThickness);
 
 };
 

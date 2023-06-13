@@ -12,6 +12,7 @@
 
 #include <map>
 #include "Citadel/Character.hpp"
+#include "Citadel/Ground.hpp"
 #include "Mortymere/Instance.hpp"
 
 namespace Citadel {
@@ -26,6 +27,8 @@ protected: // PROTECTED MEMBERS
 public: // PUBLIC MEMBERS
     /// @brief List of all characters in the Citadel
     std::map<Citadel::CharacterNumber, Citadel::Character> characters;
+    /// @brief Ground of the Citadel
+    Citadel::Ground ground;
 
 public: // PUBLIC FUNCTIONS
     /// @brief Enters a new server command to the Citadel

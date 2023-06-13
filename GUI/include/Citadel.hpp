@@ -12,4 +12,5 @@
 
 #include "Citadel/Character.hpp"
 #include "Citadel/Exception.hpp"
+#include "Citadel/Ground.hpp"
 #include "Citadel/Instance.hpp"

@@ -18,8 +18,8 @@ CHARACTER::Character(std::string const &filepath) : _filepath(filepath)
             << std::endl;
         return;
     }
-    _convex.setTexture(&_texture);
-    _textureRect = _convex.getTextureRect();
+    _sprite.setTexture(&_texture);
+    _textureRect = _sprite.getTextureRect();
     setCharacterRotation(Mortymere::CharacterRotation::Down);
 }
 
@@ -36,18 +36,18 @@ bool CHARACTER::setCharacterRotation(Mortymere::CharacterRotation const \
     spriteSize.x = (_textureRect.width - gap * 5) / 4;
     spriteSize.y = (_textureRect.height - gap * 4) / 3;
     if (characterRotation == Mortymere::CharacterRotation::Right) {
-        _convex.setScale(-1.0f, 1.0f);
+        _sprite.setScale(-1.0f, 1.0f);
         _textureRectTransformed.top = gap + static_cast<int>( \
             Mortymere::CharacterRotation::Left) * (spriteSize.y + gap);
     } else {
-        _convex.setScale(1.0f, 1.0f);
+        _sprite.setScale(1.0f, 1.0f);
         _textureRectTransformed.top = gap + static_cast<int>( \
             characterRotation) * (spriteSize.y + gap);
     }
     _textureRectTransformed.left = gap;
     _textureRectTransformed.width = spriteSize.x;
     _textureRectTransformed.height = spriteSize.y;
-    _convex.setTextureRect(_textureRectTransformed);
+    _sprite.setTextureRect(_textureRectTransformed);
     _characterRotation = characterRotation;
     return true;
 }
