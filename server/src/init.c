@@ -75,7 +75,7 @@ void init_struct(args_t args, team_t *team, map_t *maps, player_t *player)
             team[j].player[k] = init_player(player[k], args);
     maps->max_x = args.width;
     maps->max_y = args.height;
-    team->nb_client = args.clients;
+    team->nb_clients = args.clients;
     init_tab(maps);
     set_team(args, team);
 }
