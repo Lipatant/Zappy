@@ -36,7 +36,7 @@ typedef struct map_s {
 
 typedef struct team_s {
     char *name;
-    int id;
+    int nb_clients;
     player_t *player;
 } team_t;
 
