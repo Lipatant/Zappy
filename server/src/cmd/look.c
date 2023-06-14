@@ -13,10 +13,13 @@
 void look(data_t *data)
 {
     if (direction == 0) {
+        look_up(data);
     } else if (direction == 1) {
+        look_right(data);
     } else if (direction == 2) {
+        look_down(data);
     } else if (direction == 3) {
-        look_left()
+        look_left(data);
     }
     send(socket, to_send, strlen(to_send), 0);
 }
