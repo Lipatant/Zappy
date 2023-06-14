@@ -19,7 +19,7 @@ int forward(data_t *data);
 int right(data_t *data);
 int left(data_t *data);
 int quit(data_t *data);
-//int look(data_t *data);
+int look(data_t *data);
 //int inventory(data_t *data);
 //int broadcast(data_t *data);
 //int connect_nbr(data_t *data);
