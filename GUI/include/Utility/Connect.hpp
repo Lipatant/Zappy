@@ -19,6 +19,7 @@ class Connect {
         std::string getIp() const { return _ip; };
         int getPort() const { return _port; };
         std::string receive();
+        void sender(std::string);
 
     protected:
     private:

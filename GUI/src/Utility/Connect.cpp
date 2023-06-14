@@ -8,6 +8,7 @@
 #include "Utility/Connect.hpp"
 #include <iostream>
 #include <unistd.h>
+#include <sys/socket.h>
 
 Connect::Connect(std::string ip, int port) : _ip(ip), _port(port)
 {
@@ -41,4 +42,15 @@ std::string Connect::receive()
     read(_sockfd, buffer, 1024);
     message = buffer;
     return message;
+}
+
+void Connect::sender(std::string msg) //lui donné GUI pour qu'il ce connecte au serveur
+{
+    int error_send = 0;
+
+    error_send = send(_connect, msg.c_str(), msg.size(), 0);
+    if (error_send == -1) {
+        Exception exception("Erreur de l'envoie de message.");
+        throw exception;
+    }
 }
