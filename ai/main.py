@@ -60,26 +60,67 @@ def main(argc: int, argv: list[str]) -> int:
     attributes = dir(trant)
 
     # list of the callable functions
+    # So that functions beginning with '_' are ignored, create a function table
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
                 and not attr.startswith('_')]
 
-    getattr(trant, functions[8])()
-    getattr(trant, functions[6])()
-    getattr(trant, functions[11])("food")
-    getattr(trant, functions[11])("food")
-    getattr(trant, functions[6])()
-    time.sleep(1)
-    # this part should be replaced by the command gestion. It must be able to
-    # listen to the server, change the data and execute the commands
-    # TEMPORARY VALUE
+# PARTIE AI ===================================================================
+
+    counter = 0
     while 1:
-        getattr(trant, functions[4])()
+        print("===START===> ", counter, ">", client.data, "<")
+
+        getattr(trant, functions[6])() #inventaire
         time.sleep(1)
         if (client.data == "dead\n"):
             break
-        getattr(trant, functions[9])()
+
+        getattr(trant, functions[4])() #avancer
         time.sleep(1)
+        if (client.data == "dead\n"):
+            break
+
+        getattr(trant, functions[9])() #right
+        time.sleep(1)
+        if (client.data == "dead\n"):
+            break
+
+        counter += 1
+
+#    getattr(trant, functions[8])()
+
+#    for i in range (9, 12):
+#        print(i)
+#        if i == 0 or i == 10 or i == 11:
+#            getattr(trant, functions[i])("test")
+#        else:
+#            getattr(trant, functions[i])()
+
+#    getattr(trant, functions[11])("food")
+#    getattr(trant, functions[11])("food")
+#    getattr(trant, functions[6])()
+#    time.sleep(1)
+#    # this part should be replaced by the command gestion. It must be able to
+#    # listen to the server, change the data and execute the commands
+#    # TEMPORARY VALUE
+
+# PARTIE AI ===================================================================
 
     # disconnect
     client.disconnect_from_server()
     return 0
+
+'''
+0 Broacast "Text"
+1 Connect_nbr
+2 Eject
+3 Fork
+4 Forward
+5 Incantation
+6 Inventory
+7 Left
+8 Look
+9 Right
+10 Set "Text"
+11 Take "Text"
+'''
