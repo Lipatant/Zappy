@@ -23,7 +23,7 @@ int look(data_t *data);
 //int inventory(data_t *data);
 //int broadcast(data_t *data);
 //int connect_nbr(data_t *data);
-////int fork(data_t *data);
+//int fork(data_t *data);
 //int eject(data_t *data);
 //int take(data_t *data);
 //int set(data_t *data);

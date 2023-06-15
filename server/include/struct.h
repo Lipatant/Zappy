@@ -77,4 +77,16 @@ typedef struct args_s {
     int freq;
 } args_t;
 
+typedef struct density_s {
+    int nb_case;
+    size_t food_d;
+    size_t linemate_d;
+    size_t deraumere_d;
+    size_t sibur_d;
+    size_t mendiane_d;
+    size_t phiras_d;
+    size_t thystame_d;
+} density_t;
+
+
 #endif /* !STRUCT_H_ */
