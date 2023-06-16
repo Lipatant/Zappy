@@ -32,7 +32,7 @@ struct Locks_s {
 static void engineThread(Citadel::Instance &citadel, bool &close, \
     Locks_s &locks, int const port, std::string const &ip)
 {
-    std::string userInput;
+//    std::string userInput;
     std::string infoServ;
     Connect Connect(ip, port);
 
@@ -49,16 +49,16 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
             close = true;
             return;
         }
-        std::getline(std::cin, userInput);
-        if (userInput.empty())
+//        std::getline(std::cin, userInput);
+        if (infoServ.empty())
             continue;
-        if (userInput == "exit") {
-            locks.close.lock();
-            close = true;
-            break;
-        }
+//        if (userInput == "exit") {
+//            locks.close.lock();
+//            close = true;
+//            break;
+//        }
         locks.citadel.lock();
-        try { citadel << userInput; }
+        try { citadel << infoServ; }
         CATCH_EXCEPTION_COMMAND(InvalidAmountArguments, e)
         CATCH_EXCEPTION_COMMAND(TooFewArguments, e)
         CATCH_EXCEPTION_COMMAND(TooManyArguments, e)
