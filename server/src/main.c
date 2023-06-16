@@ -12,6 +12,7 @@
 
 #include "server.h"
 #include "my.h"
+#include "struct.h"
 
 /**
  * @brief the function for displaying the help
@@ -42,7 +43,6 @@ static int help(void)
  * @param args the structure of the arguments
  * @return args_t the structure of the arguments with the names inside
  */
-
 static args_t parse_names(int argc, char **argv, args_t args)
 {
     int i = 0;
@@ -71,7 +71,6 @@ static args_t parse_names(int argc, char **argv, args_t args)
  * @param opt the option that is given by getopt
  * @return args_t the structure of the arguments with the arguments inside
  */
-
 static args_t check_args_2(int argc, char **argv, args_t args, int opt)
 {
     switch (opt) {
@@ -104,7 +103,6 @@ static args_t check_args_2(int argc, char **argv, args_t args, int opt)
  * @param args the structure of the arguments
  * @return args_t the structure of the arguments with the arguments inside
  */
-
 static args_t check_args(int argc, char **argv, args_t args)
 {
     int opt = 0;
@@ -137,22 +135,20 @@ static args_t check_args(int argc, char **argv, args_t args)
  *      if 0 no error
  *      if 84 an error occured
  */
-
 int main(int argc, char **argv)
 {
-    team_t *team;
-    player_t *player;
-    map_t *map;
+    map_t map;
     args_t args;
+    team_list_t team_list = {0, 0};
 
     if (argc == 2 && strcmp(argv[1], "-help") == 0)
         return help();
     args.names = malloc(sizeof(char *));
     args.names[0] = NULL;
     args = check_args(argc, argv, args);
-    init_struct(args, team, map, player);
-    if (server(args) == 84)
+    init_struct(args, &team_list, &map);
+    if (server(args, team_list, map) == 84)
         return 84;
-    free_struct(player, map, team);
+    free_struct(team_list.team->player, map, team_list);
     return 0;
 }

@@ -17,7 +17,6 @@
  * @param s the server structure
  * @return int the return value
  */
-
 static int in_in_loop(int i, client_t *c, server_t *s)
 {
     if (FD_ISSET(i, &c->read_fd)) {
@@ -36,7 +35,6 @@ static int in_in_loop(int i, client_t *c, server_t *s)
  * @param s the server structure
  * @return int the return value
  */
-
 int in_loop(client_t *c, server_t *s)
 {
     for (int i = 0; i != FD_SETSIZE; i++) {
