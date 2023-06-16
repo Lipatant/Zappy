@@ -50,8 +50,3 @@ void verif_rand(density_t *den, map_t *map)
     if (r >= den->food_d)
         map->map[map->max_y][map->max_x] = "food";
 }
-
-void verif_rand(density_t *den)
-{
-
-}
