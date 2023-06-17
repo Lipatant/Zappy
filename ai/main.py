@@ -13,7 +13,7 @@ from ai.client import Client
 from ai.error import print_error_exit
 
 import threading
-import sys
+import time
 
 ## @author Damien and Pierre-Louis
 ## @brief Print the message explaining how to use it
@@ -46,6 +46,7 @@ def receive_data(client: Client.Client):
         except:
             break
         client.receive = data.decode()
+        print("this is " + client.receive)
 
 
 ## @author Damien and Pierre-Louis
@@ -73,30 +74,70 @@ def main(argc: int, argv: list[str]) -> int:
     attributes = dir(trant)
 
     # list of the callable functions
+    # So that functions beginning with '_' are ignored, create a function table
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
                 and not attr.startswith('_')]
 
-    # print functions and their index
-    # TEMPORARY VALUR
-    for i in range (len(functions)):
-        print(i, functions[i])
-
+# PARTIE AI ===================================================================
 
     # this part should be replaced by the command gestion. It must be able to
     # listen to the server, change the data and execute the commands
     # TEMPORARY VALUR
-    receive_thread = threading.Thread(target=receive_data, args=(client,))
-    receive_thread.start()
+#    receive_thread = threading.Thread(target=receive_data, args=(client,))
+#    receive_thread.start()
 
 
-    # Here read commands of the server
-    while not trant.dead():
-        if client.receive != "":
-            print("received:", client.receive)
+    counter = 0
+    while 1:
+        print("===START===> ", counter, ">", client.data, "<")
+
+        getattr(trant, functions[6])() #inventaire
+        if (client.data == "dead\n"):
             break
-        else:
-            getattr(trant, functions[5])()
+
+        getattr(trant, functions[4])() #avancer
+        if (client.data == "dead\n"):
+            break
+
+        getattr(trant, functions[9])() #right
+        if (client.data == "dead\n"):
+            break
+
+        counter += 1
+
+#    getattr(trant, functions[8])()
+
+#    for i in range (9, 12):
+#        print(i)
+#        if i == 0 or i == 10 or i == 11:
+#            getattr(trant, functions[i])("test")
+#        else:
+#            getattr(trant, functions[i])()
+
+#    getattr(trant, functions[11])("food")
+#    getattr(trant, functions[11])("food")
+#    getattr(trant, functions[6])()
+#    time.sleep(1)
+#    # this part should be replaced by the command gestion. It must be able to
+#    # listen to the server, change the data and execute the commands
+#    # TEMPORARY VALUE
+
 
     # disconnect
     client.disconnect_from_server()
     return 0
+
+'''
+0 Broacast "Text"
+1 Connect_nbr
+2 Eject
+3 Fork
+4 Forward
+5 Incantation
+6 Inventory
+7 Left
+8 Look
+9 Right
+10 Set "Text"
+11 Take "Text"
+'''

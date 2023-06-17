@@ -18,7 +18,7 @@ class Client:
     team: str
     x: int
     y: int
-    receive: str = ""
+    data: str
     socket: socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def __init__(self, args: arguments):
@@ -40,19 +40,17 @@ class Client:
 
     # this method is the initialization with the server
     def communicate(self) -> str:
-        received_data = self.socket.recv(1024).decode()
-        print("Received from server:", received_data)
-
+        self.data = self.socket.recv(1024).decode()
         to_send = self.team + "\n"
         self.socket.send(to_send.encode())
         print("Sent to server:", to_send)
 
-        received_data = self.socket.recv(1024).decode()
-        print("Received from server:", received_data)
-        if (received_data == "ko\n"):
+        self.data = self.socket.recv(1024).decode()
+        print("Received from server:", self.data)
+        if (self.data == "ko\n"):
             print("error server")
             exit(84)
-        return received_data
+        return self.data
 
 
 
@@ -62,7 +60,7 @@ class Client:
 
 ## @author Pierre-Louis
 ## @brief Parse the received data of server
-## @param received_data is give by the server
+## @param self.client.data is give by the server
 ## @return None
     def parsing_data(self, str_nb):
         nb = re.findall(r'\d+', str_nb)

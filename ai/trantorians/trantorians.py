@@ -62,47 +62,63 @@ class trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def forward(self) -> None:
-        self.food -= 1
-        if self.direction == 0:
-            self.x -= 1
-            if self.x < 0:
-                self.x = self.client.x - 1
-        elif self.direction == 1:
-            self.y += 1
-            if self.y > self.client.y - 1:
-                self.y = 0
-        elif self.direction == 2:
-            self.x += 1
-            if self.x > self.client.x - 1:
-                self.x = 0
-        elif self.direction == 3:
-            self.y -= 1
-            if self.y < 0:
-                self.y = self.client.y - 1
-        to_send = "forward\n"
+        to_send = "Forward\n"
         self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+
+#        self.food -= 1
+#        if self.direction == 0:
+#            self.x -= 1
+#            if self.x < 0:
+#                self.x = self.client.x - 1
+#        elif self.direction == 1:
+#            self.y += 1
+#            if self.y > self.client.y - 1:
+#                self.y = 0
+#        elif self.direction == 2:
+#            self.x += 1
+#            if self.x > self.client.x - 1:
+#                self.x = 0
+#        elif self.direction == 3:
+#            self.y -= 1
+#            if self.y < 0:
+#                self.y = self.client.y - 1
+#        to_send = "Forward\n"
+#        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def left(self) -> None:
-        self.direction -= 1
-        if self.direction < 0:
-            self.direction = 3
-        to_send = "left\n"
+        to_send = "Left\n"
         self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        self.direction -= 1
+#        if self.direction < 0:
+#            self.direction = 3
+#        to_send = "Left\n"
+#        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def right(self) -> None:
-        self.direction += 1
-        if self.direction > 3:
-            self.direction = 0
-        to_send = "right\n"
+        to_send = "Right\n"
         self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        self.direction += 1
+#        if self.direction > 3:
+#            self.direction = 0
+#        to_send = "Right\n"
+#        self.client.socket.send(to_send.encode())
 
     ## @author Pierre-Louis
     ## @brief function for the trantorian can looking up
@@ -190,16 +206,21 @@ class trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def look(self) -> None:
-        if (self.direction == 0):
-            self._look_up()
-        if (self.direction == 1):
-            self._look_right()
-        if (self.direction == 2):
-            self._look_down()
-        if (self.direction == 3):
-            self._look_left()
-        to_send = "look\n"
+        to_send = "Look\n"
         self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        if (self.direction == 0):
+#            self._look_up()
+#        if (self.direction == 1):
+#            self._look_right()
+#        if (self.direction == 2):
+#            self._look_down()
+#        if (self.direction == 3):
+#            self._look_left()
+#        to_send = "Look\n"
+#        self.client.socket.send(to_send.encode())
 
 
     ## @author Damien
@@ -207,97 +228,127 @@ class trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def inventory(self) -> None:
-        print(f"""    Inventory:
-Food: {self.bag[FOOD]}
-Linemate: {self.bag[LINEMATE]}
-Deraumere: {self.bag[DERAUMERE]}
-Sibur: {self.bag[SIBUR]}
-Mendiane: {self.bag[MENDIANE]}
-Phiras: {self.bag[PHIRAS]}
-Thysmate: {self.bag[THYSMATE]}
-""")
+        to_send = "Inventory\n"
+        self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        print(f"""    Inventory:
+#Food: {self.bag[FOOD]}
+#Linemate: {self.bag[LINEMATE]}
+#Deraumere: {self.bag[DERAUMERE]}
+#Sibur: {self.bag[SIBUR]}
+#Mendiane: {self.bag[MENDIANE]}
+#Phiras: {self.bag[PHIRAS]}
+#Thysmate: {self.bag[THYSMATE]}
+#""")
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def broadcast_text(self, text) -> None:
-        print(text)
-        to_send = "broadcast " + text + "\n"
+        to_send = "Broacast " + text + "\n"
         self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        print(text)
+#        to_send = "Broadcast " + text + "\n"
+#        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def connect_nbr(self) -> None:
-        print("slot")
-        to_send = "connect\n"
+        to_send = "Connect_nbr\n"
         self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        print("slot")
+#        to_send = "Connect_nbr\n"
+#        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def fork(self) -> None:###creer un oeuf
-        pid: int = os.fork()
-        to_send = "fork\n"
+        to_send = "Fork\n"
         self.client.socket.send(to_send.encode())
-
-        if pid > 0:
-            print("I am parent process:")
-            print("Process ID:", os.getpid())
-            print("Child's process ID:", pid)
-        else:
-            print("\nI am child process:")
-            print("Process ID:", os.getpid())
-            print("Parent's process ID:", os.getppid())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        pid: int = os.fork()
+#        to_send = "Fork\n"
+#        self.client.socket.send(to_send.encode())
+#
+#        if pid > 0:
+#            print("I am parent process:")
+#            print("Process ID:", os.getpid())
+#            print("Child's process ID:", pid)
+#        else:
+#            print("\nI am child process:")
+#            print("Process ID:", os.getpid())
+#            print("Parent's process ID:", os.getppid())
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def eject(self) -> None:
-        print(" eject")
-        to_send = "eject\n"
+        to_send = "Eject\n"
         self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        print(" eject")
+#        to_send = "eject\n"
+#        self.client.socket.send(to_send.encode())
 
-    ## @author Damien
-    ## @brief
-    ## @param self Contains trantorian values
-    ## @return True if he runs out of food else return False
-    def dead(self) -> bool:
-        if (self.food < 0):
-            print("dead")
-            to_send = "dead\n"
-            self.client.socket.send(to_send.encode())
-            return True
-        return False
+
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def take_object(self) -> None:
-        print("take_object")
-        to_send = "take_object\n"
+    def take_object(self, object: str) -> None:
+        to_send = "Take " + object + "\n"################ DOES NOT WORK
         self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        print("Take object")
+#        to_send = "Take object\n"
+#        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def set_object(self) -> None:
-        print("set_object")
-        to_send = "set_object\n"
+    def set_object(self, object: str) -> None:
+        to_send = "Set " + object + "\n"
         self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        print("Set object")
+#        to_send = "Set object\n"
+#        self.client.socket.send(to_send.encode())
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def incantation(self) -> None:
-        print("incantation")
-        to_send = "incantation\n"
+        to_send = "Incantation\n"
         self.client.socket.send(to_send.encode())
+        print("Sent to server:", to_send)
+        self.client.data = self.client.socket.recv(1024).decode()
+        print("Received from server:", self.client.data)
+#        print("Incantation")
+#        to_send = "Incantation\n"
+#        self.client.socket.send(to_send.encode())
 # things to do are updated on the trello, do not hesitate
