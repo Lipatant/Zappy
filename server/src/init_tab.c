@@ -32,8 +32,8 @@ map_t *init_tab(map_t *maps)
         maps = init_tab_x(maps, i);
         if (maps == NULL)
             return NULL;
-        maps->map[i][maps->max_x] = NULL;
+        maps->map[i][maps->max_x] = NULL; // invalid write of size 8
     }
-    maps->map[maps->max_y] = NULL;
+    maps->map[maps->max_y] = NULL; // invalid write of size 8
     return maps;
 }
