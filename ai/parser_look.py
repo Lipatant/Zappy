@@ -76,28 +76,29 @@ def go_to_stone(trant, functions, client, stone_need, stone_case):
         getattr(trant, functions[11])(stone_need) #take
         if (client.data == "dead\n"):
             return (42)
-    elif (bot_case > stone_case):
-        getattr(trant, functions[7])() #left
-        if (client.data == "dead\n"):
-            return (42)
     else:
-        getattr(trant, functions[9])() #right
-        if (client.data == "dead\n"):
-            return (42)
-
-    while (bot_case != stone_case):
         if (bot_case > stone_case):
-            bot_case -= 1
+            getattr(trant, functions[7])() #left
+            if (client.data == "dead\n"):
+                return (42)
         else:
-            bot_case += 1
-        getattr(trant, functions[4])() #forward
+            getattr(trant, functions[9])() #right
+            if (client.data == "dead\n"):
+                return (42)
+
+        while (bot_case != stone_case):
+            if (bot_case > stone_case):
+                bot_case -= 1
+            else:
+                bot_case += 1
+            getattr(trant, functions[4])() #forward
+            if (client.data == "dead\n"):
+                return (42)
+
+        getattr(trant, functions[11])(stone_need) #take
         if (client.data == "dead\n"):
             return (42)
-
-    getattr(trant, functions[11])(stone_need) #take
-    if (client.data == "dead\n"):
-        return (42)
-    return (0)
+        return (0)
 
 '''
 0 Broadcast "Text"
