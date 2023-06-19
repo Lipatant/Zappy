@@ -59,7 +59,7 @@ std::string Connect::receive()
         }
         int bytesRead = read(_sockfd, buffer, sizeof(buffer));
         if (bytesRead == -1) {
-            if (errno == EWOULDBLOCK || errno == EAGAIN)
+            if (errno == EAGAIN)
                 return "";
             std::cerr << "Read error" << std::endl;
             return "";
