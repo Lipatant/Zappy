@@ -122,6 +122,9 @@ def main(argc: int, argv: list[str]) -> int:
             getattr(trant, functions[5])()
             if (client.data == "dead\n"):
                 break
+            elif (client.data == "Elevation underway\n"):
+                client.data = client.socket.recv(1024).decode()
+                print("Received from server:", client.data)
             trant.bag = [0 for i in range(6)]
             trant.level += 1
 #    for i in range (9, 12):
