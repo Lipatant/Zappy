@@ -75,7 +75,6 @@ def main(argc: int, argv: list[str]) -> int:
         if (client.data == "dead\n"):
             break
 
-        time.sleep(1)
         getattr(trant, functions[4])() #forward
         if (client.data == "dead\n"):
             break
@@ -103,7 +102,28 @@ def main(argc: int, argv: list[str]) -> int:
         if (client.data == "dead\n"):
             break
 
+        #loot resources
+        for i in range(6):
+            if trant.bag[i] != trantorians.UPGRADES[trant.level - 1][i]:
+                getattr(trant, functions[11])(trantorians.RESOURCES[i])
+                if (client.data == "dead\n"):
+                    break
+                if (client.data == "ok\n"):
+                    trant.bag[i] += 1
 
+        #incantation
+        if trant.bag == trantorians.UPGRADES[trant.level - 1]:
+            for i in range(6):
+                while(trant.bag[i] != 0):
+                    getattr(trant, functions[10])(trantorians.RESOURCES[i])
+                    if (client.data == "dead\n"):
+                        break
+                    trant.bag[i] -= 1
+            getattr(trant, functions[5])()
+            if (client.data == "dead\n"):
+                break
+            trant.bag = [0 for i in range(6)]
+            trant.level += 1
 #    for i in range (9, 12):
 #        print(i)
 #        if i == 0 or i == 10 or i == 11:

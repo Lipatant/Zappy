@@ -9,22 +9,29 @@
 
 from ai.client import Client
 
-# inventory indexes
-FOOD = 0
-LINEMATE = 1
-DERAUMERE = 2
-SIBUR = 3
-MENDIANE = 4
-PHIRAS = 5
-THYSMATE = 6
+RESOURCES = [
+    "linemate",
+    "deraumere",
+    "sibur",
+    "mendiane",
+    "phiras",
+    "thysmate",
+]
 
+UPGRADES = [
+    [1, 0, 0, 0, 0, 0],
+    [1, 1, 1, 0, 0, 0],
+    [2, 0, 1, 0, 2, 0],
+    [1, 1, 2, 0, 1, 0],
+    [1, 2, 1, 3, 0, 0],
+    [1, 2, 3, 0, 1, 0],
+    [2, 2, 2, 2, 2, 1],
+]
 ####    temporary map, it is used as a global variable for now but will soon be
 ####    replaced by the one from the server
 tmp_map = [
     [i for k in range(10)] for i in range(10)
 ]
-
-import os
 
 ## @author Damien and Pierre-Louis
 ## @brief contain function and variable for trantorians
@@ -40,7 +47,7 @@ class trantorians:
     ## @return None
     def __init__(self, client: Client) -> None:
         self.level = 1
-        self.bag = [0 for i in range(7)]
+        self.bag = [0 for i in range(6)]
         self.client = client
 
     ## @author Damien
