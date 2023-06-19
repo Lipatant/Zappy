@@ -7,11 +7,15 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 #include <ctype.h>
-
 #include "server.h"
 
+/**
+ * @brief the function to count the part by a separator
+ * @param command
+ * @param sep
+ * @return
+ */
 int count_parts(const char *command, char sep)
 {
     int nbr = 0;
@@ -22,6 +26,11 @@ int count_parts(const char *command, char sep)
     return nbr;
 }
 
+/**
+ * @brief the function to convert a string to lowercase
+ * @param to_convert
+ * @return
+ */
 char *convert_to_lowercase(char *to_convert)
 {
     for (char *c = to_convert; *c != '\0'; c++)
@@ -29,6 +38,12 @@ char *convert_to_lowercase(char *to_convert)
     return to_convert;
 }
 
+/**
+ * @brief the function to create a new split
+ * @param nbr
+ * @param command
+ * @return
+ */
 char **create_split(int nbr, const char *command)
 {
     char **split = malloc(sizeof(char *) * (nbr + 2));
@@ -43,6 +58,11 @@ char **create_split(int nbr, const char *command)
     return split;
 }
 
+/**
+ * @brief the function to do a simple split
+ * @param command
+ * @return
+ */
 char **simple_split(const char *command)
 {
     char **split = malloc(sizeof(char *) * 2);
@@ -54,7 +74,6 @@ char **simple_split(const char *command)
         free(split);
         return NULL;
     }
-    split[0] = convert_to_lowercase(split[0]);
     split[1] = NULL;
     return split;
 }

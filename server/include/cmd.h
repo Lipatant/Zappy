@@ -30,10 +30,10 @@ int look(data_t *data);
 //int incantation(data_t *data);
 
 static const cmd_t cmds[] = {
-    {"forward\0", &forward},
-    {"right\0", &right},
-    {"left\0", &left},
-    //{"look\0", &look}, // return char ** of look
+    {"Forward\0", &forward},
+    {"Right\0", &right},
+    {"Left\0", &left},
+    {"Look\0", &look},
     //{"inventory", &inventory},
     //{"broadcast", &broadcast}, // string
     //{"connect_nbr", &connect_nbr}, // return int nb place team

@@ -9,10 +9,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
 #include "server.h"
 #include "my.h"
-#include "struct.h"
 
 /**
  * @brief the function for displaying the help

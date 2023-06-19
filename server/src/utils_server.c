@@ -6,13 +6,17 @@
 */
 
 #include "server.h"
-#include "struct.h"
 #include <stdio.h>
 #include <sys/select.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
+/**
+ * @brief the function to read the input
+ * @param c
+ * @return
+ */
 static char *read_input(client_t *c)
 {
     int ret = 0;
@@ -34,6 +38,31 @@ static char *read_input(client_t *c)
 }
 
 /**
+ * @brief the function to handle a new client if it's an IA
+ * @param s
+ * @param c
+ * @param input
+ * @return
+ */
+static int handle_new_ia(server_t *s, client_t *c, char *input)
+{
+    int nb = 0;
+
+    nb = get_team_by_name(s, input, s->nb_team);
+    if (s->team_list->team[nb].nb_clients != 0) {
+        s->team_list->team[nb].nb_clients--;
+        dprintf(c->fd, "%d\n%d %d\n", s->team_list->team[nb].nb_clients,
+            s->map->max_x, s->map->max_y);
+        c->team_nb = nb;
+        c->player = &s->team_list->team[nb].
+            player[s->team_list->team[nb].player_use];
+    } else {
+        dprintf(c->fd, "ko\n");
+    }
+    return 0;
+}
+
+/**
  * @brief the function for adding the client
  *
  * @param s the server structure
@@ -43,7 +72,6 @@ static char *read_input(client_t *c)
 static int handle_new_connection(server_t *s, client_t *c)
 {
     char *input = NULL;
-    int nb = 0;
 
     c->fd = accept(s->fd, (struct sockaddr *)&c->addr, &s->size_sock);
     if (c->fd == -1) {
@@ -52,9 +80,11 @@ static int handle_new_connection(server_t *s, client_t *c)
     }
     dprintf(c->fd, "WELCOME\r\n");
     input = read_input(c);
-    if (strncmp(input, "GUI", 3))
+    if (strncmp(input, "GUI", 3) == 0)
         c->GUI = true;
-    nb = get_team_by_name(s, input, s->nb_team);
+    else
+        handle_new_ia(s, c, input);
+    c->map = s->map;
     FD_SET(c->fd, &c->active_fd);
     return 0;
 }

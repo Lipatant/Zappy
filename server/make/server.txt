@@ -17,4 +17,5 @@ command.c
 split.c
 utils_split.c
 cmd/quit.c
+cmd/look.c
 utils.c

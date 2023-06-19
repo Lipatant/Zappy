@@ -6,11 +6,15 @@
 */
 
 #include "server.h"
-#include "struct.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
+/**
+ * @brief function to set variable for the server
+ * @param s the server struct
+ * @return
+ */
 static server_t *set_var_server(server_t *s)
 {
     s->addr.sin_addr.s_addr = INADDR_ANY;
@@ -60,7 +64,8 @@ static int init_server(server_t *s, args_t args, team_list_t team_list,
  * @param c the client structure
  * @return int the return value
  */
-static int start_server(server_t *s, client_t *c)
+static int start_server(server_t *s, client_t *c, team_list_t team_list,
+    map_t map)
 {
     c->data = NULL;
     FD_ZERO(&c->active_fd);
@@ -71,6 +76,8 @@ static int start_server(server_t *s, client_t *c)
             perror("select");
             break;
         }
+        s->team_list = &team_list;
+        s->map = &map;
         if (in_loop(c, s) == 84)
             break;
     }
@@ -92,7 +99,7 @@ int server(args_t args, team_list_t team_list, map_t map)
 
     if (init_server(&server, args, team_list, map) == 84)
         return 84;
-    start_server(&server, client);
+    start_server(&server, client, team_list, map);
     free(client);
     return 0;
 }

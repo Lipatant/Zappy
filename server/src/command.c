@@ -9,17 +9,29 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
-
 #include "server.h"
 
-static int manage_quit(server_t *s, data_t *data)
+/**
+ * @brief the function to mange the quit command
+ * @param s the server struct
+ * @param c the client struct
+ * @param data the data struct
+ * @return
+ */
+static int manage_quit(server_t *s, client_t *c, data_t *data)
 {
     s->client--;
+    FD_CLR(data->fd, &c->active_fd);
     close(data->fd);
     free(data);
     return 0;
 }
 
+/**
+ * @brief the function to clean the str
+ * @param str the str to clean
+ * @return the str clean
+ */
 static char *clean_str(char *str)
 {
     int space = 0;
@@ -44,6 +56,11 @@ static char *clean_str(char *str)
     return clean;
 }
 
+/**
+ * @brief the function to get the command from the client
+ * @param data the data struct
+ * @return the command
+ */
 static char *get_command(data_t *data)
 {
     int ret = 0;
@@ -64,14 +81,21 @@ static char *get_command(data_t *data)
     return clean_str(buff);
 }
 
+/**
+ * @brief the command function to manage the command for the server
+ * @param s the server struct
+ * @param c the client struct
+ * @param data the data struct
+ * @return
+ */
 int command(server_t *s, client_t *c, data_t *data)
 {
     char *command = get_command(data);
-    int ret = (command == NULL) ? 84 : cmd(data, command);
+    int ret = (command == NULL) ? 84 : cmd(data, command, c);
 
     free(command);
     if (ret == 1) {
-        return manage_quit(s, data);
+        return manage_quit(s, c, data);
     }
     return 0;
 }

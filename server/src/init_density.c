@@ -22,15 +22,6 @@ void init_density(density_t *den, args_t *args)
     den->thystame_d = den->nb_case * 0.05;
 }
 
-void spawn_object(density_t *den, map_t *map, args_t *args)
-{
-    for (int i = 0; i != args->width; i++) {
-        for (int j = 0; j != args->height; j++) {
-            verif_rand(den, map);
-        }
-    }
-}
-
 void verif_rand(density_t *den, map_t *map)
 {
     int r = rand() % den->nb_case;

@@ -8,10 +8,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-
 #include "server.h"
 #include "cmd.h"
 
+/**
+ * @brief the function to check the ctrlf
+ * @param command the command
+ * @return the command
+ */
 static char *check_for_crlf(char *command)
 {
     int len = strlen(command);
@@ -22,6 +26,10 @@ static char *check_for_crlf(char *command)
     return command;
 }
 
+/**
+ * @brief the function to free the split
+ * @param splitted the char ** to be split
+ */
 static void free_split(char **splitted)
 {
     for (int i = 0; splitted[i] != NULL; i++)
@@ -29,6 +37,11 @@ static void free_split(char **splitted)
     free(splitted);
 }
 
+/**
+ * @brief the function for spliting the command by the ' '
+ * @param command
+ * @return char ** the list with the command
+ */
 static char **get_splitted(char *command)
 {
     char **splitted;
@@ -48,10 +61,22 @@ static char **get_splitted(char *command)
     return splitted;
 }
 
-int cmd(data_t *data, char *command)
+/**
+ * @brief the cmd function that check the list for the command and execute it
+ * if the command does not exist send ko
+ * @param data the struct data
+ * @param command the command get with read
+ * @param c the client struct
+ * @return
+ * 0 if no error
+ * 84 if error
+ */
+int cmd(data_t *data, char *command, client_t *c)
 {
     int ret = -1;
 
+    data->player = c->player;
+    data->map = c->map;
     data->args = get_splitted(command);
     if (data->args == NULL)
         return 84;

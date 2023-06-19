@@ -22,7 +22,7 @@ char **simple_split(const char *command);
 char **create_split(int nbr, const char *command);
 char *convert_to_lowercase(char *to_convert);
 int count_parts(const char *command, char sep);
-int cmd(data_t *data, char *command);
+int cmd(data_t *data, char *command, client_t *c);
 char **split(const char *command, char sep);
 int command(server_t *s, client_t *c, data_t *data);
 int get_team_by_name(server_t *server, char *name, int nb_team);

@@ -6,9 +6,13 @@
 */
 
 #include "my.h"
-#include "server.h"
 #include "cmd.h"
 
+/**
+ * @brief the function for the right command
+ * @param data the struct data
+ * @return
+ */
 int right(data_t *data)
 {
     if (!data->connect)
