@@ -45,6 +45,7 @@ std::string Connect::receive()
 {
     char buffer[1024] = {0};
     std::string message;
+    const std::chrono::seconds timeoutDuration(1);
     auto startTime = std::chrono::steady_clock::now();
     int flags = fcntl(_sockfd, F_GETFL, 0);
     fcntl(_sockfd, F_SETFL, flags | O_NONBLOCK);
@@ -52,7 +53,7 @@ std::string Connect::receive()
     while (1) {
         auto currentTime = std::chrono::steady_clock::now();
         auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime);
-        if (elapsedTime >= 1)
+        if (elapsedTime >= timeoutDuration)
             return "";
         if (read(_sockfd, buffer, sizeof(buffer)) < 0) {
             if (errno == EAGAIN)
