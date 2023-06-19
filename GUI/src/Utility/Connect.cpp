@@ -53,17 +53,14 @@ std::string Connect::receive()
     while (1) {
         auto currentTime = std::chrono::steady_clock::now();
         auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime);
-        if (elapsedTime >= timeoutDuration) {
-            message = "";
-            return message;
-        }
-        int bytesRead = read(_sockfd, buffer, sizeof(buffer));
-        if (bytesRead == -1) {
+        if (elapsedTime >= timeoutDuration)
+            return "";
+        if (read(_sockfd, buffer, sizeof(buffer)) < 0) {
             if (errno == EAGAIN)
                 return "";
             std::cerr << "Read error" << std::endl;
             return "";
-        } else if (bytesRead == 0)
+        } else if (read(_sockfd, buffer, sizeof(buffer))== 0)
             return "";
         else
             break;
