@@ -34,8 +34,9 @@ class Client:
         try:
             self.socket.connect((self.ip, self.port))
             print("Connected to the server.")
-        except socket.error as error:
-            print_error_exit("Error:", error)
+        except:
+            print("Error: cannot connect to the server")
+            exit(84)
 
 
     # this method is the initialization with the server
