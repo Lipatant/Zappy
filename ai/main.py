@@ -13,6 +13,7 @@ from ai.client import Client
 from ai.error import print_error_exit
 
 import time
+import random
 
 ## @author Damien and Pierre-Louis
 ## @brief Print the message explaining how to use it
@@ -66,28 +67,42 @@ def main(argc: int, argv: list[str]) -> int:
 
 # PARTIE AI ===================================================================
 
-    counter = 0
-    while 1:
-        print("===START===> ", counter, ">", client.data, "<")
+#    counter = 0
+    while client.data != "dead\n":
+#        print("===START===> ", counter, ">", client.data, "<")
 
-        getattr(trant, functions[6])() #inventaire
-        time.sleep(1)
+        getattr(trant, functions[6])() #inventory
         if (client.data == "dead\n"):
             break
 
-        getattr(trant, functions[4])() #avancer
         time.sleep(1)
+        getattr(trant, functions[4])() #forward
         if (client.data == "dead\n"):
             break
 
-        getattr(trant, functions[9])() #right
         time.sleep(1)
+        rdm = random.randint(0,3)
+
+        if rdm == 0:
+            getattr(trant, functions[9])() #left
+            if (client.data == "dead\n"):
+                break
+        elif rdm == 1:
+            getattr(trant, functions[7])() #right
+            if (client.data == "dead\n"):
+                break
+
+#        counter += 1
+        time.sleep(1)
+        getattr(trant, functions[8])() #look
         if (client.data == "dead\n"):
             break
 
-        counter += 1
+        time.sleep(1)
+        getattr(trant, functions[11])("food") #take food
+        if (client.data == "dead\n"):
+            break
 
-#    getattr(trant, functions[8])()
 
 #    for i in range (9, 12):
 #        print(i)

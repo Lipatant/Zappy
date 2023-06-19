@@ -30,14 +30,8 @@ import os
 ## @brief contain function and variable for trantorians
 ## @details The name trantorians refers to bots that do not collaborate with each other to evolve.
 class trantorians:
-    direction: int
-    food: int
-    found: list[int]####temporary
-    fov: int
+    level: int
     bag: list[int]
-    sound: int###temporary, need to know what this is
-    x: int
-    y: int
     client: Client
 
     ## @author Damien
@@ -45,17 +39,9 @@ class trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def __init__(self, client: Client) -> None:
-        self.direction = 0
-        self.food = 126
-        self.found = []
         self.level = 1
-        self.sound = 0
         self.bag = [0 for i in range(7)]
-        #temporary values ###
-        self.x = 2
-        self.y = 2
         self.client = client
-        #####################
 
     ## @author Damien
     ## @brief
