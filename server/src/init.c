@@ -7,37 +7,18 @@
 
 #include "my.h"
 #include "server.h"
+#include "struct.h"
+#include <stdio.h>
+#include <string.h>
 
-void free_struct(player_t *player, map_t *maps, team_t *team)
+void free_struct(player_t *player, map_t maps, team_list_t team_list)
 {
-    for (int i = 0; i < maps->max_y; i++)
-        free(maps->map[i]);
-    free(team->player);
-    free(maps->map);
+    for (int i = 0; i < maps.max_y; i++)
+        free(maps.map[i]);
+    free(team_list.team->player);
+    free(maps.map);
     free(player);
-    free(maps);
-    free(team);
-}
-
-int init_tab(map_t *maps)
-{
-    maps->map = malloc(sizeof(char **) * maps->max_y);
-    if (maps->map == NULL)
-        return 84;
-    for (int i = 0; i < maps->max_y; i++) {
-        maps->map[i] = malloc(sizeof(char *) * maps->max_x);
-        if (maps->map[i] == NULL)
-            return 84;
-        for (int j = 0; j < maps->max_x; j++) {
-            maps->map[i][j] = malloc(sizeof(char) * 10);
-            if (maps->map[i][j] == NULL)
-                return 84;
-            strcpy(maps->map[i][j], "0");
-        }
-        maps->map[i][maps->max_x] = NULL;
-    }
-    maps->map[maps->max_y] = NULL;
-    return 0;
+    free(team_list.team);
 }
 
 static player_t init_player(player_t player, args_t args)
@@ -61,26 +42,28 @@ static void set_team(args_t args, team_t *team)
     for (i = 0; args.names[i] != NULL; i++);
 
     for (int j = 0; j < i; j++) {
-        team->name = args.names[j];
+        team[j].name = args.names[j];
+        team[j].nb_clients = args.clients;
     }
 }
 
-void init_struct(args_t args, team_t *team, map_t *maps, player_t *player)
+void init_struct(args_t args, team_list_t *team_list, map_t *maps)
 {
     int i = 0;
     for (i = 0; args.names[i] != NULL; i++);
-    maps = malloc(sizeof(map_t));
-    team = malloc(sizeof(team_t) * i);
-    player = malloc(sizeof(player_t) * (args.clients + 1));
+    team_list->team = malloc(sizeof(team_t) * i);
+    if (team_list->team)
+        memset(team_list->team, 0, sizeof(team_t) * i);
+    team_list->team->player = malloc(sizeof(player_t) * (args.clients + 1));
     for (int j = 0; j <= i ; j++)
-        team[j].player = malloc(sizeof(player_t) * (args.clients + 1));
+        team_list->team[j].player = malloc(sizeof(player_t) *
+            (args.clients + 1));
     for (int j = 0; j <= i; j++)
         for (int k = 0; k <= args.clients; k++)
-            team[j].player[k] = init_player(player[k], args);
+            team_list->team[j].player[k] =
+                init_player(team_list->team[j].player[k], args);
     maps->max_x = args.width;
     maps->max_y = args.height;
-    team->nb_clients = args.clients;
-    init_tab(maps);
-    set_team(args, team);
+    maps = init_tab(maps);
+    set_team(args, team_list->team);
 }
-

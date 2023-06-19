@@ -34,7 +34,7 @@ void elevation_lvl7(team_t *team)
 void elevation_lvl8(team_t *team)
 {
     if (team->player->linemate >= 2 && team->player->deraumere >= 2
-    && team->player->sibur >= 2 && team->player->mendiane >= 2 
+    && team->player->sibur >= 2 && team->player->mendiane >= 2
     && team->player->phiras >= 2 && team->player->thystame >= 1) {
         team->player->linemate -= 2;
         team->player->deraumere -= 2;

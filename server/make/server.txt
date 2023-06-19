@@ -3,6 +3,7 @@ server.c
 error.c
 in_loop.c
 init.c
+init_tab.c
 call_elevation.c
 elevation_firstpart.c
 elevation_secondpart.c
@@ -16,3 +17,4 @@ command.c
 split.c
 utils_split.c
 cmd/quit.c
+utils.c

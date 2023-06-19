@@ -40,7 +40,6 @@ int find_client(data_t **data, int nbr, int fd)
  * @param nbr the number of client
  * @return int the return value
  */
-
 static int check_exist(data_t **data, int fd, int nbr)
 {
     if (data == NULL)
@@ -58,7 +57,6 @@ static int check_exist(data_t **data, int fd, int nbr)
  * @param s the server structure
  * @param fd the fd
  */
-
 static void fill_client(client_t *c, server_t *s, int fd)
 {
     c->data[s->client - 1]->args = NULL;
@@ -75,7 +73,6 @@ static void fill_client(client_t *c, server_t *s, int fd)
  * @param fd the fd
  * @return int the return value
  */
-
 int add_client(server_t *s, client_t *c, int fd)
 {
     if (check_exist(c->data, fd, s->client) == 84)

@@ -19,10 +19,8 @@
 
 enum orientation { NORTH, EAST, SOUTH, WEST };
 
-
-
-void init_struct(args_t args, team_t *team, map_t *maps, player_t *player);
-int init_tab(map_t *maps);
+void init_struct(args_t args, team_list_t *team_list, map_t *maps);
+map_t *init_tab(map_t *maps);
 void make_elevation(team_t *team);
 void elevation_lvl2(team_t *team);
 void elevation_lvl3(team_t *team);
@@ -31,6 +29,6 @@ void elevation_lvl5(team_t *team);
 void elevation_lvl6(team_t *team);
 void elevation_lvl7(team_t *team);
 void elevation_lvl8(team_t *team);
-void free_struct(player_t *player, map_t *maps, team_t *team);
+void free_struct(player_t *player, map_t maps, team_list_t team);
 
 #endif /* !MY_H_ */

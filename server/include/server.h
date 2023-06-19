@@ -12,7 +12,7 @@
     #include <stddef.h>
     #include "struct.h"
 
-int server(args_t args);
+int server(args_t args, team_list_t team_list, map_t map);
 int error(char *msg);
 int find_client(data_t **data, int nbr, int fd);
 int add_client(server_t *s, client_t *c, int fd);
@@ -25,5 +25,6 @@ int count_parts(const char *command, char sep);
 int cmd(data_t *data, char *command);
 char **split(const char *command, char sep);
 int command(server_t *s, client_t *c, data_t *data);
+int get_team_by_name(server_t *server, char *name, int nb_team);
 
 #endif /* !SERVER_H_ */

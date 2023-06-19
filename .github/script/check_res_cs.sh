@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONTENT="$(cat coding-style-reports.log)"
+CONTENT="$(cat server/coding-style-reports.log)"
 ILLEGAL_FILES_FOUND=0
 if [ "$CONTENT" == "" ]; then
     exit 0

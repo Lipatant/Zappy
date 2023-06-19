@@ -32,7 +32,7 @@ typedef struct player_s {
 typedef struct map_s {
     int max_x;
     int max_y;
-    char **map;
+    char ***map;
 } map_t;
 
 typedef struct team_s {
@@ -40,6 +40,11 @@ typedef struct team_s {
     int nb_clients;
     player_t *player;
 } team_t;
+
+typedef struct team_list_s {
+    size_t length;
+    team_t *team;
+} team_list_t;
 
 typedef struct data_s {
     int fd;
@@ -49,6 +54,7 @@ typedef struct data_s {
     char *ip;
     bool connect;
     player_t *player;
+    map_t *map;
 } data_t;
 
 typedef struct server_s {
@@ -59,6 +65,9 @@ typedef struct server_s {
     struct sockaddr_in addr;
     socklen_t size_addr;
     socklen_t size_sock;
+    team_list_t *team_list;
+    map_t *map;
+    int nb_team;
 } server_t;
 
 typedef struct client_s {
@@ -67,6 +76,7 @@ typedef struct client_s {
     fd_set read_fd;
     fd_set active_fd;
     data_t **data;
+    bool GUI;
 } client_t;
 
 typedef struct args_s {
