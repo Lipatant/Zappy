@@ -70,8 +70,12 @@ def main(argc: int, argv: list[str]) -> int:
 # PARTIE AI ===================================================================
 
     while client.data != "dead\n":
-        if (algo_search_stone(trant, functions, client) == 42):
+        result = algo_search_stone(trant, functions, client)
+
+        if (result == 42):
             break
+        elif (result == 0):
+            trant.bag[0] += 1
         time.sleep(1)
 
         getattr(trant, functions[11])("food") #take food

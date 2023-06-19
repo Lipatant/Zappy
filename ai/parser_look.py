@@ -42,9 +42,13 @@ def algo_search_stone(trant, functions, client):
                 return (42)
 
     else: # STONE IN LOOK
-        go_to_stone(trant, functions, client, stone_need, result)
+        return (go_to_stone(trant, functions, client, stone_need, result))
 
+## @author Pierre-Louis
 def parser_look(look, stone_need):
+    if look.startswith("[ player,"):
+        print("""QUE PLAYER, QUE PLAYER, QUE PLAYER
+QUE PLAYER, QUE PLAYER, QUE PLAYER""")
     if stone_need in look:
         stone_case = look[:look.index(stone_need)].count(",")
         print(f"PRESENT")
@@ -53,41 +57,39 @@ def parser_look(look, stone_need):
         print("ABSENT")
         return ("ABSENT")
 
+## @author Pierre-Louis
 def go_to_stone(trant, functions, client, stone_need, stone_case):
-    print(">>>", stone_case, "<<<")
     bot_case = 0
+    counter = 0
+    tab_max_case = [0, 3, 8, 15]
+    tab_mid_case = [2, 6, 12, 20]
 
-    bot_case += 2
-    getattr(trant, functions[4])() #forward
-    if (client.data == "dead\n"):
-        return (42)
-
-    if (stone_case > 3):
-        bot_case += 4
-        getattr(trant, functions[4])() #forward
-        if (client.data == "dead\n"):
-            return (42)
+    for i in tab_max_case:
+        if (stone_case > i):
+            bot_case = tab_mid_case[counter]
+            getattr(trant, functions[4])() #forward
+            if (client.data == "dead\n"):
+                return (42)
+        counter += 1
 
     if (bot_case == stone_case):
         getattr(trant, functions[11])(stone_need) #take
         if (client.data == "dead\n"):
             return (42)
     elif (bot_case > stone_case):
-        getattr(trant, functions[9])() #left
+        getattr(trant, functions[7])() #left
         if (client.data == "dead\n"):
             return (42)
     else:
-        getattr(trant, functions[9])() #left
+        getattr(trant, functions[9])() #right
         if (client.data == "dead\n"):
             return (42)
 
     while (bot_case != stone_case):
-        print("WHHHHHHHHILE >", bot_case, stone_case)
         if (bot_case > stone_case):
             bot_case -= 1
         else:
             bot_case += 1
-
         getattr(trant, functions[4])() #forward
         if (client.data == "dead\n"):
             return (42)
@@ -95,9 +97,6 @@ def go_to_stone(trant, functions, client, stone_need, stone_case):
     getattr(trant, functions[11])(stone_need) #take
     if (client.data == "dead\n"):
         return (42)
-
-    print("FIIIIIIIN > ", bot_case, stone_case)
-
     return (0)
 
 '''
