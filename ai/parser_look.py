@@ -47,8 +47,8 @@ def algo_search_stone(trant, functions, client):
 ## @author Pierre-Louis
 def parser_look(look, stone_need):
     if look.startswith("[ player,"):
-        print("""QUE PLAYER, QUE PLAYER, QUE PLAYER
-QUE PLAYER, QUE PLAYER, QUE PLAYER""")
+        print("""ONLY PLAYER ONLY PLAYER ONLY PLAYER
+ONLY PLAYER ONLY PLAYER ONLY PLAYER""")
     if stone_need in look:
         stone_case = look[:look.index(stone_need)].count(",")
         print(f"PRESENT")
