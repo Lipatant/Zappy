@@ -241,7 +241,7 @@ class trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def broadcast_text(self, text) -> None:
-        to_send = "Broacast " + text + "\n"
+        to_send = "Broadcast " + text + "\n"
         self.client.socket.send(to_send.encode())
         print("Sent to server:", to_send)
         self.client.data = self.client.socket.recv(1024).decode()
