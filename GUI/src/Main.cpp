@@ -35,7 +35,13 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
 //    std::string userInput;
     std::string infoServ;
     Connect Connect(ip, port);
-
+    try {
+        Connect.join();
+    } catch (std::exception const& e) {
+            std::cerr << e.what() << std::endl;
+            close = true;
+            return;
+    }
     while (1) {
         locks.close.lock();
         if (close)
@@ -44,11 +50,10 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
         try {
             infoServ = Connect.receive();
         } catch (std::exception const& e) {
-            std::cerr << e.what() << std::endl;
-            locks.close.lock();
-            close = true;
-            return;
+            infoServ = "";
+            break;
         }
+        std::cerr << "Received :" << infoServ << '.' << std::endl;
 //        std::getline(std::cin, userInput);
         if (infoServ.empty())
             continue;

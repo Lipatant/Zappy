@@ -5,27 +5,34 @@
 ** Connect
 */
 
-#include "Utility/Connect.hpp"
+#include <chrono>
 #include <iostream>
 #include <unistd.h>
 #include <sys/socket.h>
+#include <fcntl.h>
+#include "Citadel/Exception.hpp"
+#include "Utility/Connect.hpp"
 
 Connect::Connect(std::string ip, int port) : _ip(ip), _port(port)
+{
+
+}
+
+void Connect::join(void)
 {
     _serverAddress.sin_family = AF_INET;
     _serverAddress.sin_port = htons(_port);
     _serverAddress.sin_addr.s_addr = inet_addr(_ip.c_str());
     _sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (_sockfd == -1) {
-        close(_sockfd);
-        Exception exception("Erreur lors de la création du socket.");
-        throw exception;
+        Exception Exception("Socket create failed.");
+        throw Exception;
     }
     _connect = connect(_sockfd, reinterpret_cast<struct sockaddr*>(&_serverAddress), sizeof(_serverAddress));
     if (_connect < 0) {
         close(_sockfd);
-        Exception exception("Échec de la connexion au serveur.");
-        throw exception;
+        Exception Exception("Connection to the server failed");
+        throw Exception;
     }
 }
 
@@ -38,8 +45,31 @@ std::string Connect::receive()
 {
     char buffer[1024] = {0};
     std::string message;
+    const std::chrono::seconds timeoutDuration(1);
+    auto startTime = std::chrono::steady_clock::now();
+    int flags = fcntl(_sockfd, F_GETFL, 0);
+    fcntl(_sockfd, F_SETFL, flags | O_NONBLOCK);
 
-    read(_sockfd, buffer, 1024);
+    while (1) {
+        auto currentTime = std::chrono::steady_clock::now();
+        auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime);
+        if (elapsedTime >= timeoutDuration) {
+            message = "";
+            return message;
+        }
+        int bytesRead = read(_sockfd, buffer, sizeof(buffer));
+        if (bytesRead == -1) {
+            if (errno == EWOULDBLOCK || errno == EAGAIN)
+                return "";
+            std::cerr << "Read error" << std::endl;
+            return "";
+        } else if (bytesRead == 0)
+            return "";
+        else
+            break;
+    }
+    flags = fcntl(_sockfd, F_GETFL, 0);
+    fcntl(_sockfd, F_SETFL, flags & (~O_NONBLOCK));
     message = buffer;
     return message;
 }

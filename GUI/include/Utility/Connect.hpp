@@ -20,6 +20,7 @@ class Connect {
         int getPort() const { return _port; };
         std::string receive();
         void sender(std::string);
+        void join(void);
 
     protected:
     private:
