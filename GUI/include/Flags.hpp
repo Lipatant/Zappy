@@ -6,7 +6,7 @@
 */
 
 /// @file
-/// @brief
+/// @brief Includes useful compilation flags
 
 #pragma once
 
