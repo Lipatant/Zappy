@@ -65,7 +65,7 @@ map_t *verif_rand(density_t *den, map_t *map, int i, int j)
  * @param den the struct containing info about the density
  * @param map the struct containing info about the map
  * @param args the struct containing info about the args
- * 
+ *
  * @return map_t the struct containing info about the map
  */
 map_t *spawn_object(density_t *den, map_t *map)

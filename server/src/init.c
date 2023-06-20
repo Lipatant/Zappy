@@ -55,7 +55,7 @@ static player_t init_player(player_t player, args_t args)
  *
  * @param args the struct containing info about the args
  * @param team the struct containing info about the team
- * 
+ *
  */
 static void set_team(args_t args, team_t *team)
 {
@@ -68,14 +68,13 @@ static void set_team(args_t args, team_t *team)
     }
 }
 
-
 /**
  * @brief the function for initializing the struct
  *
  * @param args the struct containing info about the args
  * @param team_list the struct containing info about the team_list
  * @param map the struct containing info about the map
- * 
+ *
  */
 void init_struct(args_t args, team_list_t *team_list, map_t *maps)
 {
