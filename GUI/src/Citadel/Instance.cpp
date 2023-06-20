@@ -211,7 +211,8 @@ static void convertCommand(std::string const &cmd, size_t &ac, \
 INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine)
 {
     srand(time(NULL));
-    engine.addDisplayModule(citadelDisplayModuleCharacterList, this);
+    _engine.addDisplayModule(citadelDisplayModuleCharacterList, this);
+    _engine.window.setViewCenter(0, 0);
 }
 
 Mortymere::Instance &INSTANCE::engine(void)
@@ -252,9 +253,16 @@ void INSTANCE::enterCommand(std::string const &cmd)
 bool INSTANCE::udpate(void)
 {
     if (selectedCharacter && characters.find(selectedCharacter) != characters.end())
-        _engine.window.setViewCenter(_engine.camera.inSpaceToOnScreen(characters.at(selectedCharacter).sprite->anchor()));
-    else
-        _engine.window.setViewCenter(0, 0);
+        _engine.camera.center = characters.at(selectedCharacter).sprite->anchor();
+    else {
+        _engine.camera.center = {0, 0, 0};
+        _engine.camera.center.x = static_cast<float>(ground.getSizeX() - 1) / 2;
+        _engine.camera.center.z = static_cast<float>(ground.getSizeY() - 1) / 2;
+    }
+//    if (ground.getSizeX() < 1 || ground.getSizeY() < 1)
+//        _engine.camera.center = {0, 0, 0};
+//    else
+//        _engine.camera.center = {0, 0, 0};
     return _engine.udpate();
 }
 

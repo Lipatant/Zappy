@@ -11,6 +11,7 @@
 #pragma once
 
 #include <map>
+#include <vector>
 #include "Citadel/Character.hpp"
 #include "Citadel/Ground.hpp"
 #include "Mortymere/Instance.hpp"
@@ -35,6 +36,8 @@ public: // PUBLIC MEMBERS
     /// @brief Currently selected character's portrait. If no portrait is
     ///     selected, selectedPortrait should be equal to 0
     Citadel::CharacterNumber selectedPortrait = 0;
+    /// @brief List of all teams
+    std::vector<Citadel::CharacterTeam> teams = {};
     /// @brief List of all loaded portrait textures
     std::map<std::string, sf::Texture> portraitTextures;
 

@@ -30,3 +30,13 @@ bool GROUND::changeSize(size_t const x, size_t const y)
     _sizeY = y;
     return true;
 }
+
+std::size_t GROUND::getSizeX(void)
+{
+    return _sizeX;
+}
+
+std::size_t GROUND::getSizeY(void)
+{
+    return _sizeY;
+}

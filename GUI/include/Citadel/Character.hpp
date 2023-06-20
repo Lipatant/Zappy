@@ -52,6 +52,8 @@ public: // PUBLIC MEMBERS
     std::vector<std::string> spritePortraitTextures;
 
 public: // PUBLIC FUNCTIONS
+    /// @return Value of _team
+    Citadel::CharacterTeam getTeam(void);
     /// @param level (Citadel::CharacterLevel const) New value of
     ///     _level
     void setLevel(Citadel::CharacterLevel const level);

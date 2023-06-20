@@ -91,6 +91,11 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
     setTeam(t);
 }
 
+Citadel::CharacterTeam CHARACTER::getTeam(void)
+{
+    return _team;
+}
+
 void CHARACTER::setLevel(Citadel::CharacterLevel const level)
 {
     _level = level;

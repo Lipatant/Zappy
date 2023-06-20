@@ -22,6 +22,7 @@ bool OBJECT::drawOn(Mortymere::Instance &instance, sf::RenderStates const \
     sf::Vector2f cornerA;
     sf::Vector2f cornerB;
 
+    _sprite.setFillColor(_fillColor);
     cornerAnchorA.x -= 0.5; cornerAnchorB.x += 0.5; cornerAnchorB.y += height;
     cornerA = instance.camera.inSpaceToOnScreen(cornerAnchorA);
     cornerB = instance.camera.inSpaceToOnScreen(cornerAnchorB);

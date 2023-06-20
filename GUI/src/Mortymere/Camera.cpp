@@ -10,6 +10,8 @@
 
 #define CAMERA Mortymere::Camera
 
+#define CAMERA_SCALE 2 //1.5
+
 CAMERA::Camera(Mortymere::Window const &window) : _window(window)
 {
     center.x = 0; center.y = 0; center.z = 0;
@@ -24,12 +26,12 @@ sf::Vector2f CAMERA::inSpaceToOnScreen(sf::Vector3f const position) const
 {
     sf::Vector2f windowSize = _window.getView().getSize();
     sf::Vector2f returned(0.05, 0.05);
-    sf::Vector3f pos(position + center);
+    sf::Vector3f pos(position - center);
     sf::Vector2f windowSizeRatio(windowSize.x / windowSize.y, \
         windowSize.y / windowSize.x);
 
-    returned.x *= pos.x * 1.5 + pos.z * 0.7;
-    returned.y *= 0 - pos.y * 1.5 + pos.z * 0.7;
+    returned.x *= pos.x * CAMERA_SCALE + pos.z * 0.47 * CAMERA_SCALE;
+    returned.y *= 0 - pos.y * CAMERA_SCALE + pos.z * 0.47 * CAMERA_SCALE;
 //    returned.x *= pos.z * 0.70710678118;
 //    returned.y *= pos.z * 0.70710678118;
 //    returned.x *= pos.x + pos.z * 0.70710678118;
