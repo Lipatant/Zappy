@@ -19,3 +19,5 @@ utils_split.c
 cmd/quit.c
 cmd/look.c
 utils.c
+cmd/inventory.c
+init_player.c

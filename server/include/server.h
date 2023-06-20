@@ -26,5 +26,6 @@ int cmd(data_t *data, char *command, client_t *c);
 char **split(const char *command, char sep);
 int command(server_t *s, client_t *c, data_t *data);
 int get_team_by_name(server_t *server, char *name, int nb_team);
+player_t *init_player(player_t *player, int pos_x, int pos_y, int orientation);
 
 #endif /* !SERVER_H_ */
