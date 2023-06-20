@@ -15,8 +15,6 @@
  */
 int right(data_t *data)
 {
-    if (!data->connect)
-        return 84;
     switch (data->player->orientation) {
         case NORTH:
             data->player->orientation = EAST;

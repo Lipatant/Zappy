@@ -38,6 +38,46 @@ def error_handling(argc: int, argv: list[str]) -> int:
     if argc != 4 and argc != 6:
         print_error_exit("error: invalid number of arguments")
 
+## @author Damien
+## @brief create a trantorian and then loop
+## @return always 0
+def trantorian_lives(client: Client):
+    trant = trantorians.trantorians(client)
+    attributes = dir(trant)
+    functions = [attr for attr in attributes if callable(getattr(trant, attr))
+                and not attr.startswith('_')]
+
+    while 1:
+        result = algo_search_stone(trant, functions, client)
+
+        if (result == 42):
+            break
+        elif (result == 0):
+            trant.bag[0] += 1
+        time.sleep(1)
+
+        getattr(trant, functions[11])("food") #take food
+        client.check_client()
+
+        #incantation
+        if trant.bag == trantorians.UPGRADES[trant.level - 1]:
+            for i in range(6):
+                while(trant.bag[i] != 0):
+                    getattr(trant, functions[10])(trantorians.RESOURCES[i])
+                    client.check_client()
+                    trant.bag[i] -= 1
+            getattr(trant, functions[5])()
+            client.check_client()
+            if (client.data == "Elevation underway\n"):
+                client.data = client.socket.recv(1024).decode()
+                print("Received from server:", client.data)
+                trant.bag = [0 for i in range(6)]
+                trant.level += 1
+
+    # disconnect
+    client.disconnect_from_server()
+    return 0
+
 ## @author Damien and Pierre-Louis
 ## @brief Start function for ia launches error handling and connection to server
 ## @param argc is the length of argv
@@ -59,55 +99,7 @@ def main(argc: int, argv: list[str]) -> int:
     # this part initializes with the server
     msg = client.communicate()
     client.parsing_data(msg)
-    trant = trantorians.trantorians(client)
-    attributes = dir(trant)
-
-    # list of the callable functions
-    # So that functions beginning with '_' are ignored, create a function table
-    functions = [attr for attr in attributes if callable(getattr(trant, attr))
-                and not attr.startswith('_')]
+    trantorian_lives(client)
 
 # PARTIE AI ===================================================================
 
-    while client.data != "dead\n":
-        result = algo_search_stone(trant, functions, client)
-
-        if (result == 42):
-            break
-        elif (result == 0):
-            trant.bag[0] += 1
-        time.sleep(1)
-
-        getattr(trant, functions[11])("food") #take food
-        if (client.data == "dead\n"):
-            break
-
-        #loot resources
-        for i in range(6):
-            if trant.bag[i] != trantorians.UPGRADES[trant.level - 1][i]:
-                getattr(trant, functions[11])(trantorians.RESOURCES[i])
-                if (client.data == "dead\n"):
-                    break
-                if (client.data == "ok\n"):
-                    trant.bag[i] += 1
-
-        #incantation
-        if trant.bag == trantorians.UPGRADES[trant.level - 1]:
-            for i in range(6):
-                while(trant.bag[i] != 0):
-                    getattr(trant, functions[10])(trantorians.RESOURCES[i])
-                    if (client.data == "dead\n"):
-                        break
-                    trant.bag[i] -= 1
-            getattr(trant, functions[5])()
-            if (client.data == "dead\n"):
-                break
-            elif (client.data == "Elevation underway\n"):
-                client.data = client.socket.recv(1024).decode()
-                print("Received from server:", client.data)
-            trant.bag = [0 for i in range(6)]
-            trant.level += 1
-
-    # disconnect
-    client.disconnect_from_server()
-    return 0
