@@ -249,6 +249,13 @@ void INSTANCE::enterCommand(std::string const &cmd)
         throw Citadel::Exception::Command::InvalidAmountArguments();
 }
 
+bool INSTANCE::udpate(void)
+{
+    if (!selectedCharacter)
+        _engine.window.setViewCenter(0, 0);
+    return _engine.udpate();
+}
+
 void INSTANCE::operator<<(std::string const &cmd)
 {
     return enterCommand(cmd);

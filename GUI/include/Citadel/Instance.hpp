@@ -43,6 +43,8 @@ public: // PUBLIC FUNCTIONS
     void enterCommand(std::string const &cmd);
     /// @return Reference to _engine
     Mortymere::Instance &engine(void);
+    /// @return Returns true, or false if the window is closed
+    bool udpate(void);
 
 public: // PUBLIC
     /// @brief Enters a new server command to the Citadel.

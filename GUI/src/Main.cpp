@@ -32,8 +32,8 @@ struct Locks_s {
 static void engineThread(Citadel::Instance &citadel, bool &close, \
     Locks_s &locks, int const port, std::string const &ip)
 {
-//    std::string userInput;
     std::string infoServ;
+
     Connect Connect(ip, port);
     try {
         Connect.join();
@@ -53,10 +53,10 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
             infoServ = "";
             break;
         }
-//        std::getline(std::cin, userInput);
+//        std::getline(std::cin, infoServ);
         if (infoServ.empty())
             continue;
-//        if (userInput == "exit") {
+//        if (infoServ == "exit") {
 //            locks.close.lock();
 //            close = true;
 //            break;
@@ -81,7 +81,7 @@ static bool start(int const port, std::string const &machine)
     std::thread thread(engineThread, std::ref(citadel), std::ref(close), \
         std::ref(locks), port, std::ref(machine));
 
-    while (engine.udpate()) {
+    while (citadel.udpate()) {
         locks.close.lock();
         if (close) {
             locks.close.unlock();
