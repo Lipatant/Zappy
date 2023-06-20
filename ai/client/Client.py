@@ -70,4 +70,11 @@ class Client:
             exit(84)
         self.x = int(nb[1])
         self.y = int(nb[2])
-    # no need to make error handling here, since the server can't be wrong
+
+## @author Damien
+## @brief check if the client is still alive
+## @return disconnect and exit if the client is dead
+    def check_client(self):
+        if self.data == "dead\n":
+            self.disconnect_from_server()
+            exit(0)
