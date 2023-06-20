@@ -53,7 +53,6 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
             infoServ = "";
             break;
         }
-        std::cerr << "Received :" << infoServ << '.' << std::endl;
 //        std::getline(std::cin, userInput);
         if (infoServ.empty())
             continue;
