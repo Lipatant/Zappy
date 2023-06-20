@@ -38,6 +38,7 @@ typedef struct map_s {
 typedef struct team_s {
     char *name;
     int nb_clients;
+    int player_use;
     player_t *player;
 } team_t;
 
@@ -77,6 +78,9 @@ typedef struct client_s {
     fd_set active_fd;
     data_t **data;
     bool GUI;
+    int team_nb;
+    player_t *player;
+    map_t *map;
 } client_t;
 
 typedef struct args_s {

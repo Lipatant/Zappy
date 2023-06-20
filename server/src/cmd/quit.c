@@ -6,9 +6,13 @@
 */
 
 #include "cmd.h"
-#include "struct.h"
 #include <stdio.h>
 
+/**
+ * @brief the function for the command quit
+ * @param data the struct data
+ * @return
+ */
 int quit(data_t *data)
 {
     dprintf(data->fd, "%s\n", "quit");

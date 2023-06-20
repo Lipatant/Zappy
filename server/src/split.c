@@ -6,9 +6,15 @@
 */
 
 #include <stdio.h>
-
 #include "server.h"
 
+/**
+ * @brief the function to count the split
+ * @param command
+ * @param sep
+ * @param nbr_parts
+ * @return
+ */
 char **split_count(const char *command, char sep, int *nbr_parts)
 {
     int count = 0;
@@ -21,6 +27,13 @@ char **split_count(const char *command, char sep, int *nbr_parts)
     return simple_split(command);
 }
 
+/**
+ * @brief the function that create split
+ * @param command
+ * @param sep
+ * @param nbr
+ * @return
+ */
 char **split_create(const char *command, char sep, int nbr)
 {
     char **split = create_split(nbr, command);
@@ -40,11 +53,16 @@ char **split_create(const char *command, char sep, int nbr)
         }
     }
     split[j][z] = '\0';
-    split[0] = convert_to_lowercase(split[0]);
     split[nbr + 1] = NULL;
     return split;
 }
 
+/**
+ * @brief the split function
+ * @param command
+ * @param sep
+ * @return
+ */
 char **split(const char *command, char sep)
 {
     int nbr_parts = count_parts(command, sep);

@@ -2,10 +2,10 @@
 ## EPITECH PROJECT, 2023
 ## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## AI/Error.py
+## ai/error.py
 ##
 
-## @file Error.py
+## @file error.py
 
 ## @author Pierre-Louis
 ## @brief Print error message and exit 84

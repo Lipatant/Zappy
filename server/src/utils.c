@@ -6,16 +6,22 @@
 */
 
 #include "server.h"
-#include "struct.h"
 #include <string.h>
-#include <stdio.h>
 
+/**
+ * @brief the function to get the number of a team
+ * @param server
+ * @param name
+ * @param nb_team
+ * @return
+ * i the team nb
+ * -1 no team named
+ */
 int get_team_by_name(server_t *server, char *name, int nb_team)
 {
-    printf("%d\n", nb_team);
-    printf("%s\n", server->team_list->team[0].name);
-    for (int i = 0; i <= nb_team; i++) {
-        if (strcmp(server->team_list->team[i].name, name) == 0) {
+    for (int i = 0; i != nb_team; i++) {
+        if (strncmp(server->team_list->team[i].name, name,
+            strlen(server->team_list->team[i].name)) == 0) {
             return i;
         }
     }
