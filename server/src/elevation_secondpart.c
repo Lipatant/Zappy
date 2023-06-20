@@ -7,6 +7,11 @@
 
 #include "my.h"
 
+/**
+ * @brief the function for making the elevation lvl 6
+ *
+ * @param team the struct containing info about the team
+ */
 void elevation_lvl6(team_t *team)
 {
     if (team->player->linemate >= 1 && team->player->deraumere >= 2
@@ -19,6 +24,11 @@ void elevation_lvl6(team_t *team)
     }
 }
 
+/**
+ * @brief the function for making the elevation lvl 7
+ *
+ * @param team the struct containing info about the team
+ */
 void elevation_lvl7(team_t *team)
 {
     if (team->player->linemate >= 2 && team->player->deraumere >= 2
@@ -31,6 +41,11 @@ void elevation_lvl7(team_t *team)
     }
 }
 
+/**
+ * @brief the function for making the elevation lvl 8
+ *
+ * @param team the struct containing info about the team
+ */
 void elevation_lvl8(team_t *team)
 {
     if (team->player->linemate >= 2 && team->player->deraumere >= 2

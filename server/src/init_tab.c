@@ -22,18 +22,18 @@ static map_t *init_tab_x(map_t *maps, int i)
 
 map_t *init_tab(map_t *maps)
 {
-    maps->map = malloc(sizeof(char **) * maps->max_y);
+    maps->map = malloc(sizeof(char **) * maps->max_y + 2);
     if (maps->map == NULL)
         return NULL;
     for (int i = 0; i < maps->max_y; i++) {
-        maps->map[i] = malloc(sizeof(char *) * maps->max_x);
+        maps->map[i] = malloc(sizeof(char *) * maps->max_x + 2);
         if (maps->map[i] == NULL)
             return NULL;
         maps = init_tab_x(maps, i);
         if (maps == NULL)
             return NULL;
-        maps->map[i][maps->max_x] = NULL; // invalid write of size 8
+        maps->map[i][maps->max_x] = NULL;
     }
-    maps->map[maps->max_y] = NULL; // invalid write of size 8
+    maps->map[maps->max_y] = NULL;
     return maps;
 }
