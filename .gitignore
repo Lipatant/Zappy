@@ -207,8 +207,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-#################### Binaries Names ####################
+#################### Binary Names ####################
 
+a.out
 zappy_server
 zappy_gui
 #zappy_ai

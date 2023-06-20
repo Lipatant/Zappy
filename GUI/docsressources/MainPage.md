@@ -12,6 +12,8 @@ The **graphical user interface**, or **GUI** (/ˌdʒiːjuːˈaɪ/ *JEE-yoo-EYE* 
 
 Funy
 
+---
+
 ### What do I do now?
 
 <img src="ThinkingTap.png" alt="-" height="100px">

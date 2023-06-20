@@ -1,1 +1,4 @@
-make/main.txt
+make/Citadel.txt
+make/Main.txt
+make/Mortymere.txt
+make/Utility.txt
