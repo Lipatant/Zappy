@@ -1,47 +1,47 @@
 ##
 ## EPITECH PROJECT, 2023
-## Makefile
+## Zappy
 ## File description:
-## Makefile of Zappy
+## Makefile
 ##
 
 SR	=	src/
 
-SRC	=	$(shell cat make/zappy.txt | tr '\n' ' ')						\
+SRC	=	$(shell cat make/server.txt | tr '\n' ' ')						\
 
 SRC_UT		=	tests/Unit_tests.cpp									\
 
-BUILDDIR = build
+BUILDDIR	=	build
 
-OBJ = $(patsubst %.cpp, $(BUILDDIR)/%.o, $(SRC))
+OBJ	=	$(patsubst %.c, $(BUILDDIR)/%.o, $(SRC))
 
-$(BUILDDIR)/%.o: 	$(SR)%.cpp
+$(BUILDDIR)/%.o: 	$(SR)%.c
 	@mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 
-NAME	=	zappy
+NAME	=	zappy_server
 
-LDFLAGS	=	-lconfig++
+LDFLAGS	=
 
 IDIR	=	include
 
-CPPFLAGS	=	-I./$(IDIR)
+CPPFLAGS	=	-iquote ./$(IDIR)
 
 CFLAGS	=	-W -Wall -Wextra
 
-GCCFLAG	=	g++ -o
+GCCFLAG	=	gcc -o
 
 FDEBUG	=	-g3
 
 LOGSFILE	=	logs.txt
 
-CC			=	g++
+CC			=	gcc
 
 UT 			=	unit_tests
 
-CFLAGS_UT		=	-std=c++17  -Wall -Wextra -Werror
+CFLAGS_UT		=	-Wall -Wextra -Werror
 
-CPPFLAGS_UT	+=	-I./include
+CPPFLAGS_UT	+=	$(CPPFLAGS)
 
 LCRITERION	=	-lcriterion --coverage
 
@@ -49,6 +49,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	$(GCCFLAG) $(NAME) $(OBJ) $(LDFLAGS) > $(LOGSFILE)
+	@mv $(NAME) ../
 
 debug:	$(OBJ)
 	$(GCCFLAG) $(NAME) $(OBJ) $(LDFLAGS) $(FDEBUG) > $(LOGSFILE)
@@ -61,7 +62,7 @@ clean:
 	$(RM) -f $(OBJ) > $(LOGSFILE)
 
 fclean: clean
-	$(RM) -f $(NAME) >> $(LOGSFILE)
+	$(RM) -f ../$(NAME) >> $(LOGSFILE)
 	@$(RM) -f $(NAME)
 	@$(RM) -f $(UT)
 	@$(RM) -f unit_tests
@@ -75,33 +76,11 @@ fclean: clean
 	@$(RM) -f a.out
 	@$(RM) -f coding-style-reports.log
 
-play:	$(NAME)
-	./$(NAME)
-
 re:	fclean all
-
-play_re: re
-	./$(NAME)
 
 tests_run: fclean
 		$(CC) -o $(UT) $(SRC_UT) $(CFLAGS_UT) $(CPPFLAGS_UT) \
 			$(LCRITERION) $(CPPFLAGS_UT)
 		./$(UT)
 
-server:
-	@cd server && make
-
-server_re:
-	@cd server && make re
-
-server_fclean:
-	@cd server && make fclean
-
-server_clean:
-	@cd server && make clean
-
-server_debug:
-	@cd server && make debug
-
-.PHONY: all debug debug_play fclean clean play re play_re tests_run server
-.PHONY: server_re server_fclean server_clean server_debug
+.PHONY: all debug debug_play fclean clean re tests_run
