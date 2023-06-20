@@ -11,7 +11,7 @@
 #define SPRITE_PORTRAIT character.second.spritePortrait
 #define SPRITE_PORTRAIT_TEXTURES character.second.spritePortraitTextures
 #define PORTRAIT_TEXTURES citadel->portraitTextures
-
+#include <iostream>
 #define SET_SPRITE_POSITION \
         if (isHorizontal) { \
             position.x = windowSize.x * -0.5 + \
@@ -44,9 +44,13 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
     sf::FloatRect bounds;
     sf::Vector2f position(0, 0);
     sf::Vector2f const windowSize = instance.window.getView().getSize();
+    sf::View view(instance.window.getView());
+    sf::View viewSaved(view);
     Citadel::CharacterNumber newSelectedPortrait = 0;
     float newSelectedPortraitDistance = 0;
 
+    view.setCenter(0, 0);
+    instance.window.setView(view);
     for (auto &character: citadel->characters) {
         if (SPRITE_PORTRAIT_TEXTURES.empty())
             continue;
@@ -86,5 +90,8 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
         instance.window.draw(SPRITE_PORTRAIT);
         characterListPosition++;
     }
+    instance.window.setView(viewSaved);
     citadel->selectedPortrait = newSelectedPortrait;
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+        citadel->selectedCharacter = newSelectedPortrait;
 }

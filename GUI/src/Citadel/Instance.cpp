@@ -251,7 +251,9 @@ void INSTANCE::enterCommand(std::string const &cmd)
 
 bool INSTANCE::udpate(void)
 {
-    if (!selectedCharacter)
+    if (selectedCharacter && characters.find(selectedCharacter) != characters.end())
+        _engine.window.setViewCenter(_engine.camera.inSpaceToOnScreen(characters.at(selectedCharacter).sprite->anchor()));
+    else
         _engine.window.setViewCenter(0, 0);
     return _engine.udpate();
 }
