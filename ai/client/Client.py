@@ -2,13 +2,13 @@
 ## EPITECH PROJECT, 2023
 ## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## AI/Client/Client.py
+## ai/Client/Client.py
 ##
 
 ## @file Client.py
 
-from AI.Arguments import Arguments
-from AI.Error import print_error_exit
+from ai.arguments import arguments
+from ai.error import print_error_exit
 import socket
 import re
 
@@ -16,9 +16,12 @@ class Client:
     port: int
     ip: str
     team: str
+    x: int
+    y: int
+    data: str
     socket: socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    def __init__(self, args: Arguments):
+    def __init__(self, args: arguments):
         self.ip = args.ip
         self.port = args.port
         self.team = args.team
@@ -31,22 +34,24 @@ class Client:
         try:
             self.socket.connect((self.ip, self.port))
             print("Connected to the server.")
-        except socket.error as error:
-            print_error_exit("Error:", error)
+        except:
+            print("Error: cannot connect to the server")
+            exit(84)
 
 
-
+    # this method is the initialization with the server
     def communicate(self) -> str:
-        received_data = self.socket.recv(1024).decode()
-        print("Received from server:", received_data)
-
+        self.data = self.socket.recv(1024).decode()
         to_send = self.team + "\n"
         self.socket.send(to_send.encode())
         print("Sent to server:", to_send)
 
-        received_data = self.socket.recv(1024).decode()
-        print("Received from server:", received_data)
-        return received_data
+        self.data = self.socket.recv(1024).decode()
+        print("Received from server:", self.data)
+        if (self.data == "ko\n"):
+            print("error server")
+            exit(84)
+        return self.data
 
 
 
@@ -54,17 +59,15 @@ class Client:
         self.socket.close()
         print("Connection closed.")
 
-
-
-
 ## @author Pierre-Louis
 ## @brief Parse the received data of server
-## @param received_data is give by the server
+## @param self.client.data is give by the server
 ## @return None
-def parsing_data(str_nb):
-    nb = re.findall(r'\d+', str_nb)
-    nb_bot = int(nb[0])
-    map_x = int(nb[1])
-    map_y = int(nb[2])
-
-    print(">>>", nb_bot, map_x, map_y, "<<<")
+    def parsing_data(self, str_nb):
+        nb = re.findall(r'\d+', str_nb)
+        if (int(nb[0]) <= 0):
+            print("error: too many trantorians in this team")
+            exit(84)
+        self.x = int(nb[1])
+        self.y = int(nb[2])
+    # no need to make error handling here, since the server can't be wrong

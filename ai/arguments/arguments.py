@@ -2,16 +2,16 @@
 ## EPITECH PROJECT, 2023
 ## B-YEP-400-PAR-4-1-zappy-viktor.bruggeman
 ## File description:
-## AI/Arguments/Arguments.py
+## ai/arguments/arguments.py
 ##
 
-## @file Arguments.py
+## @file arguments.py
 
-from AI.Error import print_error_exit
+from ai.error import print_error_exit
 
 ## @author Damien and Pierre-Louis
 ## @brief Contains server variables and the function to parse arguments of argv
-class Arguments:
+class arguments:
     port: int
     team: str
     ip: str
@@ -32,10 +32,14 @@ class Arguments:
     ## @param argv contain argument given by the user
     ## @return None
     def parse_args(self, argc: int, argv: list[str]) -> None:
-        ## @detail (start, fin, acrementation)
+        ## @details (start, fin, acrementation)
         for i in range(0, argc, 2):
             if argv[i] == "-p":
-                self.port = int(argv[i + 1])
+                try:
+                    self.port = int(argv[i + 1])
+                except:
+                    print("Invalid argument for port", argv[i + 1])
+                    exit(84)
             elif argv[i] == "-n":
                 self.team = argv[i + 1]
             elif argv[i] == "-h":
