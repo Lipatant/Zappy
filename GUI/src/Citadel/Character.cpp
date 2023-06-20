@@ -20,14 +20,16 @@ struct Variance_s {
     std::string name;
     std::string path;
     int weigth;
+    bool forceVariance;
 };
 
 static const Variance_s VARIANCES[] = {
-    {"Rick", "Rick/", 55},
-    {"Morty", "Morty/", 25},
-    {"Jerry", "Jerry/", 10},
-    {"Summer", "Summer/", 8},
-    {"Beth", "Beth/", 2},
+    {"Rick", "Rick/", 55, false},
+    {"Morty", "Morty/", 25, false},
+    {"Jerry", "Jerry/", 10, false},
+    {"Summer", "Summer/", 6, false},
+    {"Beth", "Beth/", 2, false},
+    {"???", "Other/", 2, true},
 };
 static const std::size_t VARIANCES_LENGTH = \
     sizeof(VARIANCES) / sizeof(VARIANCES[0]);
@@ -37,11 +39,12 @@ static const int VARIANCES_TOTAL_WEIGTH = 100;
 
 CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
 {
-    Variance_s variance = {"", "", 0};
-    bool variant;
+    Variance_s variance = {"", "", 0, false};
+    bool variant = true;
     int varianceWeigth = rand() % VARIANCES_TOTAL_WEIGTH;
     int varianceWeigthCumulated = 0;
     std::vector<std::string> paths = {};
+    std::string portraitPath = "";
 
     for (Variance_s const &selectedVariance: VARIANCES) {
         variance = selectedVariance;
@@ -49,7 +52,8 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
         if (varianceWeigth < varianceWeigthCumulated)
             break;
     }
-    variant = (rand() % 100 < 30);
+    if (!variance.forceVariance)
+        variant = (rand() % 100 < 30);
     try {
         for (auto const &file: std::filesystem::directory_iterator( \
             "graphics/charact/" + variance.path)) {
@@ -70,6 +74,12 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
         _filepath = paths[rand() % paths.size()];
         sprite = Mortymere::createSprite<Mortymere::Sprites::Character>( \
             _filepath);
+        portraitPath = _filepath;
+        std::size_t portraitPathFetch = portraitPath.find("/charact/");
+        if (portraitPathFetch != std::string::npos) {
+            portraitPath.replace(portraitPathFetch, 9, "/portrait/");
+            spritePortraitTextures.push_back(portraitPath);
+        }
     } else {
         std::cerr << "No file found for a character sprite" << std::endl;
         sprite = nullptr;

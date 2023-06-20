@@ -29,6 +29,14 @@ public: // PUBLIC MEMBERS
     std::map<Citadel::CharacterNumber, Citadel::Character> characters;
     /// @brief Ground of the Citadel
     Citadel::Ground ground;
+    /// @brief Currently selected character. If no cbaracter is
+    ///     selected, selectedCharacter should be equal to 0
+    Citadel::CharacterNumber selectedCharacter = 0;
+    /// @brief Currently selected character's portrait. If no portrait is
+    ///     selected, selectedPortrait should be equal to 0
+    Citadel::CharacterNumber selectedPortrait = 0;
+    /// @brief List of all loaded portrait textures
+    std::map<std::string, sf::Texture> portraitTextures;
 
 public: // PUBLIC FUNCTIONS
     /// @brief Enters a new server command to the Citadel

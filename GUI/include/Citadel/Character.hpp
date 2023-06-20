@@ -48,6 +48,8 @@ protected: // PROTECTED MEMBERS
 
 public: // PUBLIC MEMBERS
     Mortymere::Sprite sprite;
+    sf::Sprite spritePortrait;
+    std::vector<std::string> spritePortraitTextures;
 
 public: // PUBLIC FUNCTIONS
     /// @param level (Citadel::CharacterLevel const) New value of

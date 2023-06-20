@@ -13,7 +13,7 @@
 #define SCREENSIZE_X 1000
 #define SCREENSIZE_Y 1000
 
-Mortymere::Window::Window(void)
+Mortymere::Window::Window(void) : mouse(0, 0), mouseUI(0, 0)
 {
     if (_icon.loadFromFile("GUI/graphics/Icon.png") || \
         _icon.loadFromFile("graphics/Icon.png"))
@@ -65,18 +65,39 @@ static sf::Vector2f getWindowRatio(sf::Window const &window)
         ratio.y = (float)size.x / size.y;
     return ratio;
 }
-
+#include <iostream>
 void Mortymere::Window::update(void)
 {
     sf::Vector2f windowRatio(getWindowRatio(*this));
     sf::View view(getView());
+    sf::Vector2f viewCenter(view.getCenter());
     sf::FloatRect viewport;
+    sf::Vector2i positionPixels = sf::Mouse::getPosition(*this);
 
     view.setSize(SCREENSIZE_X, SCREENSIZE_Y);
     viewport = sf::FloatRect(1, 1, windowRatio.x, windowRatio.y);
     viewport.left = (1 - viewport.width) / 2;
     viewport.top = (1 - viewport.height) / 2;
     view.setCenter(0, 0);
+    mouseUI = mapPixelToCoords(positionPixels, view);
+    view.setCenter(viewCenter);
+    mouse = mapPixelToCoords(positionPixels, view);
     view.setViewport(viewport);
+    setView(view);
+}
+
+void Mortymere::Window::setViewCenter(float const x, float const y)
+{
+    sf::View view(getView());
+
+    view.setCenter(x, y);
+    setView(view);
+}
+
+void Mortymere::Window::setViewCenter(sf::Vector2f const center)
+{
+    sf::View view(getView());
+
+    view.setCenter(center);
     setView(view);
 }

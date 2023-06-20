@@ -16,7 +16,21 @@
 #include "Mortymere/SpritePtr.hpp"
 #include "Mortymere/Window.hpp"
 
+#define MORTYMERE_INSTANCE_DISPLAY_MODULE(FUNCTION) \
+    void FUNCTION(Mortymere::Instance &instance, void *data)
+
 namespace Mortymere {
+
+/// @brief Display module function
+using InstanceDisplayModuleType = void (*)(Mortymere::Instance &, void *);
+
+/// @brief Display module function
+using InstanceDisplayModule = struct InstanceDisplayModule_s {
+    /// @brief Function
+    Mortymere::InstanceDisplayModuleType function;
+    /// @brief Data that can be brough. nullptr by default
+    void *data;
+};
 
 class Instance {
 
@@ -25,6 +39,9 @@ public: // PUBLIC MEMBERS required to be initialized before PRIVATE MEMBERS
     Mortymere::Window window;
     /// @brief Camera used for display information
     Mortymere::Camera camera;
+    /// @brief Module functions displaying additional stuff on top of the
+    ///     objects from _objects
+    std::list<Mortymere::InstanceDisplayModule> displayModules;
 
 private: // PRIVATE MEMBERS
     /// @brief Ground to display
@@ -33,6 +50,15 @@ private: // PRIVATE MEMBERS
     std::list<Mortymere::SpritePtr> _objects;
 
 public: // PUBLIC FUNCTIONS
+    /// @brief Adds a Mortymere::InstanceDisplayModuleType to displayModules
+    /// @param function (Mortymere::InstanceDisplayModuleType)
+    /// @param data (void *) (optional)
+    void addDisplayModule(Mortymere::InstanceDisplayModuleType function);
+    /// @brief Adds a Mortymere::InstanceDisplayModuleType to displayModules
+    /// @param function (Mortymere::InstanceDisplayModuleType)
+    /// @param data (void *) (optional)
+    void addDisplayModule(Mortymere::InstanceDisplayModuleType function, \
+        void *data);
     /// @brief Adds a SpritePtr to _objects
     /// @param objectPtr (Mortymere::SpritePtr) Pointer to the object
     void addObject(Mortymere::SpritePtr objectPtr);

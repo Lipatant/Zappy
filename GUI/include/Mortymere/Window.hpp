@@ -37,6 +37,10 @@ private: // PRIVATE FUNCTIONS
 public: // PUBLIC MEMBERS
     /// @brief
     bool hasFocus = true;
+    /// @brief Mouse position relative to the camera
+    sf::Vector2f mouse;
+    /// @brief Absolute mouse position
+    sf::Vector2f mouseUI;
 
 public: // PUBLIC FUNCTIONS
     /// @return true/false
@@ -51,6 +55,10 @@ public: // PUBLIC FUNCTIONS
     bool setFullscreen(void);
     /// @brief
     void update(void);
+    /// @brief Sets the center of the window's view
+    void setViewCenter(float const x, float const y);
+    /// @brief Sets the center of the window's view
+    void setViewCenter(sf::Vector2f const center);
 
 public: // CONSTRUCTORS
     /// @brief Default constructor

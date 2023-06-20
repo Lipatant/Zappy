@@ -26,6 +26,17 @@ static bool sortObjects(Mortymere::SpritePtr const object1, \
 INSTANCE::Instance(void) : camera(window)
 { }
 
+void INSTANCE::addDisplayModule(Mortymere::InstanceDisplayModuleType function)
+{
+    displayModules.push_back({function, nullptr});
+}
+
+void INSTANCE::addDisplayModule(Mortymere::InstanceDisplayModuleType \
+    function, void *data)
+{
+    displayModules.push_back({function, data});
+}
+
 void INSTANCE::addObject(Mortymere::SpritePtr objectPtr)
 {
     _objects.push_back(objectPtr);
@@ -68,6 +79,8 @@ bool INSTANCE::udpate(void)
             _objects.erase(object++);
         object++;
     }
+    for (Mortymere::InstanceDisplayModule module: displayModules)
+        module.function(*this, module.data);
     window.display();
     return window.isOpen();
 }

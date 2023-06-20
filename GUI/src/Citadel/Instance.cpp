@@ -32,6 +32,8 @@
 #define INSTANCECMD_FUNCTION(NAME) \
     static void NAME(INSTANCE &instance, std::vector<std::string> const &av)
 
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList);
+
 struct Command_s {
     std::string name;
     std::size_t arguments;
@@ -209,6 +211,7 @@ static void convertCommand(std::string const &cmd, size_t &ac, \
 INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine)
 {
     srand(time(NULL));
+    engine.addDisplayModule(citadelDisplayModuleCharacterList, this);
 }
 
 Mortymere::Instance &INSTANCE::engine(void)
