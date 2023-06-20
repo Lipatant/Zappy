@@ -9,6 +9,9 @@
 
 from ai.client import Client
 
+## @author Damien
+## @brief lists of the resources
+## @details each resource is at its index
 RESOURCES = [
     "linemate",
     "deraumere",
@@ -18,6 +21,9 @@ RESOURCES = [
     "thysmate",
 ]
 
+## @author Damien
+## @brief lists of the resources needed for the trantorian to upgrade
+## @details each list correspond to index - 1
 UPGRADES = [
     [1, 0, 0, 0, 0, 0],
     [1, 1, 1, 0, 0, 0],
