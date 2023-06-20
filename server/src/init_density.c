@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 /**
  * @brief the function for initializing the density
  *
@@ -41,7 +40,7 @@ void init_density(density_t *den, args_t *args)
  */
 map_t *verif_rand(density_t *den, map_t *map, int i, int j)
 {
-    int r = rand() % 10;
+    int r = rand() % den->nb_case;
 
     if (r >= den->linemate_d)
         memcpy(map->map[i][j], "linemate;", 10);
@@ -53,8 +52,8 @@ map_t *verif_rand(density_t *den, map_t *map, int i, int j)
         memcpy(map->map[i][j], "mendiane;", 11);
     if (r >= den->phiras_d)
         memcpy(map->map[i][j], "phiras;", 8);
-    // if (r >= den->thystame_d)
-    //     memcpy(map->map[i][j], "thystame;", 10);
+    if (r >= den->thystame_d)
+        memcpy(map->map[i][j], "thystame;", 11);
     if (r >= den->food_d)
         memcpy(map->map[i][j], "food;", 6);
     return map;
@@ -69,33 +68,13 @@ map_t *verif_rand(density_t *den, map_t *map, int i, int j)
  * 
  * @return map_t the struct containing info about the map
  */
-map_t *spawn_object(density_t *den, map_t *map, args_t *args)
+map_t *spawn_object(density_t *den, map_t *map)
 {
-    for (int i = 0; i != args->width - 1; i++) {
-        for (int j = 0; j != args->height - 1; j++) {
+    for (int i = 0; i != map->max_y; i++) {
+        for (int j = 0; j != map->max_x; j++) {
             map = verif_rand(den, map, i, j);
-            printf("%s", map->map[i][j]);
         }
     }
     return map;
 }
 
-int main(void)
-{
-    density_t *den = malloc(sizeof(density_t));
-    map_t *map = malloc(sizeof(map_t));
-    args_t args = {4242, 15, 10, NULL, 0, 0};
-    map->max_x = args.width;
-    map->max_y = args.height;
-    init_density(den, &args);
-    map = init_tab(map);
-    map = spawn_object(den, map, &args);
-
-    for (int i = 0; i != map->max_y; i++) {
-        for (int j = 0; j != map->max_x; j++) {
-            printf("%s", map->map[i][j]);
-        }
-        printf("\n");
-    }
-    return 0;
-}
