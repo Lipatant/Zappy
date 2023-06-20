@@ -77,4 +77,3 @@ map_t *spawn_object(density_t *den, map_t *map)
     }
     return map;
 }
-
