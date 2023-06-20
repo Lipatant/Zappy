@@ -75,7 +75,7 @@ void Connect::sender(std::string msg) //lui donné GUI pour qu'il ce connecte au
 {
     int error_send = 0;
 
-    error_send = send(_connect, msg.c_str(), msg.size(), 0);
+    error_send = send(_sockfd, msg.c_str(), msg.size(), 0);
     if (error_send == -1) {
         Exception exception("Erreur de l'envoie de message.");
         throw exception;
