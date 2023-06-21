@@ -2,8 +2,9 @@
 
 The repository for the Zappy project.
 
-<img src="Zappy_picture.jpg" alt="picture zappy" width="540" height="360">
-<img src="Epitech_logo.png" alt="logo Epitech">
+<img src="ai/doc/Zappy_picture.jpg" alt="picture zappy" width="540" height="360">
+
+<img src="ai/doc/Epitech_logo.png" alt="logo Epitech">
 
 ---
 
@@ -22,7 +23,15 @@ The repository for the Zappy project.
 ## <a id="titre1"></a>1. The purpose of the project
 
 
-...
+Welcome to "Zappy" – an electrifying network game that will spark your competitive spirit! In this thrilling project, we aim to create an engaging multiplayer experience where teams battle it out on a dynamic tile-based map filled with valuable resources.
+
+The primary objective of Zappy is to lead your team to victory by being the first to have at least six players reach the maximum elevation. But beware, the path to triumph is riddled with challenges and intense competition. Strategic decision-making, efficient resource management, and effective teamwork will be the keys to success.
+
+As you explore the following pages, you will uncover the intricacies of the game's mechanics and the constraints that shape this electrifying adventure. From understanding the layout of the map and its resource distribution to devising winning strategies, you'll gain valuable insights into how to outmaneuver your opponents.
+
+Prepare to immerse yourself in a world where lightning-fast reflexes and cunning tactics reign supreme. Collaborate closely with your teammates, navigate the ever-changing terrain, and capitalize on the available resources to surge ahead in the race to the highest elevation.
+
+Get ready to embrace the pulse-pounding excitement of Zappy, where lightning strikes and fortunes change in an instant. May your team harness the power of strategy and skill to outshine the competition and emerge as champions in this electrifying network game!
 
 
 ---
@@ -37,20 +46,41 @@ The repository for the Zappy project.
 ---
 
 
-## <a id="titre3"></a>3. How to launch
+## <a id="titre3"></a>3. How to launch the AI
 
+```sh
+> make AI
+> /zappy_ai -p port -n name -h machine
+    port is the port number
+    name is the name of the team
+    machine is the name of the machine; localhost by default
+```
+
+## <a id="titre3"></a>4. How to launch the GUI
 
 To run the project:
 
 ```sh
-
-> make
-> ./Zappy
-
+> make GUI
+> ./zappy_ai -p port -h machine
+    port is the port number
+    machine is the name of the machine; localhost by default
 ```
 
+## <a id="titre3"></a>5. How to launch the Server
 
-## <a id="titre4"></a>4. Contributors
+```sh
+> make server
+> ./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq
+    port            is the port number
+    width           is the width of the world
+    height          is the height of the world
+    nameX           is the name of the team X
+    clientsNb       is the number of authorized clients per team
+    freq            is the reciprocal of time unit for execution of actions
+```
+
+## <a id="titre4"></a>.6 Contributors
 
 | [<img src="https://github.com/Bastien91390.png?size=85" width=85><br><sub>Bastien Rodrigues</sub>](https://github.com/Bastien91390) | [<img src="https://github.com/Cyprien-nguyen-van-vien.png?size=85" width=85><br><sub>Cyprien Nguyen-Van-Vien</sub>](https://github.com/Cyprien-nguyen-van-vien) | [<img src="https://github.com/damienBC.png?size=85" width=85><br><sub>Damien Benais-Captal</sub>](https://github.com/damienBC) | [<img src="https://github.com/Pierrelouisleroy.png?size=85" width=85><br><sub>Pierre-Louis Leroy</sub>](https://github.com/Pierrelouisleroy) | [<img src="https://github.com/Hinivir.png?size=85" width=85><br><sub>Viktor Bruggeman</sub>](https://github.com/Hinivir) | [<img src="https://github.com/Lipatant.png?size=85" width=85><br><sub>Virgile Berrier</sub>](https://github.com/Lipatant)
 | :--: | :--: | :--: | :--: | :--: | :--: |

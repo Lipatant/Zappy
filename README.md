@@ -2,8 +2,9 @@
 
 The repository for the Zappy project.
 
-<img src="doc/Zappy_picture.jpg" alt="picture zappy" width="540" height="360">
-<img src="doc/Epitech_logo.png" alt="logo Epitech">
+<img src="ai/doc/Zappy_picture.jpg" alt="picture zappy" width="540" height="360">
+
+<img src="ai/doc/Epitech_logo.png" alt="logo Epitech">
 
 ---
 
@@ -45,7 +46,7 @@ Get ready to embrace the pulse-pounding excitement of Zappy, where lightning str
 ---
 
 
-## <a id="titre3"></a>4. How to launch the AI
+## <a id="titre3"></a>3. How to launch the AI
 
 ```sh
 > make AI
@@ -55,7 +56,7 @@ Get ready to embrace the pulse-pounding excitement of Zappy, where lightning str
     machine is the name of the machine; localhost by default
 ```
 
-## <a id="titre3"></a>5. How to launch the GUI
+## <a id="titre3"></a>4. How to launch the GUI
 
 To run the project:
 
@@ -66,18 +67,20 @@ To run the project:
     machine is the name of the machine; localhost by default
 ```
 
+## <a id="titre3"></a>5. How to launch the Server
+
 ```sh
 > make server
->../zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq
+> ./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq
     port            is the port number
     width           is the width of the world
     height          is the height of the world
     nameX           is the name of the team X
     clientsNb       is the number of authorized clients per team
-    freq            is the reciprocal of time unit for execution of actions 
+    freq            is the reciprocal of time unit for execution of actions
 ```
 
-## <a id="titre4"></a>. Contributors
+## <a id="titre4"></a>.6 Contributors
 
 | [<img src="https://github.com/Bastien91390.png?size=85" width=85><br><sub>Bastien Rodrigues</sub>](https://github.com/Bastien91390) | [<img src="https://github.com/Cyprien-nguyen-van-vien.png?size=85" width=85><br><sub>Cyprien Nguyen-Van-Vien</sub>](https://github.com/Cyprien-nguyen-van-vien) | [<img src="https://github.com/damienBC.png?size=85" width=85><br><sub>Damien Benais-Captal</sub>](https://github.com/damienBC) | [<img src="https://github.com/Pierrelouisleroy.png?size=85" width=85><br><sub>Pierre-Louis Leroy</sub>](https://github.com/Pierrelouisleroy) | [<img src="https://github.com/Hinivir.png?size=85" width=85><br><sub>Viktor Bruggeman</sub>](https://github.com/Hinivir) | [<img src="https://github.com/Lipatant.png?size=85" width=85><br><sub>Virgile Berrier</sub>](https://github.com/Lipatant)
 | :--: | :--: | :--: | :--: | :--: | :--: |
