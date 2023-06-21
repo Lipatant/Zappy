@@ -9,8 +9,8 @@
     #define CMD_H_
 
     #include "server.h"
-    #define inv_1 "[linemate %d, deraumere %d, sibur %d, mendiane %d, "
-    #define inv_2 "phiras %d, thystame %d, food %d]\n"
+    #define inv_1 "[linemate %ld, deraumere %ld, sibur %ld, mendiane %ld, "
+    #define inv_2 "phiras %ld, thystame %ld, food %ld]\n"
 
 typedef struct cmd_s {
     char *cmd;
