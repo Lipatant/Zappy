@@ -21,7 +21,7 @@ int forward(data_t *data);
 int right(data_t *data);
 int left(data_t *data);
 int quit(data_t *data);
-int look(data_t *data);
+//int look(data_t *data);
 int inventory(data_t *data);
 //int broadcast(data_t *data);
 //int connect_nbr(data_t *data);
@@ -36,7 +36,7 @@ static const cmd_t cmds[] = {
     {"Forward\0", &forward},
     {"Right\0", &right},
     {"Left\0", &left},
-    {"Look\0", &look},
+    //{"Look\0", &look},
     {"Inventory", &inventory},
     //{"broadcast", &broadcast}, // string
     //{"connect_nbr", &connect_nbr}, // return int nb place team

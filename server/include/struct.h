@@ -28,10 +28,21 @@ typedef struct player_s {
     int orientation;
 } player_t;
 
+typedef struct tile_s {
+    int linemate;
+    int deraumere;
+    int sibur;
+    int mendiane;
+    int phiras;
+    int thystame;
+    int food;
+    int player;
+} tile_t;
+
 typedef struct map_s {
     int max_x;
     int max_y;
-    char ***map;
+    tile_t **tile;
 } map_t;
 
 typedef struct team_s {
@@ -100,6 +111,7 @@ typedef struct density_s {
     size_t mendiane_d;
     size_t phiras_d;
     size_t thystame_d;
+    size_t player_d;
 } density_t;
 
 
