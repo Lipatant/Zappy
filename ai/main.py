@@ -63,10 +63,10 @@ def trantorian_lives(client: client, args: arguments):
 
     while 1:
 
-        # Test Cyprien Bastien for Broadcast
-        getattr(trant, functions[0])("coucou") #broadcast
-        time.sleep(0.2)
-        client.check_client()
+#        # Test Cyprien Bastien for Broadcast
+#        getattr(trant, functions[0])("coucou") #broadcast
+#        time.sleep(0.2)
+#        client.check_client()
 
         result = algo_search_stone(trant, functions, client) #no return 42 <=> No break <=> Check_client
 
