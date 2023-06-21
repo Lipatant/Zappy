@@ -66,6 +66,16 @@ To run the project:
     machine is the name of the machine; localhost by default
 ```
 
+```sh
+> make server
+>../zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb -f freq
+    port            is the port number
+    width           is the width of the world
+    height          is the height of the world
+    nameX           is the name of the team X
+    clientsNb       is the number of authorized clients per team
+    freq            is the reciprocal of time unit for execution of actions 
+```
 
 ## <a id="titre4"></a>. Contributors
 
