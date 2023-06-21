@@ -20,3 +20,5 @@ utils.c
 cmd/inventory.c
 init_player.c
 tile.c
+cmd/take.c
+cmd/take2.c
