@@ -13,7 +13,7 @@ import time
 ## @author Pierre-Louis
 def algo_search_stone(trant, functions, client):
     # defines the stone we're looking for # !!!!!!!!!!!!!!!!!! ARRRAY LEVEL UP
-    stone_need = "linemate"
+    stone_need = "egg"
 
     getattr(trant, functions[8])() #look
     time.sleep(0.2)
@@ -45,9 +45,6 @@ def algo_search_stone(trant, functions, client):
 
 ## @author Pierre-Louis
 def parser_look(look, stone_need):
-    if look.startswith("[ player,"):
-        print("""ONLY PLAYER ONLY PLAYER ONLY PLAYER
-ONLY PLAYER ONLY PLAYER ONLY PLAYER""")
     if stone_need in look:
         stone_case = look[:look.index(stone_need)].count(",")
         print(f"PRESENT")
