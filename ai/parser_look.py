@@ -8,6 +8,7 @@
 ## @file parser_look.py
 
 import random
+import time
 
 ## @author Pierre-Louis
 def algo_search_stone(trant, functions, client):
@@ -15,6 +16,7 @@ def algo_search_stone(trant, functions, client):
     stone_need = "linemate"
 
     getattr(trant, functions[8])() #look
+    time.sleep(0.2)
     client.check_client()
 
     # Send look and stone for parsing
@@ -24,15 +26,18 @@ def algo_search_stone(trant, functions, client):
     # if Stone isn't in look, move random
     if (result == "ABSENT"):
         getattr(trant, functions[4])() #forward
+        time.sleep(0.2)
         client.check_client()
 
         rdm = random.randint(0,3)
 
         if rdm == 0:
             getattr(trant, functions[9])() #left
+            time.sleep(0.2)
             client.check_client()
         elif rdm == 1:
             getattr(trant, functions[7])() #right
+            time.sleep(0.2)
             client.check_client()
 
     else: # STONE IN LOOK
@@ -62,18 +67,22 @@ def go_to_stone(trant, functions, client, stone_need, stone_case):
         if (stone_case > i):
             bot_case = tab_mid_case[counter]
             getattr(trant, functions[4])() #forward
+            time.sleep(0.2)
             client.check_client()
         counter += 1
 
     if (bot_case == stone_case):
         getattr(trant, functions[11])(stone_need) #take
+        time.sleep(0.2)
         client.check_client()
     else:
         if (bot_case > stone_case):
             getattr(trant, functions[7])() #left
+            time.sleep(0.2)
             client.check_client()
         else:
             getattr(trant, functions[9])() #right
+            time.sleep(0.2)
             client.check_client()
 
         while (bot_case != stone_case):
@@ -82,9 +91,11 @@ def go_to_stone(trant, functions, client, stone_need, stone_case):
             else:
                 bot_case += 1
             getattr(trant, functions[4])() #forward
+            time.sleep(0.2)
             client.check_client()
 
         getattr(trant, functions[11])(stone_need) #take
+        time.sleep(0.2)
         client.check_client()
         return (0)
 
