@@ -9,6 +9,13 @@
 #include "server.h"
 #include <string.h>
 
+/**
+ * @brief the function for freeing the struct
+ *
+ * @param player the struct containing info about the player
+ * @param map the struct containing info about the map
+ * @param team_list the struct containing info about the team_list
+ */
 void free_struct(player_t *player, map_t maps, team_list_t team_list)
 {
     for (int i = 0; i < maps.max_y; i++)
@@ -19,6 +26,12 @@ void free_struct(player_t *player, map_t maps, team_list_t team_list)
     free(team_list.team);
 }
 
+/**
+ * @brief the function for setting the team
+ *
+ * @param args the struct containing info about the args
+ * @param team the struct containing info about the team
+ */
 static void set_team(args_t args, team_t *team)
 {
     int i = 0;
@@ -30,6 +43,14 @@ static void set_team(args_t args, team_t *team)
     }
 }
 
+/**
+ * @brief the function for initializing the struct
+ *
+ * @param args the struct containing info about the args
+ * @param team_list the struct containing info about the team_list
+ * @param map the struct containing info about the map
+ *
+ */
 void init_struct(args_t args, team_list_t *team_list, map_t *maps)
 {
     int i = 0;

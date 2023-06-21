@@ -15,7 +15,7 @@
 
 /**
  * @brief the function to read the input
- * @param c
+ * @param c the client structure
  * @return
  */
 static char *read_input(client_t *c)
@@ -40,9 +40,9 @@ static char *read_input(client_t *c)
 
 /**
  * @brief the function to handle a new client if it's an IA
- * @param s
- * @param c
- * @param input
+ * @param s the server structure
+ * @param c the client structure
+ * @param input the input (represented has a char *)
  * @return
  */
 static int handle_new_ia(server_t *s, client_t *c, char *input)
