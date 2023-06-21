@@ -40,10 +40,8 @@ def error_handling(argc: int, argv: list[str]) -> int:
     if argc != 4 and argc != 6:
         print_error_exit("error: invalid number of arguments")
 
-
-
-
-
+## @author Damien and Pierre-Louis
+## @brief create a new ai when there is a place
 def duplicate_ai(args: arguments, client):
     pid = os.fork()
 
@@ -53,10 +51,6 @@ def duplicate_ai(args: arguments, client):
         client.disconnect_from_server()
     else:
         return pid
-
-
-
-
 
 ## @author Damien
 ## @brief create a trantorian and then loop
@@ -74,13 +68,13 @@ def trantorian_lives(client: client, args: arguments):
         time.sleep(0.2)
         client.check_client()
 
-
         result = algo_search_stone(trant, functions, client) #no return 42 <=> No break <=> Check_client
 
         if (result == 0):
             trant.bag[0] += 1
+        else:
+            getattr(trant, functions[3])()
         time.sleep(1)
-
 
         getattr(trant, functions[1])()
         if client.data != "0\n":
@@ -106,8 +100,6 @@ def trantorian_lives(client: client, args: arguments):
                 print("Received from server:", client.data)
                 trant.bag = [0 for i in range(6)]
                 trant.level += 1
-
-
 
     # disconnect
     client.disconnect_from_server()
