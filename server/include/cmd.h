@@ -27,7 +27,8 @@ int inventory(data_t *data);
 //int connect_nbr(data_t *data);
 //int fork(data_t *data);
 //int eject(data_t *data);
-//int take(data_t *data);
+int take(data_t *data);
+int take_phiras(data_t *d);
 //int set(data_t *data);
 // inventory and add to the tile
 //int incantation(data_t *data); // bastien
@@ -42,7 +43,7 @@ static const cmd_t cmds[] = {
     //{"connect_nbr", &connect_nbr}, // return int nb place team
     ////{"fork\0", &fork},
     //{"eject\0", &eject},
-    //{"take", &take},
+    {"Take", &take},
     //{"set", &set},
     //{"incantation", &incantation}, // send to all client on tile
     {"quit\0", &quit},
