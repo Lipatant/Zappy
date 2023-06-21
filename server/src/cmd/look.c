@@ -14,7 +14,7 @@ char *look_left(data_t *data, char *msg)
     int j = 0;
     int rank = 0;
 
-    for (int i = 0; i <= data->player->level; i++) {
+    for (size_t i = 0; i <= data->player->level; i++) {
         j = i;
         rank = data->player->posy - i;
         while (rank < 0)
@@ -24,7 +24,7 @@ char *look_left(data_t *data, char *msg)
             j--;
         }
         sprintf(msg, "%s", data->map->map[data->player->posx][rank]);
-        for (int k = 1; k <= i; k++) {
+        for (size_t k = 1; k <= i; k++) {
             sprintf(msg, "%s", data->map->map[data->player->posx - k][rank]);
         }
         sprintf(msg, "\n");
@@ -37,14 +37,14 @@ char *look_down(data_t *data, char *msg)
     int j = 0;
     int rank = 0;
 
-    for (int i = 0; i <= data->player->level; i++) {
+    for (size_t i = 0; i <= data->player->level; i++) {
         j = i;
         rank = data->player->posx + i;
         while (rank >= data->player->posx)
             rank -= data->player->posx;
         while (rank < 0)
             rank += data->player->posx;
-        for (int k = 1; k <= i; k++)
+        for (size_t k = 1; k <= i; k++)
             sprintf(msg, "%s", data->map->map[rank][data->player->posy + k]);
         sprintf(msg, "%s", data->map->map[rank][data->player->posy]);
         while (j > 0) {
@@ -61,7 +61,7 @@ char *look_up(data_t *data, char *msg)
     int j = 0;
     int rank = 0;
 
-    for (int i = 0; i <= data->player->level; i++) {
+    for (size_t i = 0; i <= data->player->level; i++) {
         j = i;
         rank = data->player->posx - i;
         while (rank < 0)
@@ -71,7 +71,7 @@ char *look_up(data_t *data, char *msg)
             j--;
         }
         sprintf(msg, "%s", data->map->map[rank][data->player->posy]);
-        for (int k = 1; k <= i; k++)
+        for (size_t k = 1; k <= i; k++)
             sprintf(msg, "%s", data->map->map[rank][data->player->posy + k]);
         sprintf(msg, "\n");
     }
@@ -83,7 +83,7 @@ char *look_right(data_t *data, char *msg)
     int j = 0;
     int rank = 0;
 
-    for (int i = 0; i <= data->player->level; i++) {
+    for (size_t i = 0; i <= data->player->level; i++) {
         j = i;
         rank = data->player->posy + i;
         while (rank >= data->player->posy)
@@ -93,7 +93,7 @@ char *look_right(data_t *data, char *msg)
             j--;
         }
         sprintf(msg, "%s", data->map->map[data->player->posx][rank]);
-        for (int k = 1; k <= i; k++)
+        for (size_t k = 1; k <= i; k++)
             sprintf(msg, "%s", data->map->map[data->player->posx + k][rank]);
         sprintf(msg, "\n");
     }

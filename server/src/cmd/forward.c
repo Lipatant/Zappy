@@ -106,7 +106,7 @@ int forward(data_t *d)
             d->map->tile[d->player->posy][d->player->posx].player++;
         }
         break;
-    default :
+    default:
         forward_east(d);
         break;
     }

@@ -43,6 +43,15 @@ static void set_team(args_t args, team_t *team)
     }
 }
 
+static pos_t *inside_for(pos_t *pos, map_t *map, int i, int j)
+{
+    if (map->tile[i][j].player == 1) {
+        pos->x = i;
+        pos->y = j;
+    }
+    return pos;
+}
+
 static pos_t *init_pos(pos_t *pos, map_t *map, int nb_player)
 {
     int a = 0;
@@ -50,11 +59,7 @@ static pos_t *init_pos(pos_t *pos, map_t *map, int nb_player)
     pos = malloc(sizeof(pos_t) * nb_player + 1);
     for (int i = 0; i < map->max_x; i++) {
         for (int j = 0; j < map->max_y; j++) {
-            if (map->tile[i][j].player == 1) {
-                pos[a].x = i;
-                pos[a].y = j;
-                a++;
-            }
+            pos = inside_for(pos, map, i, j);
         }
     }
     return pos;

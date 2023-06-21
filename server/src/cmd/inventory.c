@@ -25,6 +25,6 @@ int inventory(data_t *data)
     snprintf(msg, size + 1, inv_1 inv_2, data->player->linemate,\
         data->player->deraumere, data->player->sibur, data->player->mendiane,\
         data->player->phiras, data->player->thystame, data->player->food);
-    dprintf(data->fd, "%s\n", msg);
+    dprintf(data->fd, "%s", msg);
     return 0;
 }
