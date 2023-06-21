@@ -35,8 +35,7 @@ class Client:
             self.socket.connect((self.ip, self.port))
             print("Connected to the server.")
         except:
-            print("Error: cannot connect to the server")
-            exit(84)
+            print_error_exit("Error: cannot connect to the server")
 
 
     # this method is the initialization with the server
@@ -49,8 +48,7 @@ class Client:
         self.data = self.socket.recv(1024).decode()
         print("Received from server:", self.data)
         if (self.data == "ko\n"):
-            print("error server")
-            exit(84)
+            print_error_exit("error server")
         return self.data
 
 
@@ -66,8 +64,7 @@ class Client:
     def parsing_data(self, str_nb):
         nb = re.findall(r'\d+', str_nb)
         if (int(nb[0]) <= 0):
-            print("error: too many trantorians in this team")
-            exit(84)
+            print_error_exit("error: too many trantorians in this team")
         self.x = int(nb[1])
         self.y = int(nb[2])
 

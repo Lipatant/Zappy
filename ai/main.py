@@ -9,9 +9,10 @@
 
 from ai.arguments import arguments
 from ai.trantorians import trantorians
-from ai.client import Client
+from ai.client import client
 from ai.error import print_error_exit
 
+# Remove * and put list of final functions
 from ai.parser_look import *
 
 import time
@@ -41,8 +42,8 @@ def error_handling(argc: int, argv: list[str]) -> int:
 ## @author Damien
 ## @brief create a trantorian and then loop
 ## @return always 0
-def trantorian_lives(client: Client):
-    trant = trantorians.trantorians(client)
+def trantorian_lives(client: client):
+    trant = trantorians.Trantorians(client)
     attributes = dir(trant)
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
                 and not attr.startswith('_')]
@@ -89,17 +90,17 @@ def main(argc: int, argv: list[str]) -> int:
     error_handling(argc, argv)
 
     # argument parser, see arguments/arguments.py
-    args = arguments.arguments()
+    args = arguments.Arguments()
     args.parse_args(argc, argv)
 
     # create the client, see client/Client.py
-    client = Client.Client(args)
-    client.connect_to_server()
+    client_m = client.Client(args)
+    client_m.connect_to_server()
 
     # this part initializes with the server
-    msg = client.communicate()
-    client.parsing_data(msg)
-    trantorian_lives(client)
+    msg = client_m.communicate()
+    client_m.parsing_data(msg)
+    trantorian_lives(client_m)
 
 # PARTIE AI ===================================================================
 
