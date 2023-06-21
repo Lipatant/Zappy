@@ -87,6 +87,8 @@ tests_run: fclean
 		$(CC) -o $(UT) $(SRC_UT) $(CFLAGS_UT) $(CPPFLAGS_UT) \
 			$(LCRITERION) $(CPPFLAGS_UT)
 		./$(UT)
+#		find ai -name "*.py" -exec cp {} tests/ai/ \;
+	    pytest tests/
 
 server:
 	@cd server && make
