@@ -54,6 +54,7 @@ static int init_server(server_t *s, args_t args, team_list_t team_list,
     s->team_list = &team_list;
     s->map = &map;
     s->nb_team = i;
+    s->nb_player = args.clients * i;
     return 0;
 }
 

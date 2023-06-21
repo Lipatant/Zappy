@@ -14,8 +14,8 @@
 
 typedef struct player_s {
     size_t food;
-    size_t posx;
-    size_t posy;
+    int posx;
+    int posy;
     size_t level;
     size_t life;
     size_t linemate;
@@ -53,9 +53,15 @@ typedef struct team_s {
     player_t *player;
 } team_t;
 
+typedef struct pos_s {
+    int x;
+    int y;
+} pos_t;
+
 typedef struct team_list_s {
     size_t length;
     team_t *team;
+    pos_t *pos;
 } team_list_t;
 
 typedef struct data_s {
@@ -80,6 +86,7 @@ typedef struct server_s {
     team_list_t *team_list;
     map_t *map;
     int nb_team;
+    int nb_player;
 } server_t;
 
 typedef struct client_s {

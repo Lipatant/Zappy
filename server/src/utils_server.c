@@ -57,7 +57,7 @@ static int handle_new_ia(server_t *s, client_t *c, char *input)
         c->team_nb = nb;
         c->player = &s->team_list->team[nb].
             player[s->team_list->team[nb].player_use];
-        c->player = init_player(c->player, 1, 1, NORTH);
+        c->player = init_player(c->player, s->team_list->pos, s);
     } else {
         dprintf(c->fd, "ko\n");
     }

@@ -6,14 +6,21 @@
 */
 
 #include "struct.h"
+#include <stdlib.h>
 
 /**
  * @brief init the player struct
  * @param player the player struct
  * @return player stuct
  */
-player_t *init_player(player_t *player, int pos_x, int pos_y, int orientation)
+player_t *init_player(player_t *player, pos_t *pos, server_t *server)
 {
+    int i = server->nb_player;
+
+    server->nb_player--;
+    player->posx = pos[i].x;
+    player->posy = pos[i].y;
+    pos[i] = pos[i - 1];
     player->food = 10;
     player->linemate = 0;
     player->deraumere = 0;
@@ -22,8 +29,6 @@ player_t *init_player(player_t *player, int pos_x, int pos_y, int orientation)
     player->phiras = 0;
     player->thystame = 0;
     player->lvl = 1;
-    player->orientation = orientation;
-    player->posx = pos_x;
-    player->posy = pos_y;
+    player->orientation = rand() % 4;
     return player;
 }
