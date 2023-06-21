@@ -8,6 +8,7 @@
 #include "cmd.h"
 #include "struct.h"
 #include <string.h>
+#include <stdio.h>
 
 /**
  * @brief function to take mendiane to check
@@ -18,8 +19,8 @@
 static int take_mendiane(data_t *d)
 {
     if (strcmp(d->args[1], "mendiane") == 0) {
-        if (d->map->map[d->player->posx][d->player->posy]->mendiane > 0) {
-            d->map->map[d->player->posx][d->player->posy]->mendiane -= 1;
+        if (d->map->tile[d->player->posx][d->player->posy].mendiane > 0) {
+            d->map->tile[d->player->posx][d->player->posy].mendiane -= 1;
             d->player->mendiane += 1;
             dprintf(d->fd, "ok\n");
             return 0;
@@ -40,8 +41,8 @@ static int take_mendiane(data_t *d)
 static int take_sibur(data_t *d)
 {
     if (strcmp(d->args[1], "sibur") == 0) {
-        if (d->map->map[d->player->posx][d->player->posy]->sibur > 0) {
-            d->map->map[d->player->posx][d->player->posy]->sibur -= 1;
+        if (d->map->tile[d->player->posx][d->player->posy].sibur > 0) {
+            d->map->tile[d->player->posx][d->player->posy].sibur -= 1;
             d->player->sibur += 1;
             dprintf(d->fd, "ok\n");
             return 0;
@@ -62,8 +63,8 @@ static int take_sibur(data_t *d)
 static int take_deraumere(data_t *d)
 {
     if (strcmp(d->args[1], "deraumere") == 0) {
-        if (d->map->map[d->player->posx][d->player->posy]->deraumere > 0) {
-            d->map->map[d->player->posx][d->player->posy]->deraumere -= 1;
+        if (d->map->tile[d->player->posx][d->player->posy].deraumere > 0) {
+            d->map->tile[d->player->posx][d->player->posy].deraumere -= 1;
             d->player->deraumere += 1;
             dprintf(d->fd, "ok\n");
             return 0;
@@ -81,11 +82,11 @@ static int take_deraumere(data_t *d)
  * @param d the struct of data_t
  * @return int
  */
-static int take_linemate(data *d)
+static int take_linemate(data_t *d)
 {
     if (strcmp(d->args[1], "linemate") == 0) {
-        if (d->map->map[d->player->posx][d->player->posy]->linemate > 0) {
-            d->map->map[d->player->posx][d->player->posy]->linemate -= 1;
+        if (d->map->tile[d->player->posx][d->player->posy].linemate > 0) {
+            d->map->tile[d->player->posx][d->player->posy].linemate -= 1;
             d->player->linemate += 1;
             dprintf(d->fd, "ok\n");
             return 0;
@@ -106,8 +107,8 @@ static int take_linemate(data *d)
 int take(data_t *d)
 {
     if (strcmp(d->args[1], "food") == 0) {
-        if (d->map->map[d->player->posx][d->player->posy]->food > 0) {
-            d->map->map[d->player->posx][d->player->posy]->food -= 1;
+        if (d->map->tile[d->player->posx][d->player->posy].food > 0) {
+            d->map->tile[d->player->posx][d->player->posy].food -= 1;
             d->player->food += 1;
             dprintf(d->fd, "ok\n");
             return 0;

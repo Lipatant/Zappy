@@ -6,8 +6,8 @@
 */
 
 #include "cmd.h"
-#include "struct.h"
 #include <string.h>
+#include <stdio.h>
 
 /**
  * @brief function to take mendiane to check
@@ -18,8 +18,8 @@
 static int take_thystame(data_t *d)
 {
     if (strcmp(d->args[1], "thystame") == 0) {
-        if (d->map->map[d->player->posx][d->player->posy]->thystame > 0) {
-            d->map->map[d->player->posx][d->player->posy]->thystame -= 1;
+        if (d->map->tile[d->player->posx][d->player->posy].thystame > 0) {
+            d->map->tile[d->player->posx][d->player->posy].thystame -= 1;
             d->player->thystame += 1;
             dprintf(d->fd, "ok\n");
             return 0;
@@ -41,8 +41,8 @@ static int take_thystame(data_t *d)
 int take_phiras(data_t *d)
 {
     if (strcmp(d->args[1], "phiras") == 0) {
-        if (d->map->map[d->player->posx][d->player->posy]->phiras > 0) {
-            d->map->map[d->player->posx][d->player->posy]->phiras -= 1;
+        if (d->map->tile[d->player->posx][d->player->posy].phiras > 0) {
+            d->map->tile[d->player->posx][d->player->posy].phiras -= 1;
             d->player->phiras += 1;
             dprintf(d->fd, "ok\n");
         } else
