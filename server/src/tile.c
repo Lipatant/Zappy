@@ -72,7 +72,8 @@ static tile_t init_tile(tile_t tile, density_t *den)
  * @param nb_player the number of player
  * @return density_t return the density
  */
-static density_t *init_density(density_t *den, int max_x, int max_y, int nb_player)
+static density_t *init_density(density_t *den, int max_x, int max_y,
+    int nb_player)
 {
     den = malloc(sizeof(density_t));
 
@@ -104,7 +105,7 @@ map_t *init_map(map_t *map, int nb_player)
     for (int i = 0; i <= map->max_x; i++)
         map->tile[i] = malloc(sizeof(tile_t) * map->max_y + 1);
     for (int i = 0; i <= map->max_x; i++)
-        for(int j = 0; j <= map->max_y; j++)
+        for (int j = 0; j <= map->max_y; j++)
             map->tile[i][j] = init_tile(map->tile[i][j], den);
     return map;
 }
