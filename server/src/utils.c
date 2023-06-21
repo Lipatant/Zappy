@@ -10,10 +10,10 @@
 
 /**
  * @brief the function to get the number of a team
- * @param server
- * @param name
- * @param nb_team
- * @return
+ * @param server the struct containing info about the server
+ * @param name the name of the team
+ * @param nb_team the number of team
+ * @return 
  * i the team nb
  * -1 no team named
  */

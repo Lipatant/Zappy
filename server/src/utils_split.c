@@ -12,9 +12,9 @@
 
 /**
  * @brief the function to count the part by a separator
- * @param command
- * @param sep
- * @return
+ * @param command the command to split
+ * @param sep the character use to split
+ * @return the number of part
  */
 int count_parts(const char *command, char sep)
 {
@@ -28,8 +28,8 @@ int count_parts(const char *command, char sep)
 
 /**
  * @brief the function to convert a string to lowercase
- * @param to_convert
- * @return
+ * @param to_convert the string to convert
+ * @return the string converted
  */
 char *convert_to_lowercase(char *to_convert)
 {
@@ -40,9 +40,9 @@ char *convert_to_lowercase(char *to_convert)
 
 /**
  * @brief the function to create a new split
- * @param nbr
- * @param command
- * @return
+ * @param nbr the number of part
+ * @param command the command to split
+ * @return the split inside a tab
  */
 char **create_split(int nbr, const char *command)
 {
@@ -60,8 +60,8 @@ char **create_split(int nbr, const char *command)
 
 /**
  * @brief the function to do a simple split
- * @param command
- * @return
+ * @param command the command to split
+ * @return the split inside a tab
  */
 char **simple_split(const char *command)
 {

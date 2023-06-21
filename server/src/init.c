@@ -9,7 +9,6 @@
 #include "server.h"
 #include <string.h>
 
-
 /**
  * @brief the function for freeing the struct
  *
@@ -27,6 +26,12 @@ void free_struct(player_t *player, map_t maps, team_list_t team_list)
     free(team_list.team);
 }
 
+/**
+ * @brief the function for setting the team
+ *
+ * @param args the struct containing info about the args
+ * @param team the struct containing info about the team
+ */
 static void set_team(args_t args, team_t *team)
 {
     int i = 0;
