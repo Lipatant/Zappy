@@ -16,7 +16,7 @@ from ai.error import print_error_exit
 from ai.parser_look import *
 
 import time
-import random
+#import random not use
 
 ## @author Damien and Pierre-Louis
 ## @brief Print the message explaining how to use it
@@ -49,11 +49,9 @@ def trantorian_lives(client: client):
                 and not attr.startswith('_')]
 
     while 1:
-        result = algo_search_stone(trant, functions, client)
+        result = algo_search_stone(trant, functions, client) #no return 42 <=> No break <=> Check_client
 
-        if (result == 42):
-            break
-        elif (result == 0):
+        if (result == 0):
             trant.bag[0] += 1
         time.sleep(1)
 
