@@ -15,6 +15,7 @@ from ai.error import print_error_exit
 # Remove * and put list of final functions
 from ai.parser_look import *
 
+import os
 import time
 #import random not use
 
@@ -39,10 +40,28 @@ def error_handling(argc: int, argv: list[str]) -> int:
     if argc != 4 and argc != 6:
         print_error_exit("error: invalid number of arguments")
 
+
+
+
+
+def duplicate_ai(args: arguments, client):
+    pid = os.fork()
+
+    if pid == 0:
+        cmd = f"./zappy_ai -p {args.port} -n {args.team} -h {args.ip}"
+        os.system(cmd)
+        client.disconnect_from_server()
+    else:
+        return pid
+
+
+
+
+
 ## @author Damien
 ## @brief create a trantorian and then loop
 ## @return always 0
-def trantorian_lives(client: client):
+def trantorian_lives(client: client, args: arguments):
     trant = trantorians.Trantorians(client)
     attributes = dir(trant)
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
@@ -61,6 +80,11 @@ def trantorian_lives(client: client):
         if (result == 0):
             trant.bag[0] += 1
         time.sleep(1)
+
+
+        getattr(trant, functions[1])()
+        if client.data != "0\n":
+            duplicate_ai(args, client)
 
         getattr(trant, functions[11])("food") #take food
         time.sleep(0.2) # PL test command
@@ -82,6 +106,8 @@ def trantorian_lives(client: client):
                 print("Received from server:", client.data)
                 trant.bag = [0 for i in range(6)]
                 trant.level += 1
+
+
 
     # disconnect
     client.disconnect_from_server()
@@ -108,7 +134,7 @@ def main(argc: int, argv: list[str]) -> int:
     # this part initializes with the server
     msg = client_m.communicate()
     client_m.parsing_data(msg)
-    trantorian_lives(client_m)
+    trantorian_lives(client_m, args)
 
 # PARTIE AI ===================================================================
 
