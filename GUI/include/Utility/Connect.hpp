@@ -6,7 +6,7 @@
 */
 
 /// @file
-/// @brief ...
+/// @brief Contain function to the connection to the server
 
 #ifndef CONNECT_HPP_
     #define CONNECT_HPP_
