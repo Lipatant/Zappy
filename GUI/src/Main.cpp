@@ -37,7 +37,7 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
     Connect Connect(ip, port);
     try {
         Connect.join();
-        Connect.sender("GRAPHIC");
+        Connect.sender("GRAPHIC\n");
     } catch (std::exception const& e) {
             std::cerr << e.what() << std::endl;
             close = true;
