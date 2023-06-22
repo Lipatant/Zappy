@@ -2,9 +2,9 @@
 
 The repository for the Zappy project.
 
-<img src=".github/ressource/Zappy_picture.jpg" alt="picture zappy" width="540" height="360">
+<img src="ai/doc/Zappy_picture.jpg" alt="picture zappy" width="540" height="360">
 
-<img src=".github/ressource/Epitech_logo.png" alt="logo Epitech">
+<img src="ai/doc/Epitech_logo.png" alt="logo Epitech">
 
 ---
 
@@ -80,26 +80,9 @@ To run the project:
     freq            is the reciprocal of time unit for execution of actions
 ```
 
-## Incantation
-
-In order to win in zappy you and all the member of your team must reach lvl 8 (at least 6 of them), by collecting some resource and starting the incantation ritual. There exist different resource: linemate, deramere, sibur, mendiane, phiras and thystame.
-Those resource will spawn depending of there density and the size of the map.
-
-Here the conditions to reach the next lvl of a player:
-
-| elevation | nb of players | Linemate | Deraumere | Sibur | Mendiane | Phiras | Thystame |
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| 1->2 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
-| 2->3 | 2 | 1 | 1 | 1 | 0 | 0 | 0 |
-| 3->4 | 2 | 2 | 0 | 1 | 0 | 2 | 0 |
-| 4->5 | 4 | 1 | 1 | 2 | 0 | 1 | 0 |
-| 5->6 | 4 | 1 | 2 | 1 | 3 | 0 | 0 |
-| 6->7 | 6 | 1 | 2 | 3 | 0 | 1 | 0 |
-| 7->8 | 6 | 2 | 2 | 2 | 2 | 2 | 1 |
-
 ## <a id="titre4"></a>.6 Contributors
 
-| [<img src="https://github.com/Shaladur.png?size=85" width=85><br><sub>Bastien Rodrigues</sub>](https://github.com/Shaladur) | [<img src="https://github.com/Cyprien-nguyen-van-vien.png?size=85" width=85><br><sub>Cyprien Nguyen-Van-Vien</sub>](https://github.com/Cyprien-nguyen-van-vien) | [<img src="https://github.com/damienBC.png?size=85" width=85><br><sub>Damien Benais-Captal</sub>](https://github.com/damienBC) | [<img src="https://github.com/Pierrelouisleroy.png?size=85" width=85><br><sub>Pierre-Louis Leroy</sub>](https://github.com/Pierrelouisleroy) | [<img src="https://github.com/Hinivir.png?size=85" width=85><br><sub>Viktor Bruggeman</sub>](https://github.com/Hinivir) | [<img src="https://github.com/Lipatant.png?size=85" width=85><br><sub>Virgile Berrier</sub>](https://github.com/Lipatant)
+| [<img src="https://github.com/Bastien91390.png?size=85" width=85><br><sub>Bastien Rodrigues</sub>](https://github.com/Bastien91390) | [<img src="https://github.com/Cyprien-nguyen-van-vien.png?size=85" width=85><br><sub>Cyprien Nguyen-Van-Vien</sub>](https://github.com/Cyprien-nguyen-van-vien) | [<img src="https://github.com/damienBC.png?size=85" width=85><br><sub>Damien Benais-Captal</sub>](https://github.com/damienBC) | [<img src="https://github.com/Pierrelouisleroy.png?size=85" width=85><br><sub>Pierre-Louis Leroy</sub>](https://github.com/Pierrelouisleroy) | [<img src="https://github.com/Hinivir.png?size=85" width=85><br><sub>Viktor Bruggeman</sub>](https://github.com/Hinivir) | [<img src="https://github.com/Lipatant.png?size=85" width=85><br><sub>Virgile Berrier</sub>](https://github.com/Lipatant)
 | :--: | :--: | :--: | :--: | :--: | :--: |
 
 bastien.rodrigues@epitech.eu  

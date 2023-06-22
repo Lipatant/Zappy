@@ -11,7 +11,7 @@ from ai.error import print_error_exit
 
 ## @author Damien and Pierre-Louis
 ## @brief Contains server variables and the function to parse arguments of argv
-class arguments:
+class Arguments:
     port: int
     team: str
     ip: str
@@ -38,8 +38,7 @@ class arguments:
                 try:
                     self.port = int(argv[i + 1])
                 except:
-                    print("Invalid argument for port", argv[i + 1])
-                    exit(84)
+                    print_error_exit("Invalid argument for port" + argv[i + 1])
             elif argv[i] == "-n":
                 self.team = argv[i + 1]
             elif argv[i] == "-h":

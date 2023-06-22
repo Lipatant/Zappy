@@ -7,7 +7,7 @@
 
 ## @file trantorians.py
 
-from ai.client import Client
+from ai.client import client
 
 ## @author Damien
 ## @brief lists of the resources
@@ -37,19 +37,19 @@ UPGRADES = [
 ## @author Damien and Pierre-Louis
 ## @brief contain function and variable for trantorians
 ## @details The name trantorians refers to bots that do not collaborate with each other to evolve.
-class trantorians:
+class Trantorians:
     level: int
     bag: list[int]
-    client: Client
+    client_t: client
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: client) -> None:
         self.level = 1
         self.bag = [0 for i in range(6)]
-        self.client = client
+        self.client_t = client
 
     ## @author Damien
     ## @brief
@@ -57,10 +57,10 @@ class trantorians:
     ## @return None
     def forward(self) -> None:
         to_send = "Forward\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -68,10 +68,10 @@ class trantorians:
     ## @return None
     def left(self) -> None:
         to_send = "Left\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -79,10 +79,10 @@ class trantorians:
     ## @return None
     def right(self) -> None:
         to_send = "Right\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -90,10 +90,10 @@ class trantorians:
     ## @return None
     def look(self) -> None:
         to_send = "Look\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -101,10 +101,10 @@ class trantorians:
     ## @return None
     def inventory(self) -> None:
         to_send = "Inventory\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -112,10 +112,10 @@ class trantorians:
     ## @return None
     def broadcast_text(self, text) -> None:
         to_send = "Broadcast " + text + "\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -123,10 +123,10 @@ class trantorians:
     ## @return None
     def connect_nbr(self) -> None:
         to_send = "Connect_nbr\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -134,10 +134,10 @@ class trantorians:
     ## @return None
     def fork(self) -> None:###creer un oeuf
         to_send = "Fork\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -145,10 +145,10 @@ class trantorians:
     ## @return None
     def eject(self) -> None:
         to_send = "Eject\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -156,10 +156,10 @@ class trantorians:
     ## @return None
     def take_object(self, object: str) -> None:
         to_send = "Take " + object + "\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -167,10 +167,10 @@ class trantorians:
     ## @return None
     def set_object(self, object: str) -> None:
         to_send = "Set " + object + "\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
 
     ## @author Damien
     ## @brief
@@ -178,7 +178,7 @@ class trantorians:
     ## @return None
     def incantation(self) -> None:
         to_send = "Incantation\n"
-        self.client.socket.send(to_send.encode())
+        self.client_t.socket.send(to_send.encode())
         print("Sent to server:", to_send)
-        self.client.data = self.client.socket.recv(1024).decode()
-        print("Received from server:", self.client.data)
+        self.client_t.data = self.client_t.socket.recv(1024).decode()
+        print("Received from server:", self.client_t.data)
