@@ -81,8 +81,7 @@ void Connect::sender(std::string msg)
     const std::chrono::seconds timeout(1);
     auto startTime = std::chrono::steady_clock::now();
 
-    while (sent > 0)
-    {
+    while (sent > 0) {
         error_send = send(_sockfd, msg.c_str() + sent, size_mess, 0);
         if (error_send == -1) {
             if (errno == EAGAIN) {
