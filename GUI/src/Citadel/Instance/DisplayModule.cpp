@@ -74,6 +74,9 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
     std::size_t charactersSize = citadel->characters.size();
     sf::Color color;
     sf::FloatRect bounds;
+    sf::Sprite items;
+    sf::IntRect itemsTextureRect;
+    float itemsScale;
     sf::Vector2f position(0, 0);
     sf::Vector2f const windowSize = instance.window.getView().getSize();
     sf::View view(instance.window.getView());
@@ -81,6 +84,11 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
     Citadel::CharacterNumber newSelectedPortrait = 0;
     float newSelectedPortraitDistance = 0;
 
+    if (citadel->ground.hasItemTexture) {
+        items.setTexture(citadel->ground.itemTexture);
+        itemsTextureRect = items.getTextureRect();
+        itemsTextureRect.width = itemsTextureRect.height;
+    }
     view.setCenter(0, 0);
     instance.window.setView(view);
     for (auto &character: citadel->characters) {
@@ -124,6 +132,33 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
         }
         instance.window.draw(SPRITE_PORTRAIT);
         characterListPosition++;
+        if (!citadel->ground.hasItemTexture)
+            continue;
+        itemsScale = scale;
+        items.setScale(itemsScale, itemsScale);
+        position.x += SPRITE_PORTRAIT.getTextureRect().width * scale * 0.5 - \
+            itemsTextureRect.width * itemsScale * 0.5;
+        position.y += SPRITE_PORTRAIT.getTextureRect().height * scale - \
+            itemsTextureRect.height * itemsScale;
+        for (std::size_t i = 0; i < CITADEL_INVENTORY_SIZE; i++) {
+            if (character.second.inventory[i] < 1)
+                continue;
+            itemsTextureRect.left = itemsTextureRect.width * i;
+            items.setTextureRect(itemsTextureRect);
+            position.x += character.second.inventory[i] * \
+                itemsTextureRect.width * itemsScale * 0.2 * 0.5;
+            for (Citadel::InventoryCount j = 0; j < \
+                character.second.inventory[i]; j++) {
+                items.setPosition(position);
+                instance.window.draw(items);
+                position.x -= itemsTextureRect.width * itemsScale * 0.2;
+            }
+            position.x += itemsTextureRect.width * itemsScale * 0.2 * \
+                (character.second.inventory[i]);
+            position.x -= character.second.inventory[i] * \
+                itemsTextureRect.width * itemsScale * 0.2 * 0.5;
+            position.y -= itemsTextureRect.height * itemsScale * 0.5;
+        }
     }
     instance.window.setView(viewSaved);
     citadel->selectedPortrait = newSelectedPortrait;
