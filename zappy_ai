@@ -9,8 +9,16 @@
 
 # @file zappy_ai
 
-from AI import Main
+from ai import main
 import sys
+import signal
+
+## @author Damien
+## @brief Ctrl-c handler so, when doing it, ther is no error messages
+def signal_handler(sig, frame):
+    exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 ## @author Pierre-Louis
 ## @brief Removes useless executable name in argv
@@ -18,8 +26,12 @@ import sys
 def remove_executable_name() -> int:
     return sys.argv[1:]
 
-## @author Damien
-## @brief Calls the main of the Main.py file
+## @author Damien and Pierre-Louis
+## @brief Calls the main of the main.py file
 ## @param argc is the length of argv
 ## @param argv contain argument given by the user
-exit(Main.main(len(sys.argv) - 1, remove_executable_name()))
+## @details Checks if the file is executed as a main program
+while 1:
+    if __name__ == "__main__":
+        main.main(len(sys.argv) - 1, remove_executable_name())
+        pass
