@@ -14,21 +14,22 @@
 
 typedef struct cmd_s {
     char *cmd;
-    int (*func_ptr)(data_t *data);
+    data_t *(*func_ptr)(data_t *data);
 } cmd_t;
 
-int forward(data_t *data);
-int right(data_t *data);
-int left(data_t *data);
-int quit(data_t *data);
-//int look(data_t *data);
-int inventory(data_t *data);
+data_t *forward(data_t *data);
+data_t *right(data_t *data);
+data_t *left(data_t *data);
+data_t *look(data_t *data);
+void fix(int *n, int *goal, int lim);
+char *add_tile(data_t *data, char *send, int x, int y);
+data_t *inventory(data_t *data);
 //int broadcast(data_t *data);
 //int connect_nbr(data_t *data);
 //int fork(data_t *data);
 //int eject(data_t *data);
-int take(data_t *data);
-int take_phiras(data_t *d);
+data_t *take(data_t *data);
+data_t *take_phiras(data_t *d);
 //int set(data_t *data);
 // inventory and add to the tile
 //int incantation(data_t *data); // bastien
@@ -37,16 +38,15 @@ static const cmd_t cmds[] = {
     {"Forward\0", &forward},
     {"Right\0", &right},
     {"Left\0", &left},
-    //{"Look\0", &look},
-    {"Inventory", &inventory},
+    {"Look\0", &look},
+    {"Inventory\0", &inventory},
     //{"broadcast", &broadcast}, // string
     //{"connect_nbr", &connect_nbr}, // return int nb place team
     ////{"fork\0", &fork},
     //{"eject\0", &eject},
-    {"Take", &take},
+    {"Take\0", &take},
     //{"set", &set},
     //{"incantation", &incantation}, // send to all client on tile
-    {"quit\0", &quit},
     {NULL, NULL}
 };
 

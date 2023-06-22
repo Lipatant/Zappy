@@ -14,10 +14,10 @@
  * @param data the struct data
  * @return
  */
-static int forward_west(data_t *d)
+static data_t *forward_west(data_t *d)
 {
     switch (d->player->orientation) {
-    case WEST:
+    case LEFT:
         if (d->player->posx == 0) {
             d->map->tile[d->player->posy][d->player->posx].player--;
             d->player->posx = d->map->max_x;
@@ -29,7 +29,7 @@ static int forward_west(data_t *d)
         }
         break;
     }
-    return 0;
+    return d;
 }
 
 /**
@@ -38,10 +38,10 @@ static int forward_west(data_t *d)
  * @param data the struct data
  * @return
  */
-static int forward_south(data_t *d)
+static data_t *forward_south(data_t *d)
 {
     switch (d->player->orientation) {
-    case SOUTH:
+    case DOWN:
         if (d->player->posy == d->map->max_y) {
             d->map->tile[d->player->posy][d->player->posx].player--;
             d->player->posy = 0;
@@ -53,10 +53,10 @@ static int forward_south(data_t *d)
         }
         break;
     default:
-        forward_west(d);
+        d = forward_west(d);
         break;
     }
-    return 0;
+    return d;
 }
 
 /**
@@ -65,10 +65,10 @@ static int forward_south(data_t *d)
  * @param data the struct data
  * @return
  */
-static int forward_east(data_t *d)
+static data_t *forward_east(data_t *d)
 {
     switch (d->player->orientation) {
-    case EAST:
+    case RIGHT:
         if (d->player->posx == d->map->max_x) {
             d->map->tile[d->player->posy][d->player->posx].player--;
             d->player->posx = 0;
@@ -80,10 +80,10 @@ static int forward_east(data_t *d)
         }
         break;
     default:
-        forward_south(d);
+        d = forward_south(d);
         break;
     }
-    return 0;
+    return d;
 }
 
 /**
@@ -92,24 +92,24 @@ static int forward_east(data_t *d)
  * @param data the struct data
  * @return
  */
-int forward(data_t *d)
+data_t *forward(data_t *d)
 {
     switch (d->player->orientation) {
-    case NORTH:
+    case UP:
         if (d->player->posy == 0) {
-            d->map->tile[d->player->posy][d->player->posx].player--;
+            d->map->tile[d->player->posx][d->player->posy].player--;
             d->player->posy = d->map->max_y;
-            d->map->tile[d->player->posy][d->player->posx].player++;
+            d->map->tile[d->player->posx][d->player->posy].player++;
         } else {
-            d->map->tile[d->player->posy][d->player->posx].player--;
+            d->map->tile[d->player->posx][d->player->posy].player--;
             d->player->posy -= 1;
-            d->map->tile[d->player->posy][d->player->posx].player++;
+            d->map->tile[d->player->posx][d->player->posy].player++;
         }
         break;
     default:
-        forward_east(d);
+        d = forward_east(d);
         break;
     }
-    dprintf(d->fd, "x = %d y = %d\n", d->player->posx, d->player->posy);
-    return 0;
+    dprintf(d->fd, "ok\n");
+    return d;
 }

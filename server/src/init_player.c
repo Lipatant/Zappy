@@ -8,13 +8,14 @@
 #include "struct.h"
 #include <stdlib.h>
 
-/**
+/**X
  * @brief init the player struct
  * @param player the player struct
  * @return player stuct
  */
 player_t *init_player(player_t *player, pos_t *pos, server_t *server)
 {
+    player = malloc(sizeof(player_t));
     int i = server->nb_player;
 
     server->nb_player--;

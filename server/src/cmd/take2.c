@@ -15,21 +15,21 @@
  * @param d the struct of data_t
  * @return int
  */
-static int take_thystame(data_t *d)
+static data_t *take_thystame(data_t *d)
 {
     if (strcmp(d->args[1], "thystame") == 0) {
         if (d->map->tile[d->player->posx][d->player->posy].thystame > 0) {
             d->map->tile[d->player->posx][d->player->posy].thystame -= 1;
             d->player->thystame += 1;
             dprintf(d->fd, "ok\n");
-            return 0;
+            return d;
         } else {
             dprintf(d->fd, "ko\n");
-            return 0;
+            return NULL;
         }
     }
     dprintf(d->fd, "ko\n");
-    return 0;
+    return d;
 }
 
 /**
@@ -38,7 +38,7 @@ static int take_thystame(data_t *d)
  * @param d the struct of data_t
  * @return int
  */
-int take_phiras(data_t *d)
+data_t *take_phiras(data_t *d)
 {
     if (strcmp(d->args[1], "phiras") == 0) {
         if (d->map->tile[d->player->posx][d->player->posy].phiras > 0) {

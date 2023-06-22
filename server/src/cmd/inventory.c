@@ -13,11 +13,10 @@
  * @param data the struct data
  * @return
  */
-int inventory(data_t *data)
+data_t *inventory(data_t *data)
 {
     char *msg = NULL;
     int size = 0;
-
     size = snprintf(NULL, 0, inv_1 inv_2, data->player->linemate,\
         data->player->deraumere, data->player->sibur, data->player->mendiane,\
         data->player->phiras, data->player->thystame, data->player->food);
@@ -26,5 +25,5 @@ int inventory(data_t *data)
         data->player->deraumere, data->player->sibur, data->player->mendiane,\
         data->player->phiras, data->player->thystame, data->player->food);
     dprintf(data->fd, "%s", msg);
-    return 0;
+    return data;
 }

@@ -122,5 +122,11 @@ typedef struct density_s {
     size_t player_d;
 } density_t;
 
+typedef struct look_s {
+    int j;
+    int k;
+    int lx;
+    int ly;
+} look_t;
 
 #endif /* !STRUCT_H_ */

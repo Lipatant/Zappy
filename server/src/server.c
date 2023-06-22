@@ -23,7 +23,7 @@ static server_t *set_var_server(server_t *s)
     s->size_addr = sizeof(s->addr);
     s->size_sock = sizeof(s->fd);
     if (bind(s->fd, (struct sockaddr *)&s->addr, s->size_addr) == -1)
-        return error("bind");
+        return NULL;
     return s;
 }
 
