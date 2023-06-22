@@ -80,7 +80,7 @@ static int handle_new_connection(server_t *s, client_t *c)
     }
     dprintf(c->fd, "WELCOME\r\n");
     input = read_input(c);
-    if (strncmp(input, "GUI", 3) == 0)
+    if (strncmp(input, "GRAPHIC", 7) == 0)
         c->GUI = true;
     else
         handle_new_ia(s, c, input);
