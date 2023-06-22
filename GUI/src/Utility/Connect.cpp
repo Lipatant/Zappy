@@ -81,7 +81,7 @@ void Connect::sender(std::string msg)
     const std::chrono::seconds timeout(1);
     auto startTime = std::chrono::steady_clock::now();
 
-    while (sent > 0) {
+    while (size_mess > 0) {
         error_send = send(_sockfd, msg.c_str() + sent, size_mess, 0);
         if (error_send == -1) {
             if (errno == EAGAIN) {
@@ -89,8 +89,9 @@ void Connect::sender(std::string msg)
                 auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime);
                 if (elapsedTime >= timeout)
                     return;
-            } else {
-                Exception exception("Erreur de l'envoi de message.");
+            }
+            if (error_send == -1) {
+                Exception exception("Erreur de l'envoie de message.");
                 throw exception;
             }
         } else {
@@ -98,5 +99,4 @@ void Connect::sender(std::string msg)
             size_mess -= error_send;
         }
     }
-    std::cout << "coucou" << std::endl;
 }
