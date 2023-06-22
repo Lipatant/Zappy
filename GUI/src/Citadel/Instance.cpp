@@ -10,6 +10,7 @@
 #include <vector>
 #include "Citadel/Exception.hpp"
 #include "Citadel/Instance.hpp"
+#include "Citadel/Sprites/Items.hpp"
 #include "Utility/Regex.hpp"
 
 #define REGEX_INT "^([1-9]\\d*|\\d)$"
@@ -66,6 +67,34 @@ static T toNumber(std::string const &str)
     return returned;
 }
 
+INSTANCECMD_FUNCTION(instanceCmdBct)
+{
+    Citadel::GroundInventoryKey tile = std::make_pair(
+        toNumber<Citadel::CharacterPosition>(av[1]),
+        toNumber<Citadel::CharacterPosition>(av[2])
+    );
+
+    if (instance.ground.inventories.find(tile) == \
+        instance.ground.inventories.end()) {
+        instance.ground.inventories[tile] = Citadel::Inventory();
+    }
+    for (std::size_t i = 0; i < CITADEL_INVENTORY_SIZE; i++)
+        instance.ground.inventories[tile][i] = \
+            toNumber<Citadel::InventoryCount>(av[3 + i]);
+    instance.ground.itemSprites.push_back(Mortymere::createSprite< \
+        Citadel::Sprites::Items>(&instance.ground, tile));
+//    instance.ground.itemSprites.back()->layer() = -1;
+    instance.engine().addObject(instance.ground.itemSprites.back());
+}
+
+INSTANCECMD_FUNCTION(instanceCmdMsz)
+{
+    instance.ground.changeSize(toNumber<std::size_t>(av[1]), \
+        toNumber<std::size_t>(av[2]));
+    for (Mortymere::Sprite tile: instance.ground.sprites)
+        instance.engine().addObject(tile);
+}
+
 INSTANCECMD_FUNCTION(instanceCmdPnw)
 {
     Citadel::CharacterNumber characterNumber = toNumber<std::size_t>(av[1]);
@@ -105,21 +134,13 @@ INSTANCECMD_FUNCTION(instanceCmdPdi)
     instance.characters.erase(characterNumber);
 }
 
-INSTANCECMD_FUNCTION(instanceCmdMsz)
-{
-    instance.ground.changeSize(toNumber<std::size_t>(av[1]), \
-        toNumber<std::size_t>(av[2]));
-    for (Mortymere::Sprite tile: instance.ground.sprites)
-        instance.engine().addObject(tile);
-}
-
 static const struct Command_s COMMANDS[] = {
     // Map size
     {"msz", 2, {REGEX_POSITION, REGEX_POSITION}, instanceCmdMsz},
     // Content of a tile
-    {"btc", 9, {REGEX_POSITION, REGEX_POSITION, REGEX_RESSOURCE, \
+    {"bct", 9, {REGEX_POSITION, REGEX_POSITION, REGEX_RESSOURCE, \
         REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE, \
-        REGEX_RESSOURCE, REGEX_RESSOURCE}, 0},
+        REGEX_RESSOURCE, REGEX_RESSOURCE}, instanceCmdBct},
     // Name of a team
     {"tna", 1, {REGEX_TEAM}, 0},
     // Connection of a new player
@@ -252,12 +273,24 @@ void INSTANCE::enterCommand(std::string const &cmd)
 
 bool INSTANCE::udpate(void)
 {
-    if (selectedCharacter && characters.find(selectedCharacter) != characters.end())
-        _engine.camera.center = characters.at(selectedCharacter).sprite->anchor();
+    std::size_t groundSizeX;
+    std::size_t groundSizeY;
+
+    if (selectedCharacter && characters.find(selectedCharacter) != \
+        characters.end())
+        _engine.camera.center = \
+            characters.at(selectedCharacter).sprite->anchor();
     else {
+        groundSizeX = ground.getSizeX();
+        groundSizeY = ground.getSizeY();
+        selectedCharacter = 0;
         _engine.camera.center = {0, 0, 0};
-        _engine.camera.center.x = static_cast<float>(ground.getSizeX() - 1) / 2;
-        _engine.camera.center.z = static_cast<float>(ground.getSizeY() - 1) / 2;
+        if (groundSizeX > 0)
+            _engine.camera.center.x = static_cast<float>( \
+                ground.getSizeX() - 1) / 2;
+        if (groundSizeY > 0)
+            _engine.camera.center.z = static_cast<float>( \
+                ground.getSizeY() - 1) / 2;
     }
 //    if (ground.getSizeX() < 1 || ground.getSizeY() < 1)
 //        _engine.camera.center = {0, 0, 0};

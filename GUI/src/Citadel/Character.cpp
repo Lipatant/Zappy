@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Mortymere/Character.cpp
+** Citadel/Character.cpp
 ** File description:
 ** -
 */
