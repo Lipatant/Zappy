@@ -109,6 +109,20 @@ static bool start(int const port, std::string const &machine, bool const \
     return true;
 }
 
+#define DISHELP(CONTENT) std::cout << CONTENT << std::endl
+
+static void displayHelp(void)
+{
+    DISHELP("USAGE: ./zappy_gui -p port -h machine [--manual|--displayInput]");
+    DISHELP("\t-p port:\tport to use for the connection" << \
+        " (required)");
+    DISHELP("\t-m machine:\tname of the machine to connect to" << \
+        " (localhost by default)");
+    DISHELP("\t--manual:\tignores the connection and use the user input " << \
+        "instead (ignores the -p requirement)");
+    DISHELP("\t--displayInput:\tdisplays the server input received");
+}
+
 #define REGEX_MACHINE "^.+$"
 #define REGEX_PORT "^\\d+$"
 
@@ -163,6 +177,10 @@ int main(int const ac, char const * const * const av)
         if (strcmp("--displayInput", av[i]) == 0) {
             isDisplayInputUsed = true;
             continue;
+        }
+        if (strcmp("-h", av[i]) == 0) {
+            displayHelp();
+            return 0;
         }
         std::cerr << "Unknown flag '" << av[i] << '\'' << std::endl;
         return 84;
