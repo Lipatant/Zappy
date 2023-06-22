@@ -13,23 +13,22 @@
  * @param data the struct data
  * @return
  */
-int right(data_t *data)
+data_t *right(data_t *data)
 {
-    if (!data->connect)
-        return 84;
     switch (data->player->orientation) {
-        case NORTH:
-            data->player->orientation = EAST;
+        case UP:
+            data->player->orientation = RIGHT;
             break;
-        case EAST:
-            data->player->orientation = SOUTH;
+        case RIGHT:
+            data->player->orientation = DOWN;
             break;
-        case SOUTH:
-            data->player->orientation = WEST;
+        case DOWN:
+            data->player->orientation = LEFT;
             break;
-        case WEST:
-            data->player->orientation = NORTH;
+        case LEFT:
+            data->player->orientation = UP;
             break;
     }
-    return 0;
+    dprintf(data->fd, "ok\n");
+    return data;
 }

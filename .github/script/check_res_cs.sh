@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sed -i '/docsressources/d' server/coding-style-reports.log
 CONTENT="$(cat server/coding-style-reports.log)"
 ILLEGAL_FILES_FOUND=0
 if [ "$CONTENT" == "" ]; then

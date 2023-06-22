@@ -3,7 +3,6 @@ server.c
 error.c
 in_loop.c
 init.c
-init_tab.c
 call_elevation.c
 elevation_firstpart.c
 elevation_secondpart.c
@@ -16,6 +15,11 @@ cmd.c
 command.c
 split.c
 utils_split.c
-cmd/quit.c
-cmd/look.c
 utils.c
+cmd/inventory.c
+init_player.c
+tile.c
+cmd/take.c
+cmd/take2.c
+cmd/add_tile.c
+cmd/look.c

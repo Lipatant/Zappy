@@ -82,7 +82,8 @@ int cmd(data_t *data, char *command, client_t *c)
         return 84;
     for (int i = 0; cmds[i].cmd != NULL; i++) {
         if (strcmp(cmds[i].cmd, data->args[0]) == 0) {
-            ret = cmds[i].func_ptr(data);
+            data = cmds[i].func_ptr(data);
+            ret = 0;
             break;
         }
     }
