@@ -24,10 +24,14 @@ bool OBJECT::drawOn(Mortymere::Instance &instance, sf::RenderStates const \
 
     _sprite.setFillColor(_fillColor);
     cornerAnchorA.x -= 0.5; cornerAnchorB.x += 0.5; cornerAnchorB.y += height;
+    if (scale.x < 0) {
+        cornerAnchorA.x += 1;
+        cornerAnchorB.x += 1;
+    }
     cornerA = instance.camera.inSpaceToOnScreen(cornerAnchorA);
     cornerB = instance.camera.inSpaceToOnScreen(cornerAnchorB);
-    cornerA.x *= scale.x; cornerA.y *= scale.y;
-    cornerB.x *= scale.x; cornerB.y *= scale.y;
+//    cornerA.x *= scale.x; cornerA.y *= scale.y;
+//    cornerB.x *= scale.x; cornerB.y *= scale.y;
     _sprite.setPosition(cornerA + sf::Vector2f(-3, 5));
     _sprite.setSize(cornerB - cornerA);
     instance.window.draw(_sprite, states);

@@ -96,6 +96,16 @@ Citadel::CharacterTeam CHARACTER::getTeam(void)
     return _team;
 }
 
+Citadel::CharacterPosition CHARACTER::getPositionX(void)
+{
+    return _positionX;
+}
+
+Citadel::CharacterPosition CHARACTER::getPositionY(void)
+{
+    return _positionY;
+}
+
 void CHARACTER::setLevel(Citadel::CharacterLevel const level)
 {
     _level = level;

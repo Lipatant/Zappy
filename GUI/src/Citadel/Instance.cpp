@@ -38,7 +38,7 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList);
 struct Command_s {
     std::string name;
     std::size_t arguments;
-    std::string argumentExpressions[9];
+    std::string argumentExpressions[10];
     void (*function)(INSTANCE &instance, std::vector<std::string> const &av);
 };
 static const char CMD_SEPARATORS[] = {' ', '\t', '\n'};
@@ -83,7 +83,6 @@ INSTANCECMD_FUNCTION(instanceCmdBct)
             toNumber<Citadel::InventoryCount>(av[3 + i]);
     instance.ground.itemSprites.push_back(Mortymere::createSprite< \
         Citadel::Sprites::Items>(&instance.ground, tile));
-//    instance.ground.itemSprites.back()->layer() = -1;
     instance.engine().addObject(instance.ground.itemSprites.back());
 }
 
@@ -125,6 +124,73 @@ INSTANCECMD_FUNCTION(instanceCmdPpo)
         toRotation<Citadel::CharacterRotation>(av[4]));
 }
 
+
+INSTANCECMD_FUNCTION(instanceCmdPpv)
+{
+    Citadel::CharacterNumber characterNumber = toNumber<std::size_t>(av[1]);
+
+    if (instance.characters.find(characterNumber) == instance.characters.end())
+        return;
+    instance.characters.at(characterNumber).setLevel(\
+        toNumber<Citadel::CharacterLevel>(av[2]));
+}
+
+INSTANCECMD_FUNCTION(instanceCmdPin)
+{
+    Citadel::CharacterNumber characterNumber = toNumber<std::size_t>(av[1]);
+
+    if (instance.characters.find(characterNumber) == instance.characters.end())
+        return;
+    instance.characters.at(characterNumber).setPosition(\
+        toNumber<Citadel::CharacterNumber>(av[2]), \
+        toNumber<Citadel::CharacterNumber>(av[3]));
+    for (std::size_t i = 0; i < CITADEL_INVENTORY_SIZE; i++)
+        instance.characters.at(characterNumber).inventory[i] = \
+            toNumber<Citadel::InventoryCount>(av[4 + i]);
+}
+
+INSTANCECMD_FUNCTION(instanceCmdPdr)
+{
+    Citadel::CharacterNumber characterNumber = toNumber<std::size_t>(av[1]);
+    std::size_t ressource = toNumber<std::size_t>(av[2]);
+    Citadel::GroundInventoryKey tile;
+
+    if (instance.characters.find(characterNumber) == instance.characters.end())
+        return;
+    if (instance.characters.at(characterNumber).inventory[ressource] > 0)
+        instance.characters.at(characterNumber).inventory[ressource] -= 1;
+    tile = std::make_pair( \
+        instance.characters.at(characterNumber).getPositionX(), \
+        instance.characters.at(characterNumber).getPositionY());
+    if (instance.ground.inventories.find(tile) == \
+        instance.ground.inventories.end()) {
+        instance.ground.inventories[tile] = Citadel::Inventory();
+        instance.ground.itemSprites.push_back(Mortymere::createSprite< \
+            Citadel::Sprites::Items>(&instance.ground, tile));
+        instance.engine().addObject(instance.ground.itemSprites.back());
+    }
+    instance.ground.inventories.at(tile)[ressource] += 1;
+}
+
+INSTANCECMD_FUNCTION(instanceCmdPgt)
+{
+    Citadel::CharacterNumber characterNumber = toNumber<std::size_t>(av[1]);
+    std::size_t ressource = toNumber<std::size_t>(av[2]);
+    Citadel::GroundInventoryKey tile;
+
+    if (instance.characters.find(characterNumber) == instance.characters.end())
+        return;
+    instance.characters.at(characterNumber).inventory[ressource] += 1;
+    tile = std::make_pair( \
+        instance.characters.at(characterNumber).getPositionX(), \
+        instance.characters.at(characterNumber).getPositionY());
+    if (instance.ground.inventories.find(tile) == \
+        instance.ground.inventories.end())
+        return;
+    if (instance.ground.inventories.at(tile)[ressource] > 0)
+        instance.ground.inventories.at(tile)[ressource] -= 1;
+}
+
 INSTANCECMD_FUNCTION(instanceCmdPdi)
 {
     Citadel::CharacterNumber characterNumber = toNumber<std::size_t>(av[1]);
@@ -150,11 +216,11 @@ static const struct Command_s COMMANDS[] = {
     {"ppo", 4, {REGEX_NUMBER, REGEX_POSITION, REGEX_POSITION, \
         REGEX_ORIENTATION}, instanceCmdPpo},
     // Player's level
-    {"plv", 2, {REGEX_NUMBER, REGEX_LEVEL}, 0},
+    {"plv", 2, {REGEX_NUMBER, REGEX_LEVEL}, instanceCmdPpv},
     // Player's inventory
-    {"pin", 8, {REGEX_NUMBER, REGEX_RESSOURCE, REGEX_RESSOURCE, \
+    {"pin", 10, {REGEX_NUMBER, REGEX_POSITION, REGEX_POSITION, \
         REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE, \
-        REGEX_RESSOURCE}, 0},
+        REGEX_RESSOURCE, REGEX_RESSOURCE, REGEX_RESSOURCE}, instanceCmdPin},
     // Expulsion
     {"pex", 1, {REGEX_NUMBER}, 0},
     // Broadcast
@@ -173,9 +239,9 @@ static const struct Command_s COMMANDS[] = {
     // Egg layed by the player
     {"pfk", 1, {REGEX_NUMBER}, 0},
     // Ressource dropping
-    {"pdr", 2, {REGEX_NUMBER, REGEX_RESSOURCE_ID}, 0},
+    {"pdr", 2, {REGEX_NUMBER, REGEX_RESSOURCE_ID}, instanceCmdPdr},
     // Ressource collecting
-    {"pgt", 2, {REGEX_NUMBER, REGEX_RESSOURCE_ID}, 0},
+    {"pgt", 2, {REGEX_NUMBER, REGEX_RESSOURCE_ID}, instanceCmdPgt},
     // Death of a player
     {"pdi", 1, {REGEX_NUMBER}, instanceCmdPdi},
     // An egg was layed by a player

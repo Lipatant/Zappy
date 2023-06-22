@@ -47,6 +47,10 @@ public: // PUBLIC MEMBERS
 public: // PUBLIC FUNCTIONS
     /// @return Value of _team
     Citadel::CharacterTeam getTeam(void);
+    /// @return Value of _positionX
+    Citadel::CharacterPosition getPositionX(void);
+    /// @return Value of _positionY
+    Citadel::CharacterPosition getPositionY(void);
     /// @param level (Citadel::CharacterLevel const) New value of
     ///     _level
     void setLevel(Citadel::CharacterLevel const level);
