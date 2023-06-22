@@ -11,6 +11,14 @@
 
 from ai import main
 import sys
+import signal
+
+## @author Damien
+## @brief Ctrl-c handler so, when doing it, ther is no error messages
+def signal_handler(sig, frame):
+    exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 ## @author Pierre-Louis
 ## @brief Removes useless executable name in argv
@@ -23,5 +31,7 @@ def remove_executable_name() -> int:
 ## @param argc is the length of argv
 ## @param argv contain argument given by the user
 ## @details Checks if the file is executed as a main program
-if __name__ == "__main__":
-    exit(main.main(len(sys.argv) - 1, remove_executable_name()))
+while 1:
+    if __name__ == "__main__":
+        main.main(len(sys.argv) - 1, remove_executable_name())
+        pass

@@ -24,7 +24,7 @@ test*.txt
 #(Useless file on the github repository)
 
 unit_tests*
-# Executable of unit_tests.cpp
+#Executable of unit_tests.cpp
 
 ########## 2. The *folders* that must be ignored: (alpahabetic order) ##########
 
@@ -38,6 +38,10 @@ Build/
 private/
 Private/
 #(Private/ folder for everything that should not be pushed)
+
+tests/*.py
+!tests/test_arguments.py
+#Ignore all .py files in the test folder except the test file
 
 ########## 3. Particular for Zappy project: (alpahabetic order) ##########
 
