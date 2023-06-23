@@ -34,7 +34,11 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
     bool const isDisplayInputUsed)
 {
     std::string infoServ;
+    std::string delimiter = "\n";
+    std::string token;
+    size_t pos = 0;
     Connect Connect(ip, port);
+    std::list<std::string> infoServList = {};
 
     if (!isManualUsed) {
         try {
@@ -60,25 +64,33 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
                 close = true;
                 break;
             }
+            infoServList.push_back(infoServ);
         } else {
             try {
-                //infoServ = Connect.receive();
+                infoServ = Connect.receive();
             } catch (std::exception const& e) {
-                infoServ = "";
                 break;
             }
             if (infoServ.empty())
                 continue;
+            while ((pos = infoServ.find(delimiter)) != std::string::npos) {
+                token = infoServ.substr(0, pos);
+                infoServList.push_back(token);
+                infoServ.erase(0, pos + delimiter.length());
+            }
         }
         locks.citadel.lock();
-        if (isDisplayInputUsed)
-            std::cerr << infoServ << std::endl;
-        try { citadel << infoServ; }
-        CATCH_EXCEPTION_COMMAND(InvalidAmountArguments, e)
-        CATCH_EXCEPTION_COMMAND(TooFewArguments, e)
-        CATCH_EXCEPTION_COMMAND(TooManyArguments, e)
-        CATCH_EXCEPTION_COMMAND(InvalidArgument, e)
+        for (std::string const &command: infoServList) {
+            if (isDisplayInputUsed)
+                std::cerr << command << std::endl;
+            try { citadel << command; }
+            CATCH_EXCEPTION_COMMAND(InvalidAmountArguments, e)
+            CATCH_EXCEPTION_COMMAND(TooFewArguments, e)
+            CATCH_EXCEPTION_COMMAND(TooManyArguments, e)
+            CATCH_EXCEPTION_COMMAND(InvalidArgument, e)
+        }
         locks.citadel.unlock();
+        infoServList.clear();
     }
     locks.close.unlock();
 }
