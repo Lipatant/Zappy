@@ -25,7 +25,7 @@ void fix(int *n, int *goal, int lim);
 char *add_tile(data_t *data, char *send, int x, int y);
 data_t *inventory(data_t *data);
 //int broadcast(data_t *data);
-//int connect_nbr(data_t *data);
+data_t *connect_nbr(data_t *data);
 //int fork(data_t *data);
 //int eject(data_t *data);
 data_t *take(data_t *data);
@@ -42,7 +42,7 @@ static const cmd_t cmds[] = {
     {"Look\0", &look},
     {"Inventory\0", &inventory},
     //{"broadcast", &broadcast}, // string
-    //{"connect_nbr", &connect_nbr}, // return int nb place team
+    {"Connect_nbr\0", &connect_nbr}, // return int nb place team
     ////{"fork\0", &fork},
     //{"eject\0", &eject},
     {"Take\0", &take},

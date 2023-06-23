@@ -75,6 +75,7 @@ typedef struct data_s {
     bool connect;
     player_t *player;
     map_t *map;
+    team_t *team;
 } data_t;
 
 typedef struct server_s {
@@ -101,6 +102,7 @@ typedef struct client_s {
     int team_nb;
     player_t *player;
     map_t *map;
+    team_t *team;
 } client_t;
 
 typedef struct args_s {
