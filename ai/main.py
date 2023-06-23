@@ -72,13 +72,13 @@ def trantorian_lives(client: client, args: arguments):
 
         if (result == 0):
             trant.bag[0] += 1
-        else:
-            getattr(trant, functions[3])()
         time.sleep(1)
 
         getattr(trant, functions[1])()
         if client.data != "0\n":
             duplicate_ai(args, client)
+        else:
+            getattr(trant, functions[3])()
 
         getattr(trant, functions[11])("food") #take food
         time.sleep(0.2) # PL test command
