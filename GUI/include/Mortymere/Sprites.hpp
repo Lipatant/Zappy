@@ -6,7 +6,7 @@
 */
 
 /// @file
-/// @brief Includes all headers from the Mortymere/Maths directory
+/// @brief Includes all headers from the Mortymere/Sprites directory
 
 #pragma once
 

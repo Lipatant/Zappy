@@ -11,6 +11,7 @@
 #pragma once
 
 #include <list>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include "Mortymere/Camera.hpp"
 #include "Mortymere/Ground.hpp"
 #include "Mortymere/SpritePtr.hpp"
@@ -28,6 +29,8 @@ using InstanceDisplayModuleType = void (*)(Mortymere::Instance &, void *);
 using InstanceDisplayModule = struct InstanceDisplayModule_s {
     /// @brief Function
     Mortymere::InstanceDisplayModuleType function;
+    /// @brief Type
+    std::string type;
     /// @brief Data that can be brough. nullptr by default
     void *data;
 };
@@ -51,17 +54,22 @@ private: // PRIVATE MEMBERS
 
 public: // PUBLIC FUNCTIONS
     /// @brief Adds a Mortymere::InstanceDisplayModuleType to displayModules
+    /// @param type (std::string const &) Type of Module (ui)
     /// @param function (Mortymere::InstanceDisplayModuleType)
     /// @param data (void *) (optional)
-    void addDisplayModule(Mortymere::InstanceDisplayModuleType function);
+    void addDisplayModule(std::string const &type, \
+        Mortymere::InstanceDisplayModuleType function);
     /// @brief Adds a Mortymere::InstanceDisplayModuleType to displayModules
+    /// @param type (std::string const &) Type of Module (ui)
     /// @param function (Mortymere::InstanceDisplayModuleType)
     /// @param data (void *) (optional)
-    void addDisplayModule(Mortymere::InstanceDisplayModuleType function, \
-        void *data);
+    void addDisplayModule(std::string const &type, \
+        Mortymere::InstanceDisplayModuleType function, void *data);
     /// @brief Adds a SpritePtr to _objects
     /// @param objectPtr (Mortymere::SpritePtr) Pointer to the object
     void addObject(Mortymere::SpritePtr objectPtr);
+    /// @brief Shape used for covering the entire screen
+    sf::RectangleShape screenCover;
     /// @return Returns true, or false if the window is closed
     bool udpate(void);
 
