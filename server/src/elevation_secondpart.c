@@ -10,53 +10,66 @@
 /**
  * @brief the function for making the elevation lvl 6
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl6(team_t *team)
+data_t *elevation_lvl6(data_t *data)
 {
-    if (team->player->linemate >= 1 && team->player->deraumere >= 2
-    && team->player->sibur >= 3 && team->player->phiras >= 1) {
-        team->player->linemate -= 1;
-        team->player->deraumere -= 2;
-        team->player->sibur -= 3;
-        team->player->phiras -= 1;
-        team->player->lvl = 6;
+    if (data->player->linemate >= 1 && data->player->deraumere >= 2
+    && data->player->sibur >= 3 && data->player->phiras >= 1 &&
+    data->map->tiles[data->player->y][data->player->x].players == 4) {
+        data->player->linemate -= 1;
+        data->player->deraumere -= 2;
+        data->player->sibur -= 3;
+        data->player->phiras -= 1;
+        data->player->lvl = 6;
     }
+    return (data);
 }
 
 /**
  * @brief the function for making the elevation lvl 7
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl7(team_t *team)
+data_t *elevation_lvl7(data_t *data)
 {
-    if (team->player->linemate >= 2 && team->player->deraumere >= 2
-    && team->player->sibur >= 2 && team->player->phiras >= 2) {
-        team->player->linemate -= 1;
-        team->player->deraumere -= 2;
-        team->player->sibur -= 3;
-        team->player->phiras -= 1;
-        team->player->lvl = 7;
+    if (data->player->linemate >= 2 && data->player->deraumere >= 2
+    && data->player->sibur >= 2 && data->player->mendiane >= 2
+    && data->player->phiras >= 2 && data->player->thystame >= 1 &&
+    data->map->tiles[data->player->y][data->player->x].players == 6) {
+        data->player->linemate -= 2;
+        data->player->deraumere -= 2;
+        data->player->sibur -= 2;
+        data->player->mendiane -= 2;
+        data->player->phiras -= 2;
+        data->player->thystame -= 1;
+        data->player->lvl = 7;
     }
+    return (data);
 }
 
 /**
  * @brief the function for making the elevation lvl 8
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl8(team_t *team)
+data_t *elevation_lvl8(data_t *data)
 {
-    if (team->player->linemate >= 2 && team->player->deraumere >= 2
-    && team->player->sibur >= 2 && team->player->mendiane >= 2
-    && team->player->phiras >= 2 && team->player->thystame >= 1) {
-        team->player->linemate -= 2;
-        team->player->deraumere -= 2;
-        team->player->sibur -= 2;
-        team->player->mendiane -= 2;
-        team->player->phiras -= 2;
-        team->player->thystame -= 1;
-        team->player->lvl = 8;
+    if (data->player->linemate >= 2 && data->player->deraumere >= 2
+    && data->player->sibur >= 2 && data->player->mendiane >= 2
+    && data->player->phiras >= 2 && data->player->thystame >= 2 &&
+    data->map->tiles[data->player->y][data->player->x].players == 6) {
+        data->player->linemate -= 2;
+        data->player->deraumere -= 2;
+        data->player->sibur -= 2;
+        data->player->mendiane -= 2;
+        data->player->phiras -= 2;
+        data->player->thystame -= 2;
+        data->player->lvl = 8;
     }
+    return (data);
 }
+

@@ -10,65 +10,85 @@
 /**
  * @brief the function for making the elevation lvl 2
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl2(team_t *team)
+data_t *elevation_lvl2(data_t *data)
 {
-    if (team->player->linemate >= 1 && team->player->deraumere >= 1
-    && team->player->sibur >= 1) {
-        team->player->linemate -= 1;
-        team->player->deraumere -= 1;
-        team->player->sibur -= 1;
-        team->player->lvl = 2;
+    if (data->player->linemate >= 1 && data->player->deraumere >= 1
+    && data->player->sibur >= 1 &&
+    data->map->tiles[data->player->y][data->player->x].players == 1) {
+        dprintf(data->player->fd, "Elevation underway\n");
+        //function who make incantation and wait 3 sec
+        data->player->linemate -= 1;
+        data->player->deraumere -= 1;
+        data->player->sibur -= 1;
+        data->player->lvl = 2;
+        //call function take object for lvl 2 and lvl 2 in that function
+
     }
+    dprintf(data->player->fd, "Current level: %d\n", data->player->lvl);
+    return (data);
 }
 
 /**
  * @brief the function for making the elevation lvl 3
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl3(team_t *team)
+data_t *elevation_lvl3(data_t *data)
 {
-    if (team->player->linemate >= 2 && team->player->sibur >= 1
-    && team->player->phiras >= 2) {
-        team->player->linemate -= 2;
-        team->player->sibur -= 1;
-        team->player->phiras -= 2;
-        team->player->lvl = 3;
+    if (data->player->linemate >= 2 && data->player->sibur >= 1
+    && data->player->phiras >= 2 &&
+    data->map->tiles[data->player->y][data->player->x].players == 2) {
+        data->player->linemate -= 2;
+        data->player->sibur -= 1;
+        data->player->phiras -= 2;
+        data->player->lvl = 3;
+        //call function take object for lvl 3
     }
+    return (data);
 }
 
 /**
  * @brief the function for making the elevation lvl 4
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl4(team_t *team)
+data_t *elevation_lvl4(data_t *data)
 {
-    if (team->player->linemate >= 1 && team->player->deraumere >= 1
-    && team->player->sibur >= 2 && team->player->phiras >= 1) {
-        team->player->linemate -= 1;
-        team->player->deraumere -= 1;
-        team->player->sibur -= 2;
-        team->player->phiras -= 1;
-        team->player->lvl = 4;
+    if (data->player->linemate >= 1 && data->player->deraumere >= 1
+    && data->player->sibur >= 2 && data->player->phiras >= 1 &&
+    data->map->tiles[data->player->y][data->player->x].players == 2) {
+        data->player->linemate -= 1;
+        data->player->deraumere -= 1;
+        data->player->sibur -= 2;
+        data->player->phiras -= 1;
+        data->player->lvl = 4;
+        //call function take object for lvl 4
     }
+    return (data);
 }
 
 /**
  * @brief the function for making the elevation lvl 5
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl5(team_t *team)
+data_t *elevation_lvl5(data_t *data)
 {
-    if (team->player->linemate >= 1 && team->player->deraumere >= 2
-    && team->player->sibur >= 1 && team->player->mendiane >= 3) {
-        team->player->linemate -= 1;
-        team->player->deraumere -= 2;
-        team->player->sibur -= 1;
-        team->player->mendiane -= 3;
-        team->player->lvl = 5;
+    if (data->player->linemate >= 1 && data->player->deraumere >= 2
+    && data->player->sibur >= 1 && data->player->mendiane >= 3 &&
+    data->map->tiles[data->player->y][data->player->x].players == 4) {
+        data->player->linemate -= 1;
+        data->player->deraumere -= 2;
+        data->player->sibur -= 1;
+        data->player->mendiane -= 3;
+        data->player->lvl = 5;
+        //call function take object for lvl 5
     }
+    return (data);
 }
