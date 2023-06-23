@@ -30,5 +30,3 @@ data_t *make_elevation(data_t *data)
         elevation_lvl8(data);
     return (data);
 }
-
-

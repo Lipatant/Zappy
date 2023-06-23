@@ -81,4 +81,3 @@ data_t *elevation_lvl8(data_t *data)
     dprintf(data->fd, "Current level: %ld\n", data->player->lvl);
     return (data);
 }
-

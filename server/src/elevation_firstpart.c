@@ -48,7 +48,8 @@ data_t *elevation_lvl3(data_t *data)
         data->player->lvl = 3;
     }
     dprintf(data->fd, "Current level: %ld\n", data->player->lvl);
-    return (data);}
+    return (data);
+}
 
 /**
  * @brief the function for making the elevation lvl 4
