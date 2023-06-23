@@ -21,8 +21,12 @@ using ButtonValue = int;
 class Button : public sf::Sprite {
 
 private: // PRIVATE MEMBERS
+    /// @brief
+    unsigned char _hovered = 0;
     /// @brief If _texture is laoded
     bool _isTextureLoaded = false;
+    /// @brief
+    bool _selected = false;
     /// @brief Texture of the sprite
     sf::Texture _texture;
     /// @brief Texture rect of the sprite

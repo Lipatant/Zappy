@@ -34,7 +34,8 @@
     static void NAME(INSTANCE &instance, std::vector<std::string> const &av)
 
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList);
-MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleMenu);
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu);
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUINone);
 
 struct Command_s {
     std::string name;
@@ -297,26 +298,36 @@ static void convertCommand(std::string const &cmd, size_t &ac, \
 }
 
 INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
-    mainMenuButtonPlay("graphics/buttons/Play.png")
+    mainMenuButtonPlay("graphics/buttons/Play.png"), \
+    noneButtonSettings("graphics/buttons/Settings.png")
 {
     srand(time(NULL));
     _engine.addDisplayModule("ui", citadelDisplayModuleCharacterList, this);
-    _engine.addDisplayModule("ui", citadelDisplayModuleMenu, this);
+    _engine.addDisplayModule("ui", citadelDisplayModuleUINone, this);
+    _engine.addDisplayModule("ui", citadelDisplayModuleUIMainMenu, this);
     _engine.window.setViewCenter(0, 0);
-    isMainMenuCoverTextureLoaded = true;
-    if (!_mainMenuCoverTexture.loadFromFile("GUI/graphics/MainMenu.png")) {
-        if (!_mainMenuCoverTexture.loadFromFile("graphics/MainMenu.png")) {
-            isMainMenuCoverTextureLoaded = false;
-            return;
-        }
+    if (_mainMenuCoverTexture.loadFromFile("GUI/graphics/MainMenu.png") || \
+        _mainMenuCoverTexture.loadFromFile("graphics/MainMenu.png")) {
+        mainMenuCover.setTexture(&_mainMenuCoverTexture);
+        mainMenuCoverTextureRect = mainMenuCover.getTextureRect();
+        isMainMenuCoverTextureLoaded = true;
     }
-    mainMenuCover.setTexture(&_mainMenuCoverTexture);
-    mainMenuCoverTextureRect = mainMenuCover.getTextureRect();
+    if (_mainMenuTitleTexture.loadFromFile("GUI/graphics/MainTitle.png") || \
+        _mainMenuTitleTexture.loadFromFile("graphics/MainTitle.png")) {
+        mainMenuTitle.setTexture(&_mainMenuTitleTexture);
+        mainMenuTitleTextureRect = mainMenuTitle.getTextureRect();
+        isMainMenuTitleTextureLoaded = true;
+    }
 }
 
 Mortymere::Instance &INSTANCE::engine(void)
 {
     return _engine;
+}
+
+void INSTANCE::changeCurrentMenu(InstanceCurrentMenu const newMenu)
+{
+    _nextMenu = newMenu;
 }
 
 void INSTANCE::enterCommand(std::string const &cmd)
@@ -351,6 +362,7 @@ void INSTANCE::enterCommand(std::string const &cmd)
 
 bool INSTANCE::udpate(void)
 {
+    bool returned;
     std::size_t groundSizeX;
     std::size_t groundSizeY;
 
@@ -370,7 +382,24 @@ bool INSTANCE::udpate(void)
             _engine.camera.center.z = static_cast<float>( \
                 ground.getSizeY() - 1) / 2;
     }
-    return _engine.udpate();
+    if (currentMenu != lastMenu) {
+        menuTransition = static_cast<double>( \
+            _menuTransitionClock.getElapsedTime().asMilliseconds()) / 1000 * 4;
+        if (menuTransition >= 1.0) {
+            lastMenu = currentMenu;
+            menuTransition = 1.0;
+            isInMenuTransition = false;
+        }
+    }
+    returned = _engine.udpate();
+    if (_nextMenu != currentMenu) {
+        _menuTransitionClock.restart();
+        menuTransition = 0;
+        lastMenu = currentMenu;
+        currentMenu = _nextMenu;
+        isInMenuTransition = true;
+    }
+    return returned;
 }
 
 void INSTANCE::operator<<(std::string const &cmd)

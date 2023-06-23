@@ -12,6 +12,7 @@
 
 #include <map>
 #include <vector>
+#include <SFML/System/Clock.hpp>
 #include "Citadel/Character.hpp"
 #include "Citadel/Ground.hpp"
 #include "Mortymere/Button.hpp"
@@ -30,6 +31,12 @@ class Instance {
 private: // PROTECTED MEMBERS
     /// @brief Texture of mainMenuCover
     sf::Texture _mainMenuCoverTexture;
+    /// @brief Texture of mainMenuTitle
+    sf::Texture _mainMenuTitleTexture;
+    /// @brief Clock measuring time since last menu transition
+    sf::Clock _menuTransitionClock;
+    /// @brief Variable used for the changeCurrentMenu function
+    Citadel::InstanceCurrentMenu _nextMenu = InstanceCurrentMenu::MainMenu;
 
 protected: // PROTECTED MEMBERS
     /// @brief Regerence to a Mortymere instance
@@ -39,17 +46,33 @@ public: // PUBLIC MEMBERS
     /// @brief List of all characters in the Citadel
     std::map<Citadel::CharacterNumber, Citadel::Character> characters;
     /// @brief Current menu that the player is in
-    InstanceCurrentMenu currentMenu = InstanceCurrentMenu::MainMenu;
+    Citadel::InstanceCurrentMenu currentMenu = InstanceCurrentMenu::MainMenu;
+    /// @brief Last menu the player was in, or current is the transition time
+    ///     is over
+    Citadel::InstanceCurrentMenu lastMenu = InstanceCurrentMenu::MainMenu;
     /// @brief Ground of the Citadel
     Citadel::Ground ground;
     /// @brief If _mainMenuCoverTexture is loaded
     bool isMainMenuCoverTextureLoaded = false;
+    /// @brief If _mainMenuTitleTexture is loaded
+    bool isMainMenuTitleTextureLoaded = false;
     /// @brief Shape used for covering the entire screen during the Main Menu
     sf::RectangleShape mainMenuCover;
-    /// @brief Button for leaving the main menu
-    Mortymere::Button mainMenuButtonPlay;
     /// @brief Default TextureRect of mainMenuCover
     sf::IntRect mainMenuCoverTextureRect;
+    /// @brief Shape used for covering the entire screen during the Main Menu
+    ///     with a title
+    sf::RectangleShape mainMenuTitle;
+    /// @brief Default TextureRect of mainMenuTitle
+    sf::IntRect mainMenuTitleTextureRect;
+    /// @brief Button for leaving the main menu
+    Mortymere::Button mainMenuButtonPlay;
+    /// @brief If the menu is transitioning to another
+    bool isInMenuTransition = false;
+    /// @brief Time since the last menu (from 0.0f to 1.0f)
+    float menuTransition = 1.0f;
+    /// @brief Button for re-entering the main menu
+    Mortymere::Button noneButtonSettings;
     /// @brief Currently selected character. If no cbaracter is
     ///     selected, selectedCharacter should be equal to 0
     Citadel::CharacterNumber selectedCharacter = 0;
@@ -62,6 +85,7 @@ public: // PUBLIC MEMBERS
     std::map<std::string, sf::Texture> portraitTextures;
 
 public: // PUBLIC FUNCTIONS
+    void changeCurrentMenu(InstanceCurrentMenu const newMenu);
     /// @brief Enters a new server command to the Citadel
     void enterCommand(std::string const &cmd);
     /// @return Reference to _engine
