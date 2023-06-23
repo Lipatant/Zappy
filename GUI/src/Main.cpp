@@ -62,7 +62,7 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
             }
         } else {
             try {
-                infoServ = Connect.receive();
+                //infoServ = Connect.receive();
             } catch (std::exception const& e) {
                 infoServ = "";
                 break;
