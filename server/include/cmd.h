@@ -10,7 +10,7 @@
 
     #include "server.h"
     #define inv_1 "[linemate %ld, deraumere %ld, sibur %ld, mendiane %ld, "
-    #define inv_2 "phiras %ld, thystame %ld, food %ld]\n"
+    #define inv_2 "phiras %ld, thystame %ld, food %ld]"
 
 typedef struct cmd_s {
     char *cmd;
@@ -30,7 +30,8 @@ data_t *inventory(data_t *data);
 //int eject(data_t *data);
 data_t *take(data_t *data);
 data_t *take_phiras(data_t *d);
-//int set(data_t *data);
+data_t *set(data_t *data);
+data_t *set_phiras(data_t *d);
 // inventory and add to the tile
 //int incantation(data_t *data); // bastien
 
@@ -45,7 +46,7 @@ static const cmd_t cmds[] = {
     ////{"fork\0", &fork},
     //{"eject\0", &eject},
     {"Take\0", &take},
-    //{"set", &set},
+    {"Set\0", &set},
     //{"incantation", &incantation}, // send to all client on tile
     {NULL, NULL}
 };

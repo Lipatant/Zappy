@@ -83,4 +83,7 @@ tests_run: fclean
 			$(LCRITERION) $(CPPFLAGS_UT)
 		./$(UT)
 
-.PHONY: all debug debug_play fclean clean re tests_run
+doc:
+	@doxygen docsressources/Doxyfile
+
+.PHONY: all debug debug_play fclean clean re tests_run doc

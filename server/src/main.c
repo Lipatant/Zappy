@@ -137,7 +137,7 @@ int main(int argc, char **argv)
 {
     map_t map;
     args_t args;
-    team_list_t team_list = {0, 0, NULL};
+    team_list_t team_list = {0, 0};
 
     if (argc == 2 && strcmp(argv[1], "-help") == 0)
         return help();

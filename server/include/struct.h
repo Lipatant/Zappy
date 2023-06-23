@@ -14,6 +14,7 @@
 
 typedef struct player_s {
     size_t food;
+    int id;
     int posx;
     int posy;
     size_t level;
@@ -25,7 +26,6 @@ typedef struct player_s {
     size_t phiras;
     size_t thystame;
     size_t lvl;
-    size_t id;
     int orientation;
 } player_t;
 
@@ -38,12 +38,20 @@ typedef struct tile_s {
     int thystame;
     int food;
     int player;
+    int x;
+    int y;
 } tile_t;
+
+typedef struct pos_s {
+    int x;
+    int y;
+} pos_t;
 
 typedef struct map_s {
     int max_x;
     int max_y;
     tile_t **tile;
+    pos_t *player_pos;
 } map_t;
 
 typedef struct team_s {
@@ -53,15 +61,9 @@ typedef struct team_s {
     player_t *player;
 } team_t;
 
-typedef struct pos_s {
-    int x;
-    int y;
-} pos_t;
-
 typedef struct team_list_s {
     size_t length;
     team_t *team;
-    pos_t *pos;
 } team_list_t;
 
 typedef struct data_s {
