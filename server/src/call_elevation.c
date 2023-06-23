@@ -31,5 +31,4 @@ data_t *make_elevation(data_t *data)
     return (data);
 }
 
-// create function who make the incantation and wait 3 sec
-//! must check during this time if the player is still on the tile and there aren't any eject
+
