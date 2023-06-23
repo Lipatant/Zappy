@@ -23,3 +23,5 @@ cmd/take.c
 cmd/take2.c
 cmd/add_tile.c
 cmd/look.c
+cmd/set.c
+cmd/set2.c

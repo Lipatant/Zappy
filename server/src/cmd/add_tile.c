@@ -8,6 +8,14 @@
 #include "my.h"
 #include "server.h"
 
+/**
+ * @brief add the tile to send part 4
+ * @param data
+ * @param to_send
+ * @param x
+ * @param y
+ * @return
+ */
 static char *add_tile_4(data_t *data, char *to_send, int x, int y)
 {
     int size = 0;
@@ -27,6 +35,14 @@ static char *add_tile_4(data_t *data, char *to_send, int x, int y)
     return to_send;
 }
 
+/**
+ * @brief add tile to send part 3
+ * @param data
+ * @param to_send
+ * @param x
+ * @param y
+ * @return
+ */
 static char *add_tile_3(data_t *data, char *to_send, int x, int y)
 {
     int size = 0;
@@ -46,6 +62,14 @@ static char *add_tile_3(data_t *data, char *to_send, int x, int y)
     return add_tile_4(data, to_send, x, y);
 }
 
+/**
+ * @brief add tile to send part 2
+ * @param data
+ * @param to_send
+ * @param x
+ * @param y
+ * @return
+ */
 static char *add_tile_2(data_t *data, char *to_send, int x, int y)
 {
     int size = 0;
@@ -65,6 +89,14 @@ static char *add_tile_2(data_t *data, char *to_send, int x, int y)
     return add_tile_3(data, to_send, x, y);
 }
 
+/**
+ * @brief add tile to send part 1
+ * @param data
+ * @param send
+ * @param x
+ * @param y
+ * @return
+ */
 char *add_tile(data_t *data, char *send, int x, int y)
 {
     int size = 0;
@@ -84,6 +116,12 @@ char *add_tile(data_t *data, char *send, int x, int y)
     return add_tile_2(data, send, x, y);
 }
 
+/**
+ * @brief fix the position of the player
+ * @param n
+ * @param goal
+ * @param lim
+ */
 void fix(int *n, int *goal, int lim)
 {
     if (goal == NULL && *n == lim)

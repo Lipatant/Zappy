@@ -9,6 +9,12 @@
 #include "server.h"
 #include "cmd.h"
 
+/**
+ * @brief look up
+ * @param data
+ * @param to_send
+ * @return
+ */
 static char *look_up(data_t *data, char *to_send)
 {
     look_t look = {1, data->player->posx, data->player->posx + 1,
@@ -23,12 +29,19 @@ static char *look_up(data_t *data, char *to_send)
             fix(&n, &look.lx, data->map->max_x);
             to_send = add_tile(data, to_send, i, n);
             realloc(to_send, strlen(to_send) + 1);
-            to_send[strlen(to_send)] = ',';
+            to_send[strlen(to_send) - 1] = ',';
+            to_send[strlen(to_send)] = ' ';
         }
     }
     return to_send;
 }
 
+/**
+ * @brief look down
+ * @param data
+ * @param to_send
+ * @return
+ */
 static char *look_down(data_t *data, char *to_send)
 {
     look_t look = {1, data->player->posx, data->player->posx + 1,
@@ -43,12 +56,19 @@ static char *look_down(data_t *data, char *to_send)
             fix(&n, &look.lx, data->map->max_x);
             to_send = add_tile(data, to_send, i, n);
             realloc(to_send, strlen(to_send) + 1);
-            to_send[strlen(to_send)] = ',';
+            to_send[strlen(to_send) - 1] = ',';
+            to_send[strlen(to_send)] = ' ';
         }
     }
     return to_send;
 }
 
+/**
+ * @brief look left
+ * @param data
+ * @param to_send
+ * @return
+ */
 static char *look_left(data_t *data, char *to_send)
 {
     look_t look = {1, data->player->posy, data->player->posx -
@@ -62,12 +82,19 @@ static char *look_left(data_t *data, char *to_send)
             fix(&n, &look.ly, data->map->max_y);
             to_send = add_tile(data, to_send, i, n);
             realloc(to_send, strlen(to_send) + 1);
-            to_send[strlen(to_send)] = ',';
+            to_send[strlen(to_send) - 1] = ',';
+            to_send[strlen(to_send)] = ' ';
         }
     }
     return to_send;
 }
 
+/**
+ * @brief look right
+ * @param data
+ * @param to_send
+ * @return
+ */
 static char *look_right(data_t *data, char *to_send)
 {
     look_t look = {1, data->player->posy, data->player->posx +
@@ -81,15 +108,21 @@ static char *look_right(data_t *data, char *to_send)
             fix(&n, &look.ly, data->map->max_y);
             to_send = add_tile(data, to_send, i, n);
             realloc(to_send, strlen(to_send) + 1);
-            to_send[strlen(to_send)] = ',';
+            to_send[strlen(to_send) - 1] = ',';
+            to_send[strlen(to_send)] = ' ';
         }
     }
     return to_send;
 }
 
+/**
+ * @brief look command
+ * @param data
+ * @return
+ */
 data_t *look(data_t *data)
 {
-    char *to_send = malloc(sizeof(char) + 2);
+    char *to_send = malloc(sizeof(char) + 1024);
     to_send[0] = '[';
 
     if (data->player->orientation == UP)

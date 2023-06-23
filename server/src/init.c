@@ -43,6 +43,15 @@ static void set_team(args_t args, team_t *team)
     }
 }
 
+/**
+ * @brief the function for initializing the struct for the pos of all the
+ * player part 2
+ * @param pos
+ * @param map
+ * @param i
+ * @param j
+ * @return
+ */
 static pos_t *inside_for(pos_t *pos, map_t *map, int i, int j)
 {
     if (map->tile[i][j].player == 1) {
@@ -52,9 +61,17 @@ static pos_t *inside_for(pos_t *pos, map_t *map, int i, int j)
     return pos;
 }
 
+/**
+ * @brief the function for initializing the struct for the pos of all the
+ * player
+ * @param pos
+ * @param map
+ * @param nb_player
+ * @return
+ */
 static pos_t *init_pos(pos_t *pos, map_t *map, int nb_player)
 {
-    pos = malloc(sizeof(pos_t) * nb_player + 1);
+    pos = (pos_t *)malloc(sizeof(pos_t) * (nb_player + 1));
     for (int i = 0; i < map->max_x; i++) {
         for (int j = 0; j < map->max_y; j++) {
             pos = inside_for(pos, map, i, j);
