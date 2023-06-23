@@ -34,6 +34,7 @@
     static void NAME(INSTANCE &instance, std::vector<std::string> const &av)
 
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList);
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleGround);
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu);
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUINone);
 
@@ -302,6 +303,7 @@ INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
     noneButtonSettings("graphics/buttons/Settings.png")
 {
     srand(time(NULL));
+    _engine.addDisplayModule("preobj", citadelDisplayModuleGround);
     _engine.addDisplayModule("ui", citadelDisplayModuleCharacterList, this);
     _engine.addDisplayModule("ui", citadelDisplayModuleUINone, this);
     _engine.addDisplayModule("ui", citadelDisplayModuleUIMainMenu, this);

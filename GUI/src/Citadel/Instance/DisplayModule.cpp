@@ -58,9 +58,9 @@ static sf::Color getTeamColor(Citadel::Instance *citadel, \
 
     for (std::size_t i = 0; i < teamsSize; i++)
         if (citadel->teams[i] == team)
-            return teamsSize < 2 ? COLORS_DEFAULT : COLORS[i % COLORS_LENGTH];
+            return COLORS[i % COLORS_LENGTH];
     citadel->teams.push_back(team);
-    return teamsSize < 2 ? COLORS_DEFAULT : COLORS[teamsSize % COLORS_LENGTH];
+    return COLORS[teamsSize % COLORS_LENGTH];
 }
 
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu)
@@ -266,4 +266,12 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
     citadel->selectedPortrait = newSelectedPortrait;
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
         citadel->selectedCharacter = newSelectedPortrait;
+}
+
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleGround)
+{
+    sf::Color screenCoverColor(183, 196, 196);
+
+    instance.screenCover.setFillColor(screenCoverColor);
+    instance.window.draw(instance.screenCover);
 }
