@@ -37,6 +37,7 @@ typedef struct tile_s {
     int phiras;
     int thystame;
     int food;
+    int egg;
     int player;
     int x;
     int y;
@@ -76,6 +77,7 @@ typedef struct data_s {
     player_t *player;
     map_t *map;
     team_t *team;
+    team_list_t *team_list;
 } data_t;
 
 typedef struct server_s {
@@ -103,6 +105,7 @@ typedef struct client_s {
     player_t *player;
     map_t *map;
     team_t *team;
+    team_list_t *team_list;
 } client_t;
 
 typedef struct args_s {

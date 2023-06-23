@@ -78,6 +78,7 @@ int cmd(data_t *data, char *command, client_t *c)
     data->player = c->player;
     data->map = c->map;
     data->team = c->team;
+    data->team_list = c->team_list;
     data->args = get_splitted(command);
     if (data->args == NULL)
         return 84;
