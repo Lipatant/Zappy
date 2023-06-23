@@ -13,7 +13,7 @@ import time
 ## @author Pierre-Louis
 def algo_search_stone(trant, functions, client):
     # defines the stone we're looking for # !!!!!!!!!!!!!!!!!! ARRRAY LEVEL UP
-    stone_need = "egg"
+    stone_need = "linemate"
 
     getattr(trant, functions[8])() #look
     time.sleep(0.2)
