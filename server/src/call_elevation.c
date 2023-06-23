@@ -7,6 +7,11 @@
 
 #include "my.h"
 
+/**
+ * @brief the function for checking if the player can level up
+ *
+ * @param team the struct containing info about the team
+ */
 void make_elevation(team_t *team)
 {
     if (team->player->lvl == 1)

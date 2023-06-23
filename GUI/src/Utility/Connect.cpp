@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <fcntl.h>
+#include <cstring>
 #include "Citadel/Exception.hpp"
 #include "Utility/Connect.hpp"
 
@@ -43,11 +44,12 @@ Connect::~Connect()
 
 std::string Connect::receive()
 {
-    char buffer[1024] = {0};
+    std::string buffer(10000, 0);
     std::string message;
     const std::chrono::seconds timeout(1);
     auto startTime = std::chrono::steady_clock::now();
     int flags = fcntl(_sockfd, F_GETFL, 0);
+    int read_mess = 0;
     fcntl(_sockfd, F_SETFL, flags | O_NONBLOCK);
 
     while (1) {
@@ -55,29 +57,54 @@ std::string Connect::receive()
         auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime);
         if (elapsedTime >= timeout)
             return "";
-        if (read(_sockfd, buffer, sizeof(buffer)) < 0) {
-            if (errno == EAGAIN)
+        read_mess = read(_sockfd, &buffer[0], buffer.size() - 1);
+        if (read_mess < 0) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK)
                 return "";
-            std::cerr << "Read error" << std::endl;
+            std::cerr << "Read error." << std::endl;
             return "";
-        } else if (read(_sockfd, buffer, sizeof(buffer))== 0)
-            return "";
-        else
+        } else if (read_mess == 0) {
             break;
+        } else {
+            buffer.resize(read_mess);
+            break;
+        }
     }
     flags = fcntl(_sockfd, F_GETFL, 0);
     fcntl(_sockfd, F_SETFL, flags & (~O_NONBLOCK));
     message = buffer;
+    if (!message.empty() && message.back() == '\n')
+        message.pop_back();
     return message;
 }
 
-void Connect::sender(std::string msg) //lui donné GUI pour qu'il ce connecte au serveur
-{
-    int error_send = 0;
 
-    error_send = send(_sockfd, msg.c_str(), msg.size(), 0);
-    if (error_send == -1) {
-        Exception exception("Erreur de l'envoie de message.");
-        throw exception;
+void Connect::sender(std::string msg)
+{
+    int flags = fcntl(_sockfd, F_GETFL, 0);
+    fcntl(_sockfd, F_SETFL, flags | O_NONBLOCK);
+    int sent = 0;
+    int size_mess = msg.size();
+    int error_send = 0;
+    const std::chrono::seconds timeout(1);
+    auto startTime = std::chrono::steady_clock::now();
+
+    while (size_mess > 0) {
+        error_send = send(_sockfd, msg.c_str() + sent, size_mess, 0);
+        if (error_send == -1) {
+            if (errno == EAGAIN) {
+                auto currentTime = std::chrono::steady_clock::now();
+                auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime);
+                if (elapsedTime >= timeout)
+                    return;
+            }
+            if (error_send == -1) {
+                Exception exception("Sending error.");
+                throw exception;
+            }
+        } else {
+            sent += error_send;
+            size_mess -= error_send;
+        }
     }
 }

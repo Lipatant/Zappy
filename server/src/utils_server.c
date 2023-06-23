@@ -6,6 +6,7 @@
 */
 
 #include "server.h"
+#include "my.h"
 #include <stdio.h>
 #include <sys/select.h>
 #include <stdlib.h>
@@ -14,7 +15,7 @@
 
 /**
  * @brief the function to read the input
- * @param c
+ * @param c the client structure
  * @return
  */
 static char *read_input(client_t *c)
@@ -39,9 +40,9 @@ static char *read_input(client_t *c)
 
 /**
  * @brief the function to handle a new client if it's an IA
- * @param s
- * @param c
- * @param input
+ * @param s the server structure
+ * @param c the client structure
+ * @param input the input (represented has a char *)
  * @return
  */
 static int handle_new_ia(server_t *s, client_t *c, char *input)
@@ -56,6 +57,7 @@ static int handle_new_ia(server_t *s, client_t *c, char *input)
         c->team_nb = nb;
         c->player = &s->team_list->team[nb].
             player[s->team_list->team[nb].player_use];
+        c->player = init_player(c->player, s->team_list->pos, s);
     } else {
         dprintf(c->fd, "ko\n");
     }
@@ -82,8 +84,10 @@ static int handle_new_connection(server_t *s, client_t *c)
     input = read_input(c);
     if (strncmp(input, "GRAPHIC", 7) == 0)
         c->GUI = true;
-    else
+    else {
         handle_new_ia(s, c, input);
+        c->player = init_player(c->player, s->team_list->pos, s);
+    }
     c->map = s->map;
     FD_SET(c->fd, &c->active_fd);
     return 0;

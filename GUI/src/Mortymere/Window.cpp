@@ -30,6 +30,7 @@ bool Mortymere::Window::_createWindow(bool const fullscreen)
     if (_iconIsLoaded)
         setIcon(_icon.getSize().x, _icon.getSize().y, _icon.getPixelsPtr());
     setFramerateLimit(60);
+    setViewCenter(0, 0);
     _isFullscreen = fullscreen;
     return isOpen();
 }
@@ -80,6 +81,14 @@ void Mortymere::Window::update(void)
     viewport.top = (1 - viewport.height) / 2;
     view.setCenter(0, 0);
     mouseUI = mapPixelToCoords(positionPixels, view);
+    if (mouseUI.x > SCREENSIZE_X * 0.5)
+        mouseUI.x = SCREENSIZE_X * 0.5;
+    if (mouseUI.x < SCREENSIZE_X * -0.5)
+        mouseUI.x = SCREENSIZE_X * -0.5;
+    if (mouseUI.y > SCREENSIZE_Y * 0.5)
+        mouseUI.y = SCREENSIZE_Y * 0.5;
+    if (mouseUI.y < SCREENSIZE_Y * -0.5)
+        mouseUI.y = SCREENSIZE_Y * -0.5;
     view.setCenter(viewCenter);
     mouse = mapPixelToCoords(positionPixels, view);
     view.setViewport(viewport);

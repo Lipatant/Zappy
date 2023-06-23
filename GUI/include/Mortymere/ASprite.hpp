@@ -19,6 +19,8 @@ class ASprite : public Mortymere::ISprite {
 protected: // PROTECTED MEMBERS
     Mortymere::SpritePositionType _anchor = {0, 0, 0};
     Mortymere::SpriteLayerType _layer = 0;
+    sf::Color _fillColor = sf::Color::White;
+    sf::Color _outlineColor = sf::Color::Transparent;
 
 public: // PUBLIC FUNCTIONS
     Mortymere::SpritePositionType anchor(void) const override;
@@ -30,6 +32,8 @@ public: // PUBLIC FUNCTIONS
         &states) override;
     bool setCharacterRotation(Mortymere::CharacterRotation const \
         characterRotation) override;
+    void setFillColor(sf::Color const color) override;
+    void setOutlineColor(sf::Color const color) override;
 
 };
 

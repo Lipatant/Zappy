@@ -13,25 +13,37 @@
     #include <stddef.h>
 
 typedef struct player_s {
-    int food;
+    size_t food;
     int posx;
     int posy;
-    int level;
-    int life;
+    size_t level;
+    size_t life;
+    size_t linemate;
+    size_t deraumere;
+    size_t sibur;
+    size_t mendiane;
+    size_t phiras;
+    size_t thystame;
+    size_t lvl;
+    size_t id;
+    int orientation;
+} player_t;
+
+typedef struct tile_s {
     int linemate;
     int deraumere;
     int sibur;
     int mendiane;
     int phiras;
     int thystame;
-    int lvl;
-    int orientation;
-} player_t;
+    int food;
+    int player;
+} tile_t;
 
 typedef struct map_s {
     int max_x;
     int max_y;
-    char ***map;
+    tile_t **tile;
 } map_t;
 
 typedef struct team_s {
@@ -41,9 +53,15 @@ typedef struct team_s {
     player_t *player;
 } team_t;
 
+typedef struct pos_s {
+    int x;
+    int y;
+} pos_t;
+
 typedef struct team_list_s {
     size_t length;
     team_t *team;
+    pos_t *pos;
 } team_list_t;
 
 typedef struct data_s {
@@ -68,6 +86,7 @@ typedef struct server_s {
     team_list_t *team_list;
     map_t *map;
     int nb_team;
+    int nb_player;
 } server_t;
 
 typedef struct client_s {
@@ -100,7 +119,14 @@ typedef struct density_s {
     size_t mendiane_d;
     size_t phiras_d;
     size_t thystame_d;
+    size_t player_d;
 } density_t;
 
+typedef struct look_s {
+    int j;
+    int k;
+    int lx;
+    int ly;
+} look_t;
 
 #endif /* !STRUCT_H_ */

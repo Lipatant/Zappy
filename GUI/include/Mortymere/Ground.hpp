@@ -6,7 +6,7 @@
 */
 
 /// @file
-/// @brief .
+/// @brief Class representing a Ground
 
 #pragma once
 
