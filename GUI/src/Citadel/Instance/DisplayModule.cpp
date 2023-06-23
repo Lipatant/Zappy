@@ -63,6 +63,49 @@ static sf::Color getTeamColor(Citadel::Instance *citadel, \
     return teamsSize < 2 ? COLORS_DEFAULT : COLORS[teamsSize % COLORS_LENGTH];
 }
 
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleMenu)
+{
+    if (!data) return;
+    Citadel::Instance *citadel = reinterpret_cast<Citadel::Instance *>(data);
+
+    if (citadel->currentMenu != Citadel::InstanceCurrentMenu::MainMenu) {
+        citadel->mainMenuButtonPlay.reset();
+        return;
+    }
+    sf::Color screenCoverColor = sf::Color::Black;
+    sf::IntRect textureRect;
+    sf::IntRect textureRectOld;
+    sf::Vector2f const windowSize = instance.window.getView().getSize();
+    sf::Vector2f position;
+
+    screenCoverColor.a = 200;
+    instance.screenCover.setFillColor(screenCoverColor);
+    instance.window.draw(instance.screenCover);
+    if (citadel->isMainMenuCoverTextureLoaded) {
+        textureRectOld = citadel->mainMenuCoverTextureRect;
+        textureRect = textureRectOld;
+        textureRect.left = (textureRectOld.width - windowSize.x) * \
+            (static_cast<float>(instance.window.mouseUI.x) / windowSize.x / 2 \
+            + 1) / 2;
+        textureRect.top = (textureRectOld.height - windowSize.y) * \
+            (static_cast<float>(instance.window.mouseUI.y) / windowSize.y / 2 \
+            + 1) / 2;
+        textureRect.height = windowSize.x;
+        textureRect.width = windowSize.y;
+        position = {windowSize.x / 2, windowSize.y / 2};
+        position.y -= windowSize.y * 0.2;
+        citadel->mainMenuCover.setTextureRect(textureRect);
+        citadel->mainMenuCover.setSize(windowSize);
+        citadel->mainMenuCover.setOrigin(position);
+        instance.window.draw(citadel->mainMenuCover);
+    }
+    if (citadel->mainMenuButtonPlay.update(instance.window.mouseUI, \
+        instance.window.hasFocus && \
+        sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
+        citadel->currentMenu = Citadel::InstanceCurrentMenu::None;
+    instance.window.draw(citadel->mainMenuButtonPlay);
+}
+
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
 {
     if (!data) return;
@@ -79,8 +122,6 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
     float itemsScale;
     sf::Vector2f position(0, 0);
     sf::Vector2f const windowSize = instance.window.getView().getSize();
-    sf::View view(instance.window.getView());
-    sf::View viewSaved(view);
     Citadel::CharacterNumber newSelectedPortrait = 0;
     float newSelectedPortraitDistance = 0;
 
@@ -89,8 +130,6 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
         itemsTextureRect = items.getTextureRect();
         itemsTextureRect.width = itemsTextureRect.height;
     }
-    view.setCenter(0, 0);
-    instance.window.setView(view);
     for (auto &character: citadel->characters) {
         if (SPRITE_PORTRAIT_TEXTURES.empty())
             continue;
@@ -122,9 +161,12 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
             instance.window.mouseUI.x <= bounds.left + bounds.width && \
             bounds.top <= instance.window.mouseUI.y && \
             instance.window.mouseUI.y <= bounds.top + bounds.height) {
-            newSelectedPortrait = character.first;
-            newSelectedPortraitDistance = std::abs(instance.window.mouseUI.x \
-                - bounds.left - bounds.width / 2);
+            if (citadel->currentMenu == Citadel::InstanceCurrentMenu::None) {
+                newSelectedPortrait = character.first;
+                newSelectedPortraitDistance = std::abs( \
+                    instance.window.mouseUI.x - bounds.left - bounds.width / \
+                    2);
+            }
         }
         if (citadel->selectedPortrait == character.first) {
             scale = 0.4;
@@ -160,7 +202,6 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
             position.y -= itemsTextureRect.height * itemsScale * 0.5;
         }
     }
-    instance.window.setView(viewSaved);
     citadel->selectedPortrait = newSelectedPortrait;
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
         citadel->selectedCharacter = newSelectedPortrait;

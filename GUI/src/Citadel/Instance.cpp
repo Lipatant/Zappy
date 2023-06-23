@@ -34,6 +34,7 @@
     static void NAME(INSTANCE &instance, std::vector<std::string> const &av)
 
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList);
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleMenu);
 
 struct Command_s {
     std::string name;
@@ -295,11 +296,22 @@ static void convertCommand(std::string const &cmd, size_t &ac, \
     }
 }
 
-INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine)
+INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
+    mainMenuButtonPlay("graphics/buttons/Play.png")
 {
     srand(time(NULL));
-    _engine.addDisplayModule(citadelDisplayModuleCharacterList, this);
+    _engine.addDisplayModule("ui", citadelDisplayModuleCharacterList, this);
+    _engine.addDisplayModule("ui", citadelDisplayModuleMenu, this);
     _engine.window.setViewCenter(0, 0);
+    isMainMenuCoverTextureLoaded = true;
+    if (!_mainMenuCoverTexture.loadFromFile("GUI/graphics/MainMenu.png")) {
+        if (!_mainMenuCoverTexture.loadFromFile("graphics/MainMenu.png")) {
+            isMainMenuCoverTextureLoaded = false;
+            return;
+        }
+    }
+    mainMenuCover.setTexture(&_mainMenuCoverTexture);
+    mainMenuCoverTextureRect = mainMenuCover.getTextureRect();
 }
 
 Mortymere::Instance &INSTANCE::engine(void)
@@ -358,10 +370,6 @@ bool INSTANCE::udpate(void)
             _engine.camera.center.z = static_cast<float>( \
                 ground.getSizeY() - 1) / 2;
     }
-//    if (ground.getSizeX() < 1 || ground.getSizeY() < 1)
-//        _engine.camera.center = {0, 0, 0};
-//    else
-//        _engine.camera.center = {0, 0, 0};
     return _engine.udpate();
 }
 
