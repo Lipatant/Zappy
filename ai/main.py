@@ -77,23 +77,24 @@ def trantorian_lives(client: client, args: arguments):
         getattr(trant, functions[1])()
         if client.data != "0\n":
             duplicate_ai(args, client)
-        else:
-            getattr(trant, functions[3])()
+            time.sleep(1)
+#        else:
+#            getattr(trant, functions[3])()
 
         getattr(trant, functions[11])("food") #take food
-        time.sleep(0.2) # PL test command
+        time.sleep(1)
         client.check_client()
 
         #incantation
-        if trant.bag == trantorians.UPGRADES[trant.level - 1]:
+        if trant.bag >= trantorians.UPGRADES[trant.level - 1]:
             for i in range(6):
                 while(trant.bag[i] != 0):
                     getattr(trant, functions[10])(trantorians.RESOURCES[i]) #set
-                    time.sleep(0.2) # PL test command
+                    time.sleep(1)
                     client.check_client()
                     trant.bag[i] -= 1
             getattr(trant, functions[5])() #incantation
-            time.sleep(0.2) # PL test command
+            time.sleep(1)
             client.check_client()
             if (client.data == "Elevation underway\n"):
                 client.data = client.socket.recv(1024).decode()
