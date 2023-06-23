@@ -14,19 +14,19 @@
  */
 data_t *make_elevation(data_t *data)
 {
-    if (team->player->lvl == 1)
+    if (data->player->lvl == 1)
         elevation_lvl2(data);
-    if (team->player->lvl == 2)
+    if (data->player->lvl == 2)
         elevation_lvl3(data);
-    if (team->player->lvl == 3)
+    if (data->player->lvl == 3)
         elevation_lvl4(data);
-    if (team->player->lvl == 4)
+    if (data->player->lvl == 4)
         elevation_lvl5(data);
-    if (team->player->lvl == 5)
+    if (data->player->lvl == 5)
         elevation_lvl6(data);
-    if (team->player->lvl == 6)
+    if (data->player->lvl == 6)
         elevation_lvl7(data);
-    if (team->player->lvl == 7)
+    if (data->player->lvl == 7)
         elevation_lvl8(data);
     return (data);
 }

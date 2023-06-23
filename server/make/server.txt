@@ -6,6 +6,8 @@ init.c
 call_elevation.c
 elevation_firstpart.c
 elevation_secondpart.c
+check_elevation1.c
+check_elevation2.c
 utils_client.c
 utils_server.c
 cmd/forward.c

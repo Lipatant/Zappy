@@ -16,10 +16,10 @@
  */
 bool check_lvl7(data_t *d)
 {
-    if (data->player->linemate < 2 || data->player->deraumere < 2
-        || data->player->sibur < 2 || data->player->mendiane < 2
-        || data->player->phiras < 2 || data->player->thystame < 1 ||
-        data->map->tiles[data->player->y][data->player->x].players < 6)
+    if (d->player->linemate < 2 || d->player->deraumere < 2
+        || d->player->sibur < 2 || d->player->mendiane < 2
+        || d->player->phiras < 2 || d->player->thystame < 1 ||
+        d->map->tile[d->player->posx][d->player->posy].player < 6)
         return false;
     return true;
 }
@@ -33,10 +33,10 @@ bool check_lvl7(data_t *d)
  */
 bool check_lvl8(data_t *d)
 {
-    if (data->player->linemate < 2 || data->player->deraumere < 2
-        || data->player->sibur < 2 || data->player->mendiane < 2
-        || data->player->phiras < 2 || data->player->thystame < 2 ||
-        data->map->tiles[data->player->y][data->player->x].players < 6)
+    if (d->player->linemate < 2 || d->player->deraumere < 2
+        || d->player->sibur < 2 || d->player->mendiane < 2
+        || d->player->phiras < 2 || d->player->thystame < 2 ||
+        d->map->tile[d->player->posx][d->player->posy].player < 6)
         return false;
     return true;
 }
