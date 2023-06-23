@@ -26,7 +26,7 @@ static data_t *take_mendiane(data_t *d)
             return d;
         } else {
             dprintf(d->fd, "ko\n");
-            return NULL;
+            return d;
         }
     }
     return take_phiras(d);
@@ -48,7 +48,7 @@ static data_t *take_sibur(data_t *d)
             return d;
         } else {
             dprintf(d->fd, "ko\n");
-            return NULL;
+            return d;
         }
     }
     return take_mendiane(d);
@@ -70,7 +70,7 @@ static data_t *take_deraumere(data_t *d)
             return d;
         } else {
             dprintf(d->fd, "ko\n");
-            return NULL;
+            return d;
         }
     }
     return take_sibur(d);
@@ -92,7 +92,7 @@ static data_t *take_linemate(data_t *d)
             return d;
         } else {
             dprintf(d->fd, "ko\n");
-            return NULL;
+            return d;
         }
     }
     return take_deraumere(d);
@@ -114,7 +114,7 @@ data_t *take(data_t *d)
             return d;
         } else {
             dprintf(d->fd, "ko\n");
-            return NULL;
+            return d;
         }
     }
     return take_linemate(d);

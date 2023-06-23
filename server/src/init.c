@@ -44,43 +44,6 @@ static void set_team(args_t args, team_t *team)
 }
 
 /**
- * @brief the function for initializing the struct for the pos of all the
- * player part 2
- * @param pos
- * @param map
- * @param i
- * @param j
- * @return
- */
-static pos_t *inside_for(pos_t *pos, map_t *map, int i, int j)
-{
-    if (map->tile[i][j].player == 1) {
-        pos->x = i;
-        pos->y = j;
-    }
-    return pos;
-}
-
-/**
- * @brief the function for initializing the struct for the pos of all the
- * player
- * @param pos
- * @param map
- * @param nb_player
- * @return
- */
-static pos_t *init_pos(pos_t *pos, map_t *map, int nb_player)
-{
-    pos = (pos_t *)malloc(sizeof(pos_t) * (nb_player + 1));
-    for (int i = 0; i < map->max_x; i++) {
-        for (int j = 0; j < map->max_y; j++) {
-            pos = inside_for(pos, map, i, j);
-        }
-    }
-    return pos;
-}
-
-/**
  * @brief the function for initializing the struct
  *
  * @param args the struct containing info about the args
@@ -98,6 +61,5 @@ void init_struct(args_t args, team_list_t *team_list, map_t *maps)
     maps->max_x = args.width;
     maps->max_y = args.height;
     maps = init_map(maps, i * args.clients);
-    team_list->pos = init_pos(team_list->pos, maps, i * args.clients);
     set_team(args, team_list->team);
 }

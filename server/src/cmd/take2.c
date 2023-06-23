@@ -25,7 +25,7 @@ static data_t *take_thystame(data_t *d)
             return d;
         } else {
             dprintf(d->fd, "ko\n");
-            return NULL;
+            return d;
         }
     }
     dprintf(d->fd, "ko\n");
@@ -45,8 +45,11 @@ data_t *take_phiras(data_t *d)
             d->map->tile[d->player->posx][d->player->posy].phiras -= 1;
             d->player->phiras += 1;
             dprintf(d->fd, "ok\n");
-        } else
+            return d;
+        } else {
             dprintf(d->fd, "ko\n");
+            return d;
+        }
     }
     return take_thystame(d);
 }

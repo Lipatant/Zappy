@@ -43,10 +43,12 @@ static tile_t init_tile_2(tile_t tile, density_t *den)
  * @param den the structure density
  * @return tile_t return the tile
  */
-static tile_t init_tile(tile_t tile, density_t *den)
+static tile_t init_tile(tile_t tile, density_t *den, map_t *map)
 {
     if (((double)rand() / RAND_MAX) > 0.5 && den->player_d) {
         tile.player += 1;
+        map->player_pos[den->player_d].x = tile.x;
+        map->player_pos[den->player_d].y = tile.y;
         den->player_d--;
     }
     if (((double)rand() / RAND_MAX) > 0.5 && den->food_d > 0) {
@@ -99,13 +101,17 @@ map_t *init_map(map_t *map, int nb_player)
 {
     density_t *den = NULL;
     map->tile = (tile_t **)malloc(sizeof(tile_t *) * map->max_x);
+    map->player_pos = malloc(sizeof(pos_t ) * nb_player);
 
     srand(time(NULL));
     den = init_density(den, map->max_x, map->max_y, nb_player);
     for (int i = 0; i < map->max_x; i++)
         map->tile[i] = (tile_t *)malloc(sizeof(tile_t) * map->max_y);
     for (int i = 0; i < map->max_x; i++)
-        for (int j = 0; j < map->max_y; j++)
-            map->tile[i][j] = init_tile(map->tile[i][j], den);
+        for (int j = 0; j < map->max_y; j++) {
+            map->tile[i][j].x = i;
+            map->tile[i][j].y = j;
+            map->tile[i][j] = init_tile(map->tile[i][j], den, map);
+        }
     return map;
 }

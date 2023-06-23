@@ -57,7 +57,7 @@ static int handle_new_ia(server_t *s, client_t *c, char *input)
         c->team_nb = nb;
         c->player = &s->team_list->team[nb].
             player[s->team_list->team[nb].player_use];
-        c->player = init_player(c->player, s->team_list->pos, s);
+        c->player = init_player(c->player, s);
     } else {
         dprintf(c->fd, "ko\n");
     }
@@ -86,7 +86,6 @@ static int handle_new_connection(server_t *s, client_t *c)
         c->GUI = true;
     else {
         handle_new_ia(s, c, input);
-        c->player = init_player(c->player, s->team_list->pos, s);
     }
     c->map = s->map;
     FD_SET(c->fd, &c->active_fd);
@@ -107,7 +106,6 @@ static int handle_existing_connection(server_t *s, client_t *c, int i)
         return 84;
     }
     int current = find_client(c->data, s->client, i);
-    printf("current: %d\n", current);
     return command(s, c, c->data[current]);
 }
 
