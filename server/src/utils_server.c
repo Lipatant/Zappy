@@ -55,8 +55,10 @@ static int handle_new_ia(server_t *s, client_t *c, char *input)
         dprintf(c->fd, "%d\n%d %d\n", s->team_list->team[nb].nb_clients,
             s->map->max_x, s->map->max_y);
         c->team_nb = nb;
+        c->team = &s->team_list->team[nb];
         c->player = &s->team_list->team[nb].
             player[s->team_list->team[nb].player_use];
+        s->team_list->team[nb].player_use++;
         c->player = init_player(c->player, s);
     } else {
         dprintf(c->fd, "ko\n");

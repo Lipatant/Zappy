@@ -25,3 +25,4 @@ cmd/add_tile.c
 cmd/look.c
 cmd/set.c
 cmd/set2.c
+cmd/connect_nbr.c
