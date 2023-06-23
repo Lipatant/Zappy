@@ -30,39 +30,49 @@ struct Locks_s {
 };
 
 static void engineThread(Citadel::Instance &citadel, bool &close, \
-    Locks_s &locks, int const port, std::string const &ip)
+    Locks_s &locks, int const port, std::string const &ip, bool isManualUsed, \
+    bool const isDisplayInputUsed)
 {
     std::string infoServ;
-
     Connect Connect(ip, port);
-    try {
-        Connect.join();
-        Connect.sender("GRAPHIC");
-    } catch (std::exception const& e) {
-            std::cerr << e.what() << std::endl;
-            close = true;
-            return;
+
+    if (!isManualUsed) {
+        try {
+            Connect.join();
+            Connect.sender("GRAPHIC\n");
+        } catch (std::exception const& e) {
+                std::cerr << e.what() << std::endl;
+                close = true;
+                return;
+        }
     }
     while (1) {
         locks.close.lock();
         if (close)
             break;
         locks.close.unlock();
-        try {
-            infoServ = Connect.receive();
-        } catch (std::exception const& e) {
-            infoServ = "";
-            break;
+        if (isManualUsed) {
+            std::getline(std::cin, infoServ);
+            if (infoServ.empty())
+                continue;
+            if (infoServ == "exit") {
+                locks.close.lock();
+                close = true;
+                break;
+            }
+        } else {
+            try {
+                infoServ = Connect.receive();
+            } catch (std::exception const& e) {
+                infoServ = "";
+                break;
+            }
+            if (infoServ.empty())
+                continue;
         }
-//        std::getline(std::cin, infoServ);
-        if (infoServ.empty())
-            continue;
-//        if (infoServ == "exit") {
-//            locks.close.lock();
-//            close = true;
-//            break;
-//        }
         locks.citadel.lock();
+        if (isDisplayInputUsed)
+            std::cerr << infoServ << std::endl;
         try { citadel << infoServ; }
         CATCH_EXCEPTION_COMMAND(InvalidAmountArguments, e)
         CATCH_EXCEPTION_COMMAND(TooFewArguments, e)
@@ -73,14 +83,16 @@ static void engineThread(Citadel::Instance &citadel, bool &close, \
     locks.close.unlock();
 }
 
-static bool start(int const port, std::string const &machine)
+static bool start(int const port, std::string const &machine, bool const \
+    isManualUsed, bool const isDisplayInputUsed)
 {
     bool close = false;
     Mortymere::Instance engine;
     Locks_s locks = {std::mutex(), std::mutex(), std::mutex()};
     Citadel::Instance citadel(engine);
     std::thread thread(engineThread, std::ref(citadel), std::ref(close), \
-        std::ref(locks), port, std::ref(machine));
+        std::ref(locks), port, std::ref(machine), isManualUsed, \
+        isDisplayInputUsed);
 
     while (citadel.udpate()) {
         locks.close.lock();
@@ -97,6 +109,20 @@ static bool start(int const port, std::string const &machine)
     return true;
 }
 
+#define DISHELP(CONTENT) std::cout << CONTENT << std::endl
+
+static void displayHelp(void)
+{
+    DISHELP("USAGE: ./zappy_gui -p port -h machine [--manual|--displayInput]");
+    DISHELP("\t-p port:\tport to use for the connection" << \
+        " (required)");
+    DISHELP("\t-m machine:\tname of the machine to connect to" << \
+        " (localhost by default)");
+    DISHELP("\t--manual:\tignores the connection and use the user input " << \
+        "instead (ignores the -p requirement)");
+    DISHELP("\t--displayInput:\tdisplays the server input received");
+}
+
 #define REGEX_MACHINE "^.+$"
 #define REGEX_PORT "^\\d+$"
 
@@ -104,14 +130,12 @@ int main(int const ac, char const * const * const av)
 {
     bool isPortDefined = false;
     bool isMachineDefined = false;
+    bool isManualUsed = false;
+    bool isDisplayInputUsed = false;
     int port = -1;
     std::string machine = "127.0.0.1";
 
-    if (ac % 2 != 1) {
-        std::cerr << "Invalid amount of arguments" << std::endl;
-        return 84;
-    }
-    for (int i = 1; i < ac; i += 2) {
+    for (int i = 1; i < ac; i++) {
         if (strcmp("-p", av[i]) == 0) {
             if (isPortDefined) {
                 std::cerr << "-p is already defined as '" << port << '\'' << \
@@ -126,6 +150,7 @@ int main(int const ac, char const * const * const av)
             }
             port = std::stoi(av[i + 1]);
             isPortDefined = true;
+            i++;
             continue;
         }
         if (strcmp("-m", av[i]) == 0) {
@@ -142,16 +167,29 @@ int main(int const ac, char const * const * const av)
             }
             machine = av[i + 1];
             isMachineDefined = true;
+            i++;
             continue;
+        }
+        if (strcmp("--manual", av[i]) == 0) {
+            isManualUsed = true;
+            continue;
+        }
+        if (strcmp("--displayInput", av[i]) == 0) {
+            isDisplayInputUsed = true;
+            continue;
+        }
+        if (strcmp("-h", av[i]) == 0) {
+            displayHelp();
+            return 0;
         }
         std::cerr << "Unknown flag '" << av[i] << '\'' << std::endl;
         return 84;
     }
-    if (!isPortDefined) {
+    if (!isPortDefined && !isManualUsed) {
         std::cerr << "Port is undefined" << std::endl;
         return 84;
     }
-    if (!start(port, machine))
+    if (!start(port, machine, isManualUsed, isDisplayInputUsed))
         return 84;
     return 0;
 }
