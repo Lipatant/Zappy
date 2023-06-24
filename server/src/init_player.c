@@ -19,7 +19,7 @@ player_t *init_player(player_t *player,server_t *server)
     int i = server->nb_player;
 
     player->posx = server->map->player_pos[i].x;
-    player->posy = server->map->player_pos[i].x;
+    player->posy = server->map->player_pos[i].y;
     player->id = i;
     server->nb_player--;
     player->food = 10;

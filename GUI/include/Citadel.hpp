@@ -14,3 +14,5 @@
 #include "Citadel/Exception.hpp"
 #include "Citadel/Ground.hpp"
 #include "Citadel/Instance.hpp"
+#include "Citadel/Inventory.hpp"
+#include "Citadel/Sprites.hpp"

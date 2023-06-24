@@ -94,7 +94,7 @@ int command(server_t *s, client_t *c, data_t *data)
     int ret = (command == NULL) ? 84 : cmd(data, command, c);
 
     free(command);
-    if (ret == 1) {
+    if (ret == 1 || ret == 84) {
         return manage_quit(s, c, data);
     }
     return 0;

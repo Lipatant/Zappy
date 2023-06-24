@@ -74,3 +74,11 @@ class Client:
         if self.data == "dead\n":
             self.disconnect_from_server()
             exit(0)
+
+    def write_to_server(self, msg):
+        self.socket.send(msg.encode())
+        print("Sent to server:", msg)
+
+    def read_server(self):
+        self.data = self.socket.recv(1024).decode()
+        print("Received from server:", self.data)
