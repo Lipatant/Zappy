@@ -7,6 +7,7 @@
 
 #include "my.h"
 #include "cmd.h"
+#include "our_time.h"
 
 /**
  * @brief the function for the inventory command
@@ -24,6 +25,7 @@ data_t *inventory(data_t *data)
     snprintf(msg, size + 1, inv_1 inv_2, data->player->linemate,\
         data->player->deraumere, data->player->sibur, data->player->mendiane,\
         data->player->phiras, data->player->thystame, data->player->food);
+    usleep(7 / data->freq * CONVERT_SEC);
     dprintf(data->fd, "%s\n", msg);
     return data;
 }

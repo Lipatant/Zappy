@@ -92,8 +92,6 @@ static int handle_new_connection(server_t *s, client_t *c)
     }
     c->map = s->map;
     FD_SET(c->fd, &c->active_fd);
-    c->data[current]->freq = s->freq;
-    printf("freq = %d\n", c->data[current]->freq);
     return 0;
 }
 
@@ -111,6 +109,8 @@ static int handle_existing_connection(server_t *s, client_t *c, int i)
         return 84;
     }
     int current = find_client(c->data, s->client, i);
+    c->data[current]->freq = s->freq;
+    printf("freq = %d\n", c->data[current]->freq);
     return command(s, c, c->data[current]);
 }
 

@@ -7,6 +7,7 @@
 
 #include "my.h"
 #include "cmd.h"
+#include "our_time.h"
 
 /**
  * @brief the function for the right command
@@ -29,6 +30,7 @@ data_t *right(data_t *data)
             data->player->orientation = UP;
             break;
     }
+    usleep(7 / data->freq * CONVERT_SEC);
     dprintf(data->fd, "ok\n");
     return data;
 }
