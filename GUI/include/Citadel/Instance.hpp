@@ -15,6 +15,7 @@
 #include <SFML/System/Clock.hpp>
 #include "Citadel/Character.hpp"
 #include "Citadel/Ground.hpp"
+#include "Citadel/Playlist.hpp"
 #include "Mortymere/Button.hpp"
 #include "Mortymere/Instance.hpp"
 
@@ -56,6 +57,8 @@ public: // PUBLIC MEMBERS
     bool isMainMenuCoverTextureLoaded = false;
     /// @brief If _mainMenuTitleTexture is loaded
     bool isMainMenuTitleTextureLoaded = false;
+    /// @brief If the menu is transitioning to another
+    bool isInMenuTransition = false;
     /// @brief Shape used for covering the entire screen during the Main Menu
     sf::RectangleShape mainMenuCover;
     /// @brief Default TextureRect of mainMenuCover
@@ -67,12 +70,12 @@ public: // PUBLIC MEMBERS
     sf::IntRect mainMenuTitleTextureRect;
     /// @brief Button for leaving the main menu
     Mortymere::Button mainMenuButtonPlay;
-    /// @brief If the menu is transitioning to another
-    bool isInMenuTransition = false;
     /// @brief Time since the last menu (from 0.0f to 1.0f)
     float menuTransition = 1.0f;
     /// @brief Button for re-entering the main menu
     Mortymere::Button noneButtonSettings;
+    /// @brief Playlist managing everything related to music
+    Citadel::Playlist playlist;
     /// @brief Currently selected character. If no cbaracter is
     ///     selected, selectedCharacter should be equal to 0
     Citadel::CharacterNumber selectedCharacter = 0;

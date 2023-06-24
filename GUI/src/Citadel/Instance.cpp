@@ -304,6 +304,7 @@ INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
     noneButtonSettings("graphics/buttons/Settings.png")
 {
     srand(time(NULL));
+    playlist.next();
     _engine.addDisplayModule("preobj", citadelDisplayModuleGround);
     _engine.addDisplayModule("ui", citadelDisplayModuleCharacterList, this);
     _engine.addDisplayModule("ui", citadelDisplayModuleUINone, this);

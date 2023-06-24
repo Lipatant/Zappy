@@ -3,4 +3,5 @@ Citadel/Ground.cpp
 Citadel/Instance.cpp
 Citadel/Instance/DisplayModule.cpp
 Citadel/Inventory.cpp
+Citadel/Playlist.cpp
 Citadel/Sprites/Items.cpp
