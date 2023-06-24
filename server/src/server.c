@@ -22,6 +22,8 @@ static server_t *set_var_server(server_t *s)
     s->addr.sin_port = htons(s->port);
     s->size_addr = sizeof(s->addr);
     s->size_sock = sizeof(s->fd);
+    if (bind(s->fd, (struct sockaddr *)&s->addr, s->size_addr) == -1)
+        return NULL;
     return s;
 }
 
@@ -46,14 +48,13 @@ static int init_server(server_t *s, args_t args, team_list_t team_list,
     if (s->fd == -1)
         return error("socket");
     s = set_var_server(s);
-    if (bind(s->fd, (struct sockaddr *)&s->addr, s->size_addr) == -1)
-        return error("bind");
     s->queue = listen(s->fd, 1024);
     if (s->queue == -1)
         return error("listen");
     s->team_list = &team_list;
     s->map = &map;
     s->nb_team = i;
+    s->nb_player = args.clients * i;
     return 0;
 }
 

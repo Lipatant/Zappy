@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Mortymere/Character.cpp
+** Citadel/Character.cpp
 ** File description:
 ** -
 */
@@ -89,6 +89,21 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
     setPosition(x, y);
     setRotation(o);
     setTeam(t);
+}
+
+Citadel::CharacterTeam CHARACTER::getTeam(void)
+{
+    return _team;
+}
+
+Citadel::CharacterPosition CHARACTER::getPositionX(void)
+{
+    return _positionX;
+}
+
+Citadel::CharacterPosition CHARACTER::getPositionY(void)
+{
+    return _positionY;
 }
 
 void CHARACTER::setLevel(Citadel::CharacterLevel const level)

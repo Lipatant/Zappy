@@ -58,12 +58,8 @@ void init_struct(args_t args, team_list_t *team_list, map_t *maps)
     team_list->team = malloc(sizeof(team_t) * i);
     if (team_list->team)
         memset(team_list->team, 0, sizeof(team_t) * i);
-    team_list->team->player = malloc(sizeof(player_t) * (args.clients + 1));
-    for (int j = 0; j <= i ; j++)
-        team_list->team[j].player = malloc(sizeof(player_t) *
-            (args.clients + 1));
     maps->max_x = args.width;
     maps->max_y = args.height;
-    maps = init_map(maps, i);
+    maps = init_map(maps, i * args.clients);
     set_team(args, team_list->team);
 }

@@ -9,117 +9,132 @@
 #include "server.h"
 #include "cmd.h"
 
-char *look_left(data_t *data, char *msg)
+/**
+ * @brief look up
+ * @param data
+ * @param to_send
+ * @return
+ */
+static char *look_up(data_t *data, char *to_send)
 {
-    int j = 0;
-    int rank = 0;
+    look_t look = {1, data->player->posx, data->player->posx + 1,
+        data->player->posy + data->player->lvl + 1};
 
-    for (int i = 0; i <= data->player->level; i++) {
-        j = i;
-        rank = data->player->posy - i;
-        while (rank < 0)
-            rank += data->player->posy - 1;
-        while (j > 0) {
-            sprintf(msg ,"%s", data->map->map[data->player->posy + j][rank]);
-            j--;
+    for (int i = data->player->posy; i != look.ly; i++,
+        look.j += 2, look.k -= 1) {
+        fix(&i, &look.ly, data->map->max_y);
+        fix(&look.k, NULL, data->map->max_x);
+        look.lx = look.k - look.j;
+        for (int n = look.k; n != look.lx; n--) {
+            fix(&n, &look.lx, data->map->max_x);
+            to_send = add_tile(data, to_send, i, n);
+            realloc(to_send, strlen(to_send) + 1);
+            to_send[strlen(to_send) - 1] = ',';
+            to_send[strlen(to_send)] = ' ';
         }
-        sprintf(msg, "%s", data->map->map[data->player->posx][rank]);
-        for (int k = 1; k <= i; k++) {
-            sprintf(msg, "%s", data->map->map[data->player->posx - k][rank]);
-        }
-        sprintf(msg, "\n");
     }
-    return msg;
+    return to_send;
 }
 
-char *look_down(data_t *data, char *msg)
+/**
+ * @brief look down
+ * @param data
+ * @param to_send
+ * @return
+ */
+static char *look_down(data_t *data, char *to_send)
 {
-    int j = 0;
-    int rank = 0;
+    look_t look = {1, data->player->posx, data->player->posx + 1,
+        data->player->posy - data->player->lvl - 1};
 
-    for (int i = 0; i <= data->player->level; i++) {
-        j = i;
-        rank = data->player->posx + i;
-        while (rank >= data->player->posx)
-            rank -= data->player->posx;
-        while (rank < 0)
-            rank += data->player->posx;
-        for (int k = 1; k <= i; k++)
-            sprintf(msg, "%s", data->map->map[rank][data->player->posy + k]);
-        sprintf(msg, "%s", data->map->map[rank][data->player->posy]);
-        while (j > 0) {
-            sprintf(msg, "%s", data->map->map[rank][data->player->posy - j]);
-            j--;
+    for (int i = data->player->posy; i != look.ly; i--,
+        look.j += 2, look.k += 1) {
+        fix(&i, &look.ly, data->map->max_y);
+        fix(&look.k, NULL, data->map->max_x);
+        look.lx = look.k - look.j;
+        for (int n = look.k; n != look.lx; n--) {
+            fix(&n, &look.lx, data->map->max_x);
+            to_send = add_tile(data, to_send, i, n);
+            realloc(to_send, strlen(to_send) + 1);
+            to_send[strlen(to_send) - 1] = ',';
+            to_send[strlen(to_send)] = ' ';
         }
-        sprintf(msg, "\n");
     }
-    return msg;
+    return to_send;
 }
 
-char *look_up(data_t *data, char *msg)
+/**
+ * @brief look left
+ * @param data
+ * @param to_send
+ * @return
+ */
+static char *look_left(data_t *data, char *to_send)
 {
-    int j = 0;
-    int rank = 0;
-
-    for (int i = 0; i <= data->player->level; i++) {
-        j = i;
-        rank = data->player->posx - i;
-        while (rank < 0)
-            rank += data->player->posx;
-        while (j > 0) {
-            sprintf(msg, "%s", data->map->map[rank][data->player->posy - j]);
-            j--;
+    look_t look = {1, data->player->posy, data->player->posx -
+        data->player->lvl - 1, data->player->posy + 1};
+    for (int i = data->player->posx; i != look.lx; i--, look.j += 2,
+        look.k -= 1) {
+        fix(&i, &look.lx, data->map->max_x);
+        fix(&look.k, NULL, data->map->max_y);
+        look.ly = look.k - look.j;
+        for (int n = look.k; n != look.ly; n--) {
+            fix(&n, &look.ly, data->map->max_y);
+            to_send = add_tile(data, to_send, i, n);
+            realloc(to_send, strlen(to_send) + 1);
+            to_send[strlen(to_send) - 1] = ',';
+            to_send[strlen(to_send)] = ' ';
         }
-        sprintf(msg, "%s", data->map->map[rank][data->player->posy]);
-        for (int k = 1; k <= i; k++)
-            sprintf(msg, "%s", data->map->map[rank][data->player->posy + k]);
-        sprintf(msg, "\n");
     }
-    return msg;
+    return to_send;
 }
 
-char *look_right(data_t *data, char *msg)
+/**
+ * @brief look right
+ * @param data
+ * @param to_send
+ * @return
+ */
+static char *look_right(data_t *data, char *to_send)
 {
-    int j = 0;
-    int rank = 0;
-
-    for (int i = 0; i <= data->player->level; i++) {
-        j = i;
-        rank = data->player->posy + i;
-        while (rank >= data->player->posy)
-            rank -= data->player->posy;
-        while (j > 0) {
-            sprintf(msg, "%s", data->map->map[data->player->posx - j][rank]);
-            j--;
+    look_t look = {1, data->player->posy, data->player->posx +
+        data->player->lvl + 1, data->player->posy + 1};
+    for (int i = data->player->posx; i != look.lx; i++, look.j += 2,
+            look.k += 1) {
+        fix(&i, &look.lx, data->map->max_x);
+        fix(&look.k, NULL, data->map->max_y);
+        look.ly = look.k - look.j;
+        for (int n = look.k; n != look.ly; n--) {
+            fix(&n, &look.ly, data->map->max_y);
+            to_send = add_tile(data, to_send, i, n);
+            realloc(to_send, strlen(to_send) + 1);
+            to_send[strlen(to_send) - 1] = ',';
+            to_send[strlen(to_send)] = ' ';
         }
-        sprintf(msg, "%s", data->map->map[data->player->posx][rank]);
-        for (int k = 1; k <= i; k++)
-            sprintf(msg, "%s", data->map->map[data->player->posx + k][rank]);
-        sprintf(msg, "\n");
     }
-    return msg;
+    return to_send;
 }
 
-int look(data_t *data)
+/**
+ * @brief look command
+ * @param data
+ * @return
+ */
+data_t *look(data_t *data)
 {
-    char *to_send = NULL;
+    char *to_send = malloc(sizeof(char) + 1024);
+    to_send[0] = '[';
 
-    switch (data->player->orientation) {
-        case NORTH:
-            look_up(data, to_send);
-            break;
-        case WEST:
-            look_right(data, to_send);
-            break;
-        case SOUTH:
-            look_down(data, to_send);
-            break;
-        case EAST:
-            to_send = look_left(data, to_send);
-            break;
-        default:
-            break;
-    }
+    if (data->player->orientation == UP)
+        to_send = look_up(data, to_send);
+    if (data->player->orientation == DOWN)
+        to_send = look_down(data, to_send);
+    if (data->player->orientation == LEFT)
+        to_send = look_left(data, to_send);
+    if (data->player->orientation == RIGHT)
+        to_send = look_right(data, to_send);
+    to_send[strlen(to_send) - 1] = ']';
+    to_send[strlen(to_send)] = '\n';
     send(data->fd, to_send, strlen(to_send), 0);
-    return 0;
+    return data;
 }

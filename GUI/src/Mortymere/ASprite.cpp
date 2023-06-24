@@ -46,3 +46,13 @@ bool ASPRITE::setCharacterRotation(FLAG_UNUSED Mortymere::CharacterRotation \
 {
     return false;
 }
+
+void ASPRITE::setFillColor(sf::Color const color)
+{
+    _fillColor = color;
+}
+
+void ASPRITE::setOutlineColor(sf::Color const color)
+{
+    _outlineColor = color;
+}

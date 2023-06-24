@@ -14,8 +14,9 @@
 
 typedef struct player_s {
     size_t food;
-    size_t posx;
-    size_t posy;
+    int id;
+    int posx;
+    int posy;
     size_t level;
     size_t life;
     size_t linemate;
@@ -25,7 +26,6 @@ typedef struct player_s {
     size_t phiras;
     size_t thystame;
     size_t lvl;
-    size_t id;
     int orientation;
 } player_t;
 
@@ -37,13 +37,22 @@ typedef struct tile_s {
     int phiras;
     int thystame;
     int food;
+    int egg;
     int player;
+    int x;
+    int y;
 } tile_t;
+
+typedef struct pos_s {
+    int x;
+    int y;
+} pos_t;
 
 typedef struct map_s {
     int max_x;
     int max_y;
     tile_t **tile;
+    pos_t *player_pos;
 } map_t;
 
 typedef struct team_s {
@@ -67,6 +76,8 @@ typedef struct data_s {
     bool connect;
     player_t *player;
     map_t *map;
+    team_t *team;
+    team_list_t *team_list;
 } data_t;
 
 typedef struct server_s {
@@ -80,6 +91,7 @@ typedef struct server_s {
     team_list_t *team_list;
     map_t *map;
     int nb_team;
+    int nb_player;
 } server_t;
 
 typedef struct client_s {
@@ -92,6 +104,8 @@ typedef struct client_s {
     int team_nb;
     player_t *player;
     map_t *map;
+    team_t *team;
+    team_list_t *team_list;
 } client_t;
 
 typedef struct args_s {
@@ -115,5 +129,11 @@ typedef struct density_s {
     size_t player_d;
 } density_t;
 
+typedef struct look_s {
+    int j;
+    int k;
+    int lx;
+    int ly;
+} look_t;
 
 #endif /* !STRUCT_H_ */

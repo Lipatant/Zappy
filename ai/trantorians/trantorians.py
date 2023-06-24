@@ -56,129 +56,143 @@ class Trantorians:
     ## @param self Contains trantorian values
     ## @return None
     def forward(self) -> None:
-        to_send = "Forward\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
-
+        try:
+            self.client_t.write_to_server("Forward\n")
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def left(self) -> None:
-        to_send = "Left\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            self.client_t.write_to_server("Left\n")
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def right(self) -> None:
-        to_send = "Right\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            self.client_t.write_to_server("Right\n")
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def look(self) -> None:
-        to_send = "Look\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            self.client_t.write_to_server("Look\n")
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def inventory(self) -> None:
-        to_send = "Inventory\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            self.client_t.write_to_server("Inventory\n")
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def broadcast_text(self, text) -> None:
-        to_send = "Broadcast " + text + "\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            to_send = "Broadcast " + text + "\n"
+            self.client_t.write_to_server(to_send)
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def connect_nbr(self) -> None:
-        to_send = "Connect_nbr\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            self.client_t.write_to_server("Connect_nbr\n")
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def fork(self) -> None:###creer un oeuf
-        to_send = "Fork\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            self.client_t.write_to_server("Fork\n")
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def eject(self) -> None:
-        to_send = "Eject\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            self.client_t.write_to_server("Eject\n")
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def take_object(self, object: str) -> None:
-        to_send = "Take " + object + "\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            to_send = "Take " + object + "\n"
+            self.client_t.write_to_server(to_send)
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def set_object(self, object: str) -> None:
-        to_send = "Set " + object + "\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            to_send = "Set " + object + "\n"
+            self.client_t.write_to_server(to_send)
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)
 
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
     def incantation(self) -> None:
-        to_send = "Incantation\n"
-        self.client_t.socket.send(to_send.encode())
-        print("Sent to server:", to_send)
-        self.client_t.data = self.client_t.socket.recv(1024).decode()
-        print("Received from server:", self.client_t.data)
+        try:
+            self.client_t.write_to_server("Incantation\n")
+            self.client_t.read_server()
+        except:
+            print("servor dead")
+            exit(84)

@@ -77,12 +77,15 @@ int cmd(data_t *data, char *command, client_t *c)
 
     data->player = c->player;
     data->map = c->map;
+    data->team = c->team;
+    data->team_list = c->team_list;
     data->args = get_splitted(command);
     if (data->args == NULL)
         return 84;
     for (int i = 0; cmds[i].cmd != NULL; i++) {
         if (strcmp(cmds[i].cmd, data->args[0]) == 0) {
-            ret = cmds[i].func_ptr(data);
+            data = cmds[i].func_ptr(data);
+            ret = 0;
             break;
         }
     }

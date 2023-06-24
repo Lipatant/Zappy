@@ -17,8 +17,14 @@ cmd.c
 command.c
 split.c
 utils_split.c
-cmd/quit.c
 utils.c
 cmd/inventory.c
 init_player.c
 tile.c
+cmd/take.c
+cmd/take2.c
+cmd/add_tile.c
+cmd/look.c
+cmd/set.c
+cmd/set2.c
+cmd/connect_nbr.c
