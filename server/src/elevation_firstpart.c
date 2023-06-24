@@ -18,7 +18,8 @@ data_t *elevation_lvl2(data_t *d)
     float i = 0;
     bool check = true;
 
-    if (CHECK_RESSOURCE2(d)) {
+    if ((d->map->tile[d->player->posx][d->player->posy].linemate >= 1
+        && d->map->tile[d->player->posx][d->player->posy].player >= 1)) {
         dprintf(d->fd, "Elevation underway\n");
         for (float i = 0; i <= 3 || check == true; i += 0.5)
             check = check_lvl2(d);
@@ -43,7 +44,10 @@ data_t *elevation_lvl3(data_t *d)
     bool check = true;
     float i = 0;
 
-    if (CHECK_RESSOURCE3(d)) {
+    if (d->map->tile[d->player->posx][d->player->posy].linemate >= 1
+        && d->map->tile[d->player->posx][d->player->posy].deraumere >= 1
+        && d->map->tile[d->player->posx][d->player->posy].sibur >= 1
+        && d->map->tile[d->player->posx][d->player->posy].player >= 2) {
         dprintf(d->fd, "Elevation underway\n");
         for (i = 0; i <= 3 || check_lvl3(d) == true; i += 0.5)
             check = check_lvl3(d);
@@ -70,7 +74,7 @@ data_t *elevation_lvl4(data_t *d)
     float i = 0;
     bool check = true;
 
-    if (CHECK_RESSOURCE4(d)) {
+    if (check_ressource_lvl4(d)) {
         dprintf(d->fd, "Elevation underway\n");
         for (float i = 0; i <= 3 || check == true; i += 0.5)
             check = check_lvl4(d);
@@ -97,7 +101,7 @@ data_t *elevation_lvl5(data_t *d)
     float i = 0;
     bool check = true;
 
-    if (CHECK_RESSOURCE5(d)) {
+    if (check_ressource_lvl5(d)) {
         dprintf(d->fd, "Elevation underway\n");
         for (i = 0; i <= 3 || check == true; i += 0.5)
             check = check_lvl5(d);

@@ -18,7 +18,7 @@ data_t *elevation_lvl6(data_t *d)
     float i = 0;
     bool check = true;
 
-    if (CHECK_RESSOURCE6(d)) {
+    if (check_ressource_lvl6(d)) {
         dprintf(d->fd, "Elevation underway\n");
         for (i = 0; i <= 3 || check == true; i += 0.5)
             check = check_lvl6(d);
@@ -46,7 +46,7 @@ data_t *elevation_lvl7(data_t *d)
     float i = 0;
     bool check = true;
 
-    if (CHECK_RESSOURCE7(d)) {
+    if (check_ressource_lvl7(d)) {
         dprintf(d->fd, "Elevation underway\n");
         for (i = 0; i <= 3 || check == true; i += 0.5)
             check = check_lvl7(d);
@@ -74,7 +74,7 @@ data_t *elevation_lvl8(data_t *d)
     float i = 0;
     bool check = true;
 
-    if (CHECK_RESSOURCE8(d)) {
+    if (check_ressource_lvl8(d)) {
         dprintf(d->fd, "Elevation underway\n");
         for (float i = 0; i <= 3 || check == true; i += 0.5)
             check = check_lvl8(d);
