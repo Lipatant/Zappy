@@ -17,6 +17,46 @@
     #include <netinet/in.h>
     #include "struct.h"
 
+    #define CHECK_RESSOURCE2(d) \
+        (d->map->tile[d->player->posx][d->player->posy].linemate >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].player >= 1)
+    #define CHECK_RESSOURCE3(d) \
+        (d->map->tile[d->player->posx][d->player->posy].linemate >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].deraumere >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].sibur >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].player >= 2)
+    #define CHECK_RESSOURCE4(d) \
+        (d->map->tile[d->player->posx][d->player->posy].linemate >= 2 \
+        && d->map->tile[d->player->posx][d->player->posy].sibur >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].phiras >= 2 \
+        && d->map->tile[d->player->posx][d->player->posy].player >= 2)
+    #define CHECK_RESSOURCE5(d) \
+        (d->map->tile[d->player->posx][d->player->posy].linemate >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].deraumere >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].sibur >= 2 \
+        && d->map->tile[d->player->posx][d->player->posy].phiras >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].player >= 4)
+    #define CHECK_RESSOURCE6(d) \
+        (d->map->tile[d->player->posx][d->player->posy].linemate >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].deraumere >= 2 \
+        && d->map->tile[d->player->posx][d->player->posy].sibur >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].mendiane >= 3 \
+        && d->map->tile[d->player->posx][d->player->posy].player >= 4)
+    #define CHECK_RESSOURCE7(d) \
+        (d->map->tile[d->player->posx][d->player->posy].linemate >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].deraumere >= 2 \
+        && d->map->tile[d->player->posx][d->player->posy].sibur >= 3 \
+        && d->map->tile[d->player->posx][d->player->posy].phiras >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].player >= 6)
+    #define CHECK_RESSOURCE8(d) \
+        (d->map->tile[d->player->posx][d->player->posy].linemate >= 2 \
+        && d->map->tile[d->player->posx][d->player->posy].deraumere >= 2 \
+        && d->map->tile[d->player->posx][d->player->posy].sibur >= 2 \
+        && d->map->tile[d->player->posx][d->player->posy].mendiane >= 2 \
+        && d->map->tile[d->player->posx][d->player->posy].phiras >= 2 \
+        && d->map->tile[d->player->posx][d->player->posy].thystame >= 1 \
+        && d->map->tile[d->player->posx][d->player->posy].player >= 6)
+
 enum orientation { NORTH, EAST, SOUTH, WEST };
 
 void init_struct(args_t args, team_list_t *team_list, map_t *maps);

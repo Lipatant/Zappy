@@ -16,10 +16,11 @@
  */
 bool check_lvl7(data_t *d)
 {
-    if (d->player->linemate < 2 || d->player->deraumere < 2
-        || d->player->sibur < 2 || d->player->mendiane < 2
-        || d->player->phiras < 2 || d->player->thystame < 1 ||
-        d->map->tile[d->player->posx][d->player->posy].player < 6)
+    if (d->map->tile[d->player->posx][d->player->posy].linemate < 1
+        || d->map->tile[d->player->posx][d->player->posy].deraumere < 2
+        || d->map->tile[d->player->posx][d->player->posy].sibur < 3
+        || d->map->tile[d->player->posx][d->player->posy].phiras < 1
+        || d->map->tile[d->player->posx][d->player->posy].player < 6)
         return false;
     return true;
 }
@@ -33,10 +34,13 @@ bool check_lvl7(data_t *d)
  */
 bool check_lvl8(data_t *d)
 {
-    if (d->player->linemate < 2 || d->player->deraumere < 2
-        || d->player->sibur < 2 || d->player->mendiane < 2
-        || d->player->phiras < 2 || d->player->thystame < 2 ||
-        d->map->tile[d->player->posx][d->player->posy].player < 6)
+    if (d->map->tile[d->player->posx][d->player->posy].linemate < 2
+        || d->map->tile[d->player->posx][d->player->posy].deraumere < 2
+        || d->map->tile[d->player->posx][d->player->posy].sibur < 2
+        || d->map->tile[d->player->posx][d->player->posy].mendiane < 2
+        || d->map->tile[d->player->posx][d->player->posy].phiras < 2
+        || d->map->tile[d->player->posx][d->player->posy].thystame < 1
+        || d->map->tile[d->player->posx][d->player->posy].player < 6)
         return false;
     return true;
 }

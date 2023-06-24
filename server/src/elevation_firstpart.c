@@ -13,20 +13,23 @@
  * @param data the struct containing info about list of data
  * @return data_t* the struct containing info about list of data
  */
-data_t *elevation_lvl2(data_t *data)
+data_t *elevation_lvl2(data_t *d)
 {
-    if (data->player->linemate >= 1 && data->player->deraumere >= 1
-    && data->player->sibur >= 1 &&
-    data->map->tile[data->player->posy][data->player->posx].player == 1) {
-        dprintf(data->fd, "Elevation underway\n");
-        for (float i = 0; i <= 3 || check_lvl2(data) == true; i += 0.5);
-        data->player->linemate -= 1;
-        data->player->deraumere -= 1;
-        data->player->sibur -= 1;
-        data->player->lvl = 2;
+    float i = 0;
+    bool check = true;
+
+    if (CHECK_RESSOURCE2(d)) {
+        dprintf(d->fd, "Elevation underway\n");
+        for (float i = 0; i <= 3 || check == true; i += 0.5)
+            check = check_lvl2(d);
+        if (i >= 3 && check == true) {
+            d->map->tile[d->player->posx][d->player->posy].linemate -= 1;
+            d->player->lvl = 2;
+            dprintf(d->fd, "Current level: %ld\n", d->player->lvl);
+        } else
+            dprintf(d->fd, "ko\n");
     }
-    dprintf(data->fd, "Current level: %ld\n", data->player->lvl);
-    return (data);
+    return (d);
 }
 
 /**
@@ -35,20 +38,25 @@ data_t *elevation_lvl2(data_t *data)
  * @param data the struct containing info about list of data
  * @return data_t* the struct containing info about list of data
  */
-data_t *elevation_lvl3(data_t *data)
+data_t *elevation_lvl3(data_t *d)
 {
-    if (data->player->linemate >= 2 && data->player->sibur >= 1
-    && data->player->phiras >= 2 &&
-    data->map->tile[data->player->posy][data->player->posx].player == 2) {
-        dprintf(data->fd, "Elevation underway\n");
-        for (float i = 0; i <= 3 || check_lvl3(data) == true; i += 0.5);
-        data->player->linemate -= 2;
-        data->player->sibur -= 1;
-        data->player->phiras -= 2;
-        data->player->lvl = 3;
+    bool check = true;
+    float i = 0;
+
+    if (CHECK_RESSOURCE3(d)) {
+        dprintf(d->fd, "Elevation underway\n");
+        for (i = 0; i <= 3 || check_lvl3(d) == true; i += 0.5)
+            check = check_lvl3(d);
+        if (i >= 3 && check == true) {
+            d->map->tile[d->player->posx][d->player->posy].linemate -= 1;
+            d->map->tile[d->player->posx][d->player->posy].deraumere -= 1;
+            d->map->tile[d->player->posx][d->player->posy].sibur -= 1;
+            d->player->lvl = 3;
+            dprintf(d->fd, "Current level: %ld\n", d->player->lvl);
+        } else
+            dprintf(d->fd, "ko\n");
     }
-    dprintf(data->fd, "Current level: %ld\n", data->player->lvl);
-    return (data);
+    return (d);
 }
 
 /**
@@ -57,21 +65,25 @@ data_t *elevation_lvl3(data_t *data)
  * @param data the struct containing info about list of data
  * @return data_t* the struct containing info about list of data
  */
-data_t *elevation_lvl4(data_t *data)
+data_t *elevation_lvl4(data_t *d)
 {
-    if (data->player->linemate >= 1 && data->player->deraumere >= 1
-    && data->player->sibur >= 2 && data->player->phiras >= 1 &&
-    data->map->tile[data->player->posy][data->player->posx].player == 2) {
-        dprintf(data->fd, "Elevation underway\n");
-        for (float i = 0; i <= 3 || check_lvl4(data) == true; i += 0.5);
-        data->player->linemate -= 1;
-        data->player->deraumere -= 1;
-        data->player->sibur -= 2;
-        data->player->phiras -= 1;
-        data->player->lvl = 4;
+    float i = 0;
+    bool check = true;
+
+    if (CHECK_RESSOURCE4(d)) {
+        dprintf(d->fd, "Elevation underway\n");
+        for (float i = 0; i <= 3 || check == true; i += 0.5)
+            check = check_lvl4(d);
+        if (i >= 3 && check == true) {
+            d->map->tile[d->player->posx][d->player->posy].linemate -= 2;
+            d->map->tile[d->player->posx][d->player->posy].phiras -= 2;
+            d->map->tile[d->player->posx][d->player->posy].sibur -= 1;
+            d->player->lvl = 4;
+            dprintf(d->fd, "Current level: %ld\n", d->player->lvl);
+        } else
+            dprintf(d->fd, "ko\n");
     }
-    dprintf(data->fd, "Current level: %ld\n", data->player->lvl);
-    return (data);
+    return (d);
 }
 
 /**
@@ -80,19 +92,24 @@ data_t *elevation_lvl4(data_t *data)
  * @param data the struct containing info about list of data
  * @return data_t* the struct containing info about list of data
  */
-data_t *elevation_lvl5(data_t *data)
+data_t *elevation_lvl5(data_t *d)
 {
-    if (data->player->linemate >= 1 && data->player->deraumere >= 2
-    && data->player->sibur >= 1 && data->player->mendiane >= 3 &&
-    data->map->tile[data->player->posy][data->player->posx].player == 4) {
-        dprintf(data->fd, "Elevation underway\n");
-        for (float i = 0; i <= 3 || check_lvl5(data) == true; i += 0.5);
-        data->player->linemate -= 1;
-        data->player->deraumere -= 2;
-        data->player->sibur -= 1;
-        data->player->mendiane -= 3;
-        data->player->lvl = 5;
+    float i = 0;
+    bool check = true;
+
+    if (CHECK_RESSOURCE5(d)) {
+        dprintf(d->fd, "Elevation underway\n");
+        for (i = 0; i <= 3 || check == true; i += 0.5)
+            check = check_lvl5(d);
+        if (i >= 3 && check == true) {
+            d->map->tile[d->player->posx][d->player->posy].linemate -= 1;
+            d->map->tile[d->player->posx][d->player->posy].deraumere -= 1;
+            d->map->tile[d->player->posx][d->player->posy].sibur -= 2;
+            d->map->tile[d->player->posx][d->player->posy].phiras -= 1;
+            d->player->lvl = 5;
+            dprintf(d->fd, "Current level: %ld\n", d->player->lvl);
+        } else
+            dprintf(d->fd, "ko\n");
     }
-    dprintf(data->fd, "Current level: %ld\n", data->player->lvl);
-    return (data);
+    return (d);
 }
