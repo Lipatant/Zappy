@@ -72,7 +72,10 @@ static int start_server(server_t *s, client_t *c, team_list_t team_list,
     c->data = NULL;
     FD_ZERO(&c->active_fd);
     FD_SET(s->fd, &c->active_fd);
-    while (1) {
+    s->startTime = time(NULL);
+    while (1) {//blocking read, the print does not run at each seconds
+        s->currentTime = time(NULL) - s->startTime;
+        printf("current time elapsed: %ld\n", s->currentTime);//manage time
         c->read_fd = c->active_fd;
         if (select(FD_SETSIZE, &c->read_fd, NULL, NULL, NULL) < 0) {
             perror("select");

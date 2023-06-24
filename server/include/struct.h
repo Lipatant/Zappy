@@ -11,6 +11,7 @@
     #include <netinet/in.h>
     #include <stdbool.h>
     #include <stddef.h>
+    #include <time.h>
 
 typedef struct player_s {
     size_t food;
@@ -94,6 +95,9 @@ typedef struct server_s {
     int nb_team;
     int nb_player;
     int freq;
+    time_t startTime;
+    time_t currentTime;
+
 } server_t;
 
 typedef struct client_s {
