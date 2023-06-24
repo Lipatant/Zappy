@@ -13,6 +13,7 @@
 #include <string>
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include "Mortymere/Button.hpp"
@@ -42,6 +43,8 @@ public: // PUBLIC MEMBERS
     Mortymere::Button buttonNext;
     /// @brief Button used for pausing and resuming the music
     Mortymere::Button buttonPause;
+    /// @brief Displayed album cover of the music
+    sf::RectangleShape spriteAlbum;
     /// @brief Displayed album of the music
     sf::Text textAlbum;
     /// @brief Displayed artist of the music

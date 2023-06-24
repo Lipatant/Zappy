@@ -10,11 +10,11 @@
 
 #define PLAYLIST Citadel::Playlist
 #define LOAD_FROM_FILE(OBJECT, PATH) \
-    OBJECT.loadFromFile(std::string("GUI/") + PATH) || \
-    OBJECT.loadFromFile(PATH)
+    (OBJECT.loadFromFile(std::string("GUI/") + PATH) || \
+    OBJECT.loadFromFile(PATH))
 #define OPEN_FROM_FILE(OBJECT, PATH) \
-    OBJECT.openFromFile(std::string("GUI/") + PATH) || \
-    OBJECT.openFromFile(PATH)
+    (OBJECT.openFromFile(std::string("GUI/") + PATH) || \
+    OBJECT.openFromFile(PATH))
 
 using PlaylistBgm = struct PlaylistBgm_s {
     std::string title;
@@ -29,7 +29,17 @@ using PlaylistBgm = struct PlaylistBgm_s {
     {TRACK, "The Hugo Collective", "Space Music To Trip To", \
     std::string("bgm/Space Music To Trip To/") + TRACK + ".wav", \
     "graphics/bgm/TheHugoCollective.jpeg", \
-    "graphics/bgm/SpaceMusicToTripTo.jpeg"}
+    "graphics/bgm/SpaceMusicToTripTo.jpg"}
+#define PLAYLIST_NODISCOUNTS(TRACK) \
+    {TRACK, "The Hugo Collective", "No discounts", \
+    std::string("bgm/No discounts/") + TRACK + ".wav", \
+    "graphics/bgm/TheHugoCollective.jpeg", \
+    "graphics/bgm/NoDiscounts.jpeg"}
+#define PLAYLIST_SILENTSCREAMING(TRACK) \
+    {TRACK, "The Hugo Collective (feat. Dark Forest)", "Silent Screaming", \
+    std::string("bgm/Silent Screaming/") + TRACK + ".wav", \
+    "graphics/bgm/TheHugoCollective.jpeg", \
+    "graphics/bgm/SilentScreaming.jpeg"}
 
 static const PlaylistBgm ENTIRE_PLAYLIST[] = {
     PLAYLIST_SPACEMUSICTOTRIPTO("Moon Creep"),
@@ -40,6 +50,8 @@ static const PlaylistBgm ENTIRE_PLAYLIST[] = {
     PLAYLIST_SPACEMUSICTOTRIPTO("Space Mall"),
     PLAYLIST_SPACEMUSICTOTRIPTO("Galaxy"),
     PLAYLIST_SPACEMUSICTOTRIPTO("Bonus Track: InfraRed Fuzz"),
+    PLAYLIST_NODISCOUNTS("Rocket Surgery"),
+    PLAYLIST_SILENTSCREAMING("Silent Screaming")
 };
 
 static const size_t ENTIRE_PLAYLIST_LENGTH = \
@@ -48,6 +60,10 @@ static const size_t ENTIRE_PLAYLIST_LENGTH = \
 PLAYLIST::Playlist(void) : buttonNext("graphics/buttons/MusicNext.png"), \
     buttonPause("graphics/buttons/MusicPause.png")
 {
+//    if (LOAD_FROM_FILE(spriteAlbum, "graphics/gbm"))
+    spriteAlbum.setFillColor(sf::Color::Black);
+    spriteAlbum.setOutlineColor(sf::Color::Black);
+    spriteAlbum.setOutlineThickness(3);
     if (LOAD_FROM_FILE(_font, "fonts/AileronBold.otf"))
         _isFontLoaded = true;
     if (_isFontLoaded) {
@@ -86,6 +102,27 @@ void PLAYLIST::_playAtID(size_t const id)
         textAlbum.setFillColor(sf::Color::White);
         _isMusicPause = false;
         _music.play();
+        if (_textures.find(ENTIRE_PLAYLIST[trackID].albumpath) == \
+            _textures.end()) {
+            _textures[ENTIRE_PLAYLIST[trackID].albumpath] = sf::Texture();
+            if (!LOAD_FROM_FILE(_textures[ENTIRE_PLAYLIST[trackID \
+                ].albumpath], ENTIRE_PLAYLIST[trackID].albumpath))
+                _textures.erase(_textures.find(ENTIRE_PLAYLIST[trackID \
+                ].albumpath));
+        }
+        if (_textures.find(ENTIRE_PLAYLIST[trackID].albumpath) == \
+            _textures.end()) {
+            spriteAlbum.setFillColor(sf::Color::Black);
+            spriteAlbum.setTexture(NULL);
+        } else {
+            spriteAlbum.setTextureRect({0, 0, static_cast<int>( \
+                _textures[ENTIRE_PLAYLIST[trackID].albumpath].getSize().x), \
+                static_cast<int>(_textures[ENTIRE_PLAYLIST[trackID].albumpath \
+                ].getSize().y)});
+            spriteAlbum.setFillColor(sf::Color::White);
+            spriteAlbum.setTexture(&_textures[ENTIRE_PLAYLIST[trackID \
+            ].albumpath]);
+        }
     } else {
         textTitle.setString("");
         textArtist.setString("");
