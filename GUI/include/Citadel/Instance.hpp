@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Mortymere/Citadel.hpp
+** Citadel/Citadel.hpp
 ** File description:
 ** -
 */

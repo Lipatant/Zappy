@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Mortymere/Inventory.hpp
+** Citadel/Inventory.hpp
 ** File description:
 ** -
 */

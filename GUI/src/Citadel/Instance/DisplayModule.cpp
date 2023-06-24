@@ -63,11 +63,32 @@ static sf::Color getTeamColor(Citadel::Instance *citadel, \
     return COLORS[teamsSize % COLORS_LENGTH];
 }
 
-MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu)
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMenu)
 {
     if (!data) return;
     Citadel::Instance *citadel = reinterpret_cast<Citadel::Instance *>(data);
     sf::Color screenCoverColor = sf::Color::Black;
+    bool isCurrentMenu = \
+        citadel->currentMenu != Citadel::InstanceCurrentMenu::None;
+    bool isLastMenu = \
+        citadel->lastMenu != Citadel::InstanceCurrentMenu::None;
+
+    if (!isCurrentMenu && !isLastMenu)
+        return;
+    if (isCurrentMenu && isLastMenu)
+        screenCoverColor.a = 220;
+    else if (isLastMenu)
+        screenCoverColor.a = 220 - 220 * citadel->menuTransition;
+    else
+        screenCoverColor.a = 220 * citadel->menuTransition;
+    instance.screenCover.setFillColor(screenCoverColor);
+    instance.window.draw(instance.screenCover);
+}
+
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu)
+{
+    if (!data) return;
+    Citadel::Instance *citadel = reinterpret_cast<Citadel::Instance *>(data);
     sf::Color buttonPlayColor = sf::Color::White;
     sf::IntRect textureRect;
     sf::IntRect textureRectOld;
@@ -83,14 +104,6 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu)
         if (!isLastMenu)
             return;
     }
-    if (isCurrentMenu && isLastMenu)
-        screenCoverColor.a = 220;
-    else if (isLastMenu)
-        screenCoverColor.a = 220 - 220 * citadel->menuTransition;
-    else
-        screenCoverColor.a = 220 * citadel->menuTransition;
-    instance.screenCover.setFillColor(screenCoverColor);
-    instance.window.draw(instance.screenCover);
     if (citadel->isMainMenuCoverTextureLoaded) {
         textureRectOld = citadel->mainMenuCoverTextureRect;
         textureRect = textureRectOld;
@@ -268,7 +281,7 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
         citadel->selectedCharacter = newSelectedPortrait;
 }
 
-MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleGround)
+MORTYMERE_INSTANCE_DISPLAY_MODULE_NODATA(citadelDisplayModuleGround)
 {
     sf::Color screenCoverColor(183, 196, 196);
 
