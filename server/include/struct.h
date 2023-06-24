@@ -95,8 +95,8 @@ typedef struct server_s {
     int nb_team;
     int nb_player;
     int freq;
-    time_t startTime;
-    time_t currentTime;
+    time_t fieldTime;
+    time_t foodTime;
 
 } server_t;
 

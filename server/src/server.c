@@ -59,6 +59,18 @@ static int init_server(server_t *s, args_t args, team_list_t team_list,
     return 0;
 }
 
+static void run_clock(server_t *s)
+{
+    if (time(NULL) - s->foodTime >= 1260 / s->freq) {
+        printf("it's foodin time\n");//change print by the function that
+        s->foodTime = time(NULL);//consumes the food for each trantorians
+    }
+    if (time(NULL) - s->fieldTime >= 20 / s->freq) {
+        printf("it's fieldin time\n");//change print by the function that
+        s->fieldTime = time(NULL);//generates new resources on the map
+    }
+}
+
 /**
  * @brief the function for starting the server
  *
@@ -72,10 +84,10 @@ static int start_server(server_t *s, client_t *c, team_list_t team_list,
     c->data = NULL;
     FD_ZERO(&c->active_fd);
     FD_SET(s->fd, &c->active_fd);
-    s->startTime = time(NULL);
+    s->foodTime = time(NULL);
+    s->fieldTime = time(NULL);
     while (1) {//blocking read, the print does not run at each seconds
-        s->currentTime = time(NULL) - s->startTime;
-        printf("current time elapsed: %ld\n", s->currentTime);//manage time
+        run_clock(s);
         c->read_fd = c->active_fd;
         if (select(FD_SETSIZE, &c->read_fd, NULL, NULL, NULL) < 0) {
             perror("select");
