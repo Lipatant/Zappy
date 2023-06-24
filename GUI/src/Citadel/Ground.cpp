@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Mortymere/Ground.cpp
+** Citadel/Ground.cpp
 ** File description:
 ** -
 */
@@ -12,6 +12,14 @@
 #define GROUND_TILE_COLOR \
     sf::Color::Blue, sf::Color::White, -2
 
+GROUND::Ground(void)
+{
+    hasItemTexture = true;
+    if (!itemTexture.loadFromFile("GUI/graphics/Items.png"))
+        if (!itemTexture.loadFromFile("graphics/Items.png"))
+            hasItemTexture = false;
+}
+
 bool GROUND::changeSize(size_t const x, size_t const y)
 {
     if (_sizeX == x && _sizeY == y)
@@ -21,7 +29,7 @@ bool GROUND::changeSize(size_t const x, size_t const y)
         for (size_t j = 0; j < y; j++) {
             sprites.push_back(Mortymere::createSprite< \
                 Mortymere::Sprites::Tile>(GROUND_TILE_COLOR));
-            sprites.back()->layer() = -1;
+            sprites.back()->layer() = -2;
             sprites.back()->anchor().x = i;
             sprites.back()->anchor().z = j;
         }
@@ -29,4 +37,14 @@ bool GROUND::changeSize(size_t const x, size_t const y)
     _sizeX = x;
     _sizeY = y;
     return true;
+}
+
+std::size_t GROUND::getSizeX(void)
+{
+    return _sizeX;
+}
+
+std::size_t GROUND::getSizeY(void)
+{
+    return _sizeY;
 }

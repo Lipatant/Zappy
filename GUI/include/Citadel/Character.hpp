@@ -11,6 +11,9 @@
 #pragma once
 
 #include <string>
+#include "Citadel/Character/Usings.hpp"
+#include "Citadel/Inventory.hpp"
+#include "Citadel/Sprites/Items.hpp"
 #include "Mortymere/Sprite.hpp"
 
 #define MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(N, X, Y, O, L, TEAM) \
@@ -20,17 +23,6 @@
     Citadel::CharacterTeam const &TEAM
 
 namespace Citadel {
-
-using CharacterNumber = std::size_t;
-using CharacterPosition = int;
-using CharacterLevel = std::size_t;
-using CharacterTeam = std::string;
-enum class CharacterRotation {
-    Up = 1,
-    Right = 2,
-    Down = 3,
-    Left = 4,
-};
 
 /// @brief Class representing a character
 class Character {
@@ -47,11 +39,18 @@ protected: // PROTECTED MEMBERS
     Citadel::CharacterTeam _team;
 
 public: // PUBLIC MEMBERS
+    Citadel::Inventory inventory;
     Mortymere::Sprite sprite;
     sf::Sprite spritePortrait;
     std::vector<std::string> spritePortraitTextures;
 
 public: // PUBLIC FUNCTIONS
+    /// @return Value of _team
+    Citadel::CharacterTeam getTeam(void);
+    /// @return Value of _positionX
+    Citadel::CharacterPosition getPositionX(void);
+    /// @return Value of _positionY
+    Citadel::CharacterPosition getPositionY(void);
     /// @param level (Citadel::CharacterLevel const) New value of
     ///     _level
     void setLevel(Citadel::CharacterLevel const level);

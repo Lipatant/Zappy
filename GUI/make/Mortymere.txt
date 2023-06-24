@@ -1,4 +1,5 @@
 Mortymere/ASprite.cpp
+Mortymere/Button.cpp
 Mortymere/Camera.cpp
 Mortymere/Ground.cpp
 Mortymere/Instance.cpp

@@ -26,15 +26,17 @@ static bool sortObjects(Mortymere::SpritePtr const object1, \
 INSTANCE::Instance(void) : camera(window)
 { }
 
-void INSTANCE::addDisplayModule(Mortymere::InstanceDisplayModuleType function)
+void INSTANCE::addDisplayModule(std::string const &type, \
+    Mortymere::InstanceDisplayModuleType function)
 {
-    displayModules.push_back({function, nullptr});
+    displayModules.push_back({function, type, nullptr});
 }
 
-void INSTANCE::addDisplayModule(Mortymere::InstanceDisplayModuleType \
+void INSTANCE::addDisplayModule(std::string const &type, \
+    Mortymere::InstanceDisplayModuleType \
     function, void *data)
 {
-    displayModules.push_back({function, data});
+    displayModules.push_back({function, type, data});
 }
 
 void INSTANCE::addObject(Mortymere::SpritePtr objectPtr)
@@ -49,7 +51,10 @@ void INSTANCE::operator<<(Mortymere::SpritePtr objectPtr)
 
 bool INSTANCE::udpate(void)
 {
+    sf::View view;
+    sf::View viewSaved;
     sf::Event event;
+    sf::Vector2f screenSize;
 
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
@@ -79,8 +84,17 @@ bool INSTANCE::udpate(void)
             _objects.erase(object++);
         object++;
     }
+    view = window.getView();
+    viewSaved = view;
+    view.setCenter(0, 0);
+    screenSize = window.getView().getSize();
+    screenCover.setSize({static_cast<float>(screenSize.x), \
+        static_cast<float>(screenSize.y)});
+    screenCover.setOrigin(screenSize.x / 2, screenSize.y / 2);
     for (Mortymere::InstanceDisplayModule module: displayModules)
-        module.function(*this, module.data);
+        if (module.type == "ui")
+            module.function(*this, module.data);
+    window.setView(viewSaved);
     window.display();
     return window.isOpen();
 }

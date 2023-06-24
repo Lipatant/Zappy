@@ -11,6 +11,7 @@
 #pragma once
 
 #include "Mortymere/ASprite.hpp"
+#include "Mortymere/Button.hpp"
 #include "Mortymere/Camera.hpp"
 #include "Mortymere/Ground.hpp"
 #include "Mortymere/Instance.hpp"
