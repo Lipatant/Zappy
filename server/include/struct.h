@@ -74,6 +74,7 @@ typedef struct data_s {
     char **args;
     char *ip;
     bool connect;
+    int freq;
     player_t *player;
     map_t *map;
     team_t *team;
@@ -92,6 +93,7 @@ typedef struct server_s {
     map_t *map;
     int nb_team;
     int nb_player;
+    int freq;
 } server_t;
 
 typedef struct client_s {

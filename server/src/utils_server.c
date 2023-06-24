@@ -92,6 +92,8 @@ static int handle_new_connection(server_t *s, client_t *c)
     }
     c->map = s->map;
     FD_SET(c->fd, &c->active_fd);
+    c->data[current]->freq = s->freq;
+    printf("freq = %d\n", c->data[current]->freq);
     return 0;
 }
 
