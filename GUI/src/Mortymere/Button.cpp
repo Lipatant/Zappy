@@ -66,7 +66,8 @@ Mortymere::Button const &BUTTON::update(sf::Vector2f const &mouseUI, bool \
         _selected = false;
     if (_value == 1 && _hovered)
         _selected = true;
-    _textureRect.top = (_selected && _hovered) ? _textureRect.height : 0;
+    _textureRect.top = (_selected && _hovered && _value > 0) ? \
+        _textureRect.height : 0;
     setTextureRect(_textureRect);
     return *this;
 }

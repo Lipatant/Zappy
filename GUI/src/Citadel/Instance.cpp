@@ -38,6 +38,7 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleGround);
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu);
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMenu);
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUINone);
+MORTYMERE_INSTANCE_DISPLAY_MODULE(playlistDisplayModuleBase);
 
 struct Command_s {
     std::string name;
@@ -310,6 +311,7 @@ INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
     _engine.addDisplayModule("ui", citadelDisplayModuleUINone, this);
     _engine.addDisplayModule("ui", citadelDisplayModuleUIMenu, this);
     _engine.addDisplayModule("ui", citadelDisplayModuleUIMainMenu, this);
+    _engine.addDisplayModule("ui", playlistDisplayModuleBase, this);
     _engine.window.setViewCenter(0, 0);
     if (_mainMenuCoverTexture.loadFromFile("GUI/graphics/MainMenu.png") || \
         _mainMenuCoverTexture.loadFromFile("graphics/MainMenu.png")) {

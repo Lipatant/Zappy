@@ -32,16 +32,34 @@ protected: // PROTECTED MEMBERS
     bool _isFontLoaded = false;
     /// @brief If _music is loaded
     bool _isMusicLoaded = false;
+    /// @brief If _music is playing
+    bool _isMusicPause = false;
     sf::Music _music;
     std::vector<size_t> _queue;
 
-public: // PROTECTED MEMBERS
+public: // PUBLIC MEMBERS
+    /// @brief Button used for skipping the current track
+    Mortymere::Button buttonNext;
+    /// @brief Button used for pausing and resuming the music
+    Mortymere::Button buttonPause;
+    /// @brief Displayed album of the music
+    sf::Text textAlbum;
+    /// @brief Displayed artist of the music
+    sf::Text textArtist;
+    /// @brief Displayed title of the music
+    sf::Text textTitle;
+
+protected: // PROTECTED FUNCTIONS
     /// @param id (size_t const) ID of the music in ENTIRE PLAYLIST to play
     void _playAtID(size_t const id);
 
 public: // PUBLIC FUNCTIONS
-    /// Next Music
+    /// @brief Next music
     void next(void);
+    /// @brief Pause current music
+    void pause(void);
+    /// @brief Updates the current music for some detections
+    void update(void);
 
 public: // CONSTRUCTOR
     Playlist(void);

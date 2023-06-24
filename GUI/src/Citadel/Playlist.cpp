@@ -45,10 +45,31 @@ static const PlaylistBgm ENTIRE_PLAYLIST[] = {
 static const size_t ENTIRE_PLAYLIST_LENGTH = \
     sizeof(ENTIRE_PLAYLIST) / sizeof(ENTIRE_PLAYLIST[0]);
 
-PLAYLIST::Playlist(void)
+PLAYLIST::Playlist(void) : buttonNext("graphics/buttons/MusicNext.png"), \
+    buttonPause("graphics/buttons/MusicPause.png")
 {
-    if (LOAD_FROM_FILE(_font, "fonts/Aileron-Bold.otf"))
+    if (LOAD_FROM_FILE(_font, "fonts/AileronBold.otf"))
         _isFontLoaded = true;
+    if (_isFontLoaded) {
+        textTitle.setFont(_font);
+        textTitle.setString("");
+        textTitle.setCharacterSize(24);
+        textTitle.setOutlineThickness(4);
+        textTitle.setFillColor(sf::Color::White);
+        textTitle.setOutlineColor(sf::Color::Black);
+        textArtist.setFont(_font);
+        textArtist.setString("");
+        textArtist.setCharacterSize(20);
+        textArtist.setOutlineThickness(4);
+        textArtist.setFillColor(sf::Color::White);
+        textArtist.setOutlineColor(sf::Color::Black);
+        textAlbum.setFont(_font);
+        textAlbum.setString("");
+        textAlbum.setCharacterSize(16);
+        textAlbum.setOutlineThickness(4);
+        textAlbum.setFillColor(sf::Color::White);
+        textAlbum.setOutlineColor(sf::Color::Black);
+    }
 }
 
 void PLAYLIST::_playAtID(size_t const id)
@@ -56,9 +77,19 @@ void PLAYLIST::_playAtID(size_t const id)
     size_t const trackID = id % ENTIRE_PLAYLIST_LENGTH;
 
     if (OPEN_FROM_FILE(_music, ENTIRE_PLAYLIST[trackID].musicpath)) {
+        textTitle.setString(ENTIRE_PLAYLIST[trackID].title);
+        textArtist.setString(ENTIRE_PLAYLIST[trackID].artist);
+        textAlbum.setString(ENTIRE_PLAYLIST[trackID].album);
         _isMusicLoaded = true;
+        textTitle.setFillColor(sf::Color::White);
+        textArtist.setFillColor(sf::Color::White);
+        textAlbum.setFillColor(sf::Color::White);
+        _isMusicPause = false;
         _music.play();
     } else {
+        textTitle.setString("");
+        textArtist.setString("");
+        textAlbum.setString("");
         _isMusicLoaded = false;
     }
 }
@@ -75,4 +106,28 @@ void PLAYLIST::next(void)
     queueID = rand() % _queue.size();
     _playAtID(_queue[queueID]);
     _queue.erase(_queue.begin() + queueID);
+}
+
+void PLAYLIST::pause(void)
+{
+    if (!_isMusicLoaded)
+        return;
+    if (_isMusicPause) {
+        _music.play();
+        textTitle.setFillColor(sf::Color::White);
+        textArtist.setFillColor(sf::Color::White);
+        textAlbum.setFillColor(sf::Color::White);
+    } else {
+        _music.pause();
+        textTitle.setFillColor(sf::Color::Blue);
+        textArtist.setFillColor(sf::Color::Blue);
+        textAlbum.setFillColor(sf::Color::Blue);
+    }
+    _isMusicPause = !_isMusicPause;
+}
+
+void PLAYLIST::update(void)
+{
+    if (_music.getStatus() == sf::Music::Stopped)
+        next();
 }
