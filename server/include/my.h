@@ -57,7 +57,7 @@
         d->map->tile[d->player->posx][d->player->posy].thystame >= 1 && \
         d->map->tile[d->player->posx][d->player->posy].player >= 6)
 
-enum orientation { NORTH, EAST, SOUTH, WEST };
+enum orientation { UP, RIGHT, DOWN, LEFT };
 
 void init_struct(args_t args, team_list_t *team_list, map_t *maps);
 data_t *make_elevation(data_t *data);
