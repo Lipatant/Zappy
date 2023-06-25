@@ -10,6 +10,9 @@
 #include "Mortymere/Sprites/Character.hpp"
 
 #define INSTANCE Mortymere::Instance
+#define DISPLAY_MODULES(TYPE) \
+    for (Mortymere::InstanceDisplayModule module: displayModules) \
+    if (module.type == TYPE) module.function(*this, module.data)
 
 static bool sortObjects(Mortymere::SpritePtr const object1, \
     Mortymere::SpritePtr const object2)
@@ -76,6 +79,7 @@ bool INSTANCE::udpate(void)
     window.update();
     window.clear(sf::Color::Black);
     window.draw(_ground);
+    DISPLAY_MODULES("preobj");
     _objects.sort(sortObjects);
     for (auto object = _objects.begin(); object != _objects.end();) {
         if (Mortymere::Sprite sprite = object->lock())
@@ -84,6 +88,7 @@ bool INSTANCE::udpate(void)
             _objects.erase(object++);
         object++;
     }
+    DISPLAY_MODULES("postobj");
     view = window.getView();
     viewSaved = view;
     view.setCenter(0, 0);
@@ -91,9 +96,7 @@ bool INSTANCE::udpate(void)
     screenCover.setSize({static_cast<float>(screenSize.x), \
         static_cast<float>(screenSize.y)});
     screenCover.setOrigin(screenSize.x / 2, screenSize.y / 2);
-    for (Mortymere::InstanceDisplayModule module: displayModules)
-        if (module.type == "ui")
-            module.function(*this, module.data);
+    DISPLAY_MODULES("ui");
     window.setView(viewSaved);
     window.display();
     return window.isOpen();

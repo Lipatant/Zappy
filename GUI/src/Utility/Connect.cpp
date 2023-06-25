@@ -59,7 +59,7 @@ std::string Connect::receive()
             return "";
         read_mess = read(_sockfd, &buffer[0], buffer.size() - 1);
         if (read_mess < 0) {
-            if (errno == EAGAIN || errno == EWOULDBLOCK)
+            if (errno == EAGAIN)
                 return "";
             std::cerr << "Read error." << std::endl;
             return "";
@@ -73,8 +73,6 @@ std::string Connect::receive()
     flags = fcntl(_sockfd, F_GETFL, 0);
     fcntl(_sockfd, F_SETFL, flags & (~O_NONBLOCK));
     message = buffer;
-    if (!message.empty() && message.back() == '\n')
-        message.pop_back();
     return message;
 }
 

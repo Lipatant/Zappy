@@ -61,5 +61,6 @@ void init_struct(args_t args, team_list_t *team_list, map_t *maps)
     maps->max_x = args.width;
     maps->max_y = args.height;
     maps = init_map(maps, i * args.clients);
+    team_list->length = i;
     set_team(args, team_list->team);
 }

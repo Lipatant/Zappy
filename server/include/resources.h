@@ -8,5 +8,7 @@
 #ifndef RESOURCES_H_
     #define RESOURCES_H_
 
-void consume_food(team_list_t *);
+team_list_t *consume_food(team_list_t *);
+map_t *spawn_ressource(map_t *map);
+
 #endif /* !RESOURCES_H_ */

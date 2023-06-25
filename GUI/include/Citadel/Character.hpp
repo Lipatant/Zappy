@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Mortymere/Character.hpp
+** Citadel/Character.hpp
 ** File description:
 ** -
 */
@@ -11,6 +11,7 @@
 #pragma once
 
 #include <string>
+#include <SFML/System/Clock.hpp>
 #include "Citadel/Character/Usings.hpp"
 #include "Citadel/Inventory.hpp"
 #include "Citadel/Sprites/Items.hpp"
@@ -28,12 +29,21 @@ namespace Citadel {
 class Character {
 
 private: // PRIVATE MEMBERS
+    /// @brief Name of the character
+    std::string _name;
+    /// @brief Filepath of the character sprite
     std::string _filepath;
+    /// @brief Clock measuring time since the last movement
+    sf::Clock _movementTransitionClock;
+    /// @brief If the character is currently moving
+    bool _isInMovementTransition = false;
 
 protected: // PROTECTED MEMBERS
     Citadel::CharacterNumber _number;
     Citadel::CharacterPosition _positionX;
     Citadel::CharacterPosition _positionY;
+    float _positionXOld;
+    float _positionYOld;
     Citadel::CharacterRotation _rotation;
     Citadel::CharacterLevel _level;
     Citadel::CharacterTeam _team;
@@ -45,6 +55,10 @@ public: // PUBLIC MEMBERS
     std::vector<std::string> spritePortraitTextures;
 
 public: // PUBLIC FUNCTIONS
+    /// @return Value of _level
+    Citadel::CharacterLevel getLevel(void);
+    /// @return Value of _name
+    std::string const &getName(void);
     /// @return Value of _team
     Citadel::CharacterTeam getTeam(void);
     /// @return Value of _positionX
@@ -69,6 +83,8 @@ public: // PUBLIC FUNCTIONS
     /// @param team (Citadel::CharacterLevel const) New value of
     ///     _team
     void setTeam(Citadel::CharacterTeam const &team);
+    /// @brief
+    void update(void);
 
 public: // CONSTRUCTOR
     Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t));

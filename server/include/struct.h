@@ -14,13 +14,11 @@
     #include <time.h>
 
 typedef struct player_s {
-    size_t food;
+    int food;
     int id;
     int fd;
     int posx;
     int posy;
-    size_t level;
-    size_t life;
     size_t linemate;
     size_t deraumere;
     size_t sibur;

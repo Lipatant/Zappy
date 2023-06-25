@@ -7,11 +7,12 @@
 
 #include "server.h"
 
-void consume_food(team_list_t *team)
+team_list_t *consume_food(team_list_t *team)
 {
     for (size_t i = 0; i < team->length; i++) {
-        for (int k = 0; k < team->team[i].nb_clients; k++) {
+        for (int k = 0; k < team->team[i].player_use; k++) {
             team->team[i].player[k].food -= 1;
         }
     }
+    return team;
 }

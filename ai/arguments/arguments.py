@@ -44,6 +44,6 @@ class Arguments:
             elif argv[i] == "-h":
                 self.ip = argv[i + 1]
             else:
-                print_error_exit(f"error: invalid parser parameter: {argv[i]}")
+                print_error_exit(f"Error: invalid parser parameter: {argv[i]}")
         if self.port == 0 or self.team == "" or self.ip == "":
             print_error_exit("Error: invalid parser")

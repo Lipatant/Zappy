@@ -17,7 +17,7 @@
 #define REGEX_UNINT "^-?([1-9]\\d*|\\d)$"
 
 #define REGEX_EGG_NUMBER REGEX_UNINT
-#define REGEX_LEVEL REGEX_UNINT
+#define REGEX_LEVEL "^[1-8]$"
 #define REGEX_MESSAGE ""
 #define REGEX_NUMBER REGEX_UNINT
 #define REGEX_ORIENTATION "^[1-4]$"
@@ -33,8 +33,16 @@
 #define INSTANCECMD_FUNCTION(NAME) \
     static void NAME(INSTANCE &instance, std::vector<std::string> const &av)
 
+#define LOAD_FROM_FILE(OBJECT, PATH) \
+    (OBJECT.loadFromFile(std::string("GUI/") + PATH) || \
+    OBJECT.loadFromFile(PATH))
+
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList);
-MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleMenu);
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleGround);
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu);
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMenu);
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUINone);
+MORTYMERE_INSTANCE_DISPLAY_MODULE(playlistDisplayModuleBase);
 
 struct Command_s {
     std::string name;
@@ -105,7 +113,7 @@ INSTANCECMD_FUNCTION(instanceCmdPnw)
         toNumber<Citadel::CharacterPosition>(av[2]),
         toNumber<Citadel::CharacterPosition>(av[3]),
         toRotation<Citadel::CharacterRotation>(av[4]),
-        characterNumber,
+        toNumber<Citadel::CharacterLevel>(av[5]),
         av[6]
     ));
     instance.engine().addObject( \
@@ -297,26 +305,75 @@ static void convertCommand(std::string const &cmd, size_t &ac, \
 }
 
 INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
-    mainMenuButtonPlay("graphics/buttons/Play.png")
+    mainMenuButtonExit("graphics/buttons/Exit.png"), \
+    mainMenuButtonFullscreen("graphics/buttons/Fullscreen.png"), \
+    mainMenuButtonPlay("graphics/buttons/Play.png"), \
+    noneButtonSettings("graphics/buttons/Settings.png"), \
+    noneButtonZoomIn("graphics/buttons/Plus.png"), \
+    noneButtonZoomOut("graphics/buttons/Less.png")
 {
+    sf::Color zoomInOutColor(sf::Color::White);
+
     srand(time(NULL));
+    playlist.next();
+    zoomInOutColor.a = 200;
+    noneButtonZoomIn.setColor(zoomInOutColor);
+    noneButtonZoomOut.setColor(zoomInOutColor);
+    _engine.addDisplayModule("preobj", citadelDisplayModuleGround);
     _engine.addDisplayModule("ui", citadelDisplayModuleCharacterList, this);
-    _engine.addDisplayModule("ui", citadelDisplayModuleMenu, this);
+    _engine.addDisplayModule("ui", citadelDisplayModuleUINone, this);
+    _engine.addDisplayModule("ui", citadelDisplayModuleUIMenu, this);
+    _engine.addDisplayModule("ui", citadelDisplayModuleUIMainMenu, this);
+    _engine.addDisplayModule("ui", playlistDisplayModuleBase, this);
     _engine.window.setViewCenter(0, 0);
-    isMainMenuCoverTextureLoaded = true;
-    if (!_mainMenuCoverTexture.loadFromFile("GUI/graphics/MainMenu.png")) {
-        if (!_mainMenuCoverTexture.loadFromFile("graphics/MainMenu.png")) {
-            isMainMenuCoverTextureLoaded = false;
-            return;
-        }
+    if (_mainMenuCoverTexture.loadFromFile("GUI/graphics/MainMenu.png") || \
+        _mainMenuCoverTexture.loadFromFile("graphics/MainMenu.png")) {
+        mainMenuCover.setTexture(&_mainMenuCoverTexture);
+        mainMenuCoverTextureRect = mainMenuCover.getTextureRect();
+        isMainMenuCoverTextureLoaded = true;
     }
-    mainMenuCover.setTexture(&_mainMenuCoverTexture);
-    mainMenuCoverTextureRect = mainMenuCover.getTextureRect();
+    if (_mainMenuTitleTexture.loadFromFile("GUI/graphics/MainTitle.png") || \
+        _mainMenuTitleTexture.loadFromFile("graphics/MainTitle.png")) {
+        mainMenuTitle.setTexture(&_mainMenuTitleTexture);
+        mainMenuTitleTextureRect = mainMenuTitle.getTextureRect();
+        isMainMenuTitleTextureLoaded = true;
+    }
+    if (_portraitLevelTexture.loadFromFile("GUI/graphics/Levels.png") || \
+        _portraitLevelTexture.loadFromFile("graphics/Levels.png")) {
+        portraitLevel.setTexture(_portraitLevelTexture);
+        portraitLevelTextureRect = portraitLevel.getTextureRect();
+        portraitLevelTextureRect.width = portraitLevelTextureRect.height;
+        portraitLevel.setTextureRect(portraitLevelTextureRect);
+        isPortraitLevelTextureLoaded = true;
+    }
+    if (LOAD_FROM_FILE(_font, "fonts/AileronBold.otf"))
+        _isFontLoaded = true;
+    if (_isFontLoaded) {
+        portraitText.setFont(_font);
+        portraitText.setString("");
+        portraitText.setCharacterSize(36);
+        portraitText.setOutlineThickness(4);
+        portraitText.setFillColor(sf::Color::White);
+        portraitText.setOutlineColor(sf::Color::Black);
+        portraitTextString = "";
+        portraitTextTeam.setFont(_font);
+        portraitTextTeam.setString("");
+        portraitTextTeam.setCharacterSize(36);
+        portraitTextTeam.setOutlineThickness(4);
+        portraitTextTeam.setFillColor(sf::Color::White);
+        portraitTextTeam.setOutlineColor(sf::Color::Black);
+        portraitTextTeamString = "";
+    }
 }
 
 Mortymere::Instance &INSTANCE::engine(void)
 {
     return _engine;
+}
+
+void INSTANCE::changeCurrentMenu(InstanceCurrentMenu const newMenu)
+{
+    _nextMenu = newMenu;
 }
 
 void INSTANCE::enterCommand(std::string const &cmd)
@@ -351,6 +408,7 @@ void INSTANCE::enterCommand(std::string const &cmd)
 
 bool INSTANCE::udpate(void)
 {
+    bool returned;
     std::size_t groundSizeX;
     std::size_t groundSizeY;
 
@@ -370,7 +428,26 @@ bool INSTANCE::udpate(void)
             _engine.camera.center.z = static_cast<float>( \
                 ground.getSizeY() - 1) / 2;
     }
-    return _engine.udpate();
+    if (currentMenu != lastMenu) {
+        menuTransition = static_cast<double>( \
+            _menuTransitionClock.getElapsedTime().asMilliseconds()) / 1000 * 4;
+        if (menuTransition >= 1.0) {
+            lastMenu = currentMenu;
+            menuTransition = 1.0;
+            isInMenuTransition = false;
+        }
+    }
+    returned = _engine.udpate();
+    if (_nextMenu != currentMenu) {
+        _menuTransitionClock.restart();
+        menuTransition = 0;
+        lastMenu = currentMenu;
+        currentMenu = _nextMenu;
+        isInMenuTransition = true;
+    }
+    for (auto &character: characters)
+        character.second.update();
+    return returned;
 }
 
 void INSTANCE::operator<<(std::string const &cmd)

@@ -2,9 +2,9 @@
 
 The repository for the Zappy project.
 
-<img src=".github/ressource/Zappy_picture.jpg" alt="picture zappy" width="540" height="360">
+<img src=".github/assets_readme/Zappy_picture.jpg" alt="picture zappy" width="540" height="360">
 
-<img src=".github/ressource/Epitech_logo.png" alt="logo Epitech">
+<img src=".github/assets_readme/Epitech_logo.png" alt="logo Epitech">
 
 ---
 
@@ -39,9 +39,27 @@ Get ready to embrace the pulse-pounding excitement of Zappy, where lightning str
 
 ## <a id="titre2"></a>2. How to use Zappy
 
+**Cloner le dépôt** : Commencez par cloner le dépôt du projet Zappy depuis Github. Utilisez la commande suivante dans votre terminal :
 
-...
+```sh
 
+git clone <git@github.com:EpitechPromo2026/B-YEP-400-PAR-4-1-zappy-viktor.bruggeman.git>
+
+```
+
+**Installer les dépendances** : Accédez au répertoire cloné et assurez-vous d'avoir toutes les dépendances nécessaires installées. Consultez le fichier README ou le fichier d'installation fourni pour connaître les dépendances spécifiques.
+
+**Configurer le serveur** : Le projet Zappy nécessite un serveur pour fonctionner. Consultez la documentation fournie avec le projet pour connaître les paramètres de configuration spécifiques. Vous devrez peut-être spécifier le port d'écoute, les dimensions de la carte, le nombre maximum de clients, etc.
+
+**Compiler le serveur** : Utilisez les commandes de compilation fournies pour compiler le serveur. Ces commandes peuvent varier en fonction du langage utilisé dans le projet. Assurez-vous de compiler avec les options appropriées pour activer les fonctionnalités nécessaires.
+
+**Lancer le serveur** : Une fois que le serveur est compilé, vous pouvez le lancer en utilisant la commande spécifiée. Assurez-vous que le serveur est en cours d'exécution et qu'il écoute sur le port spécifié.
+
+**Configurer les clients** : Les clients sont les entités qui interagissent avec le serveur Zappy. Assurez-vous de configurer les clients avec les paramètres appropriés pour se connecter au serveur. Vous devrez spécifier l'adresse IP du serveur, le port de connexion, le nom de l'équipe, etc.
+
+**Compiler les clients** : Si nécessaire, compilez les clients en utilisant les commandes de compilation fournies. Encore une fois, ces commandes peuvent varier en fonction du langage utilisé dans le projet.
+
+**Lancer les clients** : Une fois que les clients sont compilés, vous pouvez les lancer en utilisant la commande spécifiée. Assurez-vous de lancer suffisamment de clients pour tester les fonctionnalités multi-joueurs du projet.
 
 ---
 

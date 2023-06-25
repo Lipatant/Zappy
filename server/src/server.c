@@ -60,16 +60,17 @@ static int init_server(server_t *s, args_t args, team_list_t team_list,
     return 0;
 }
 
-static void run_clock(server_t *s, team_list_t *team)
+static server_t *run_clock(server_t *s)
 {
     if (time(NULL) - s->foodTime >= 1260 / s->freq) {
-        consume_food(team);
+        printf("consume food\n");
         s->foodTime = time(NULL);
     }
-    if (time(NULL) - s->fieldTime >= 20 / s->freq) {
-        printf("it's fieldin time\n");
+    if (time(NULL) - s->fieldTime >= 20) {
+        s->map = spawn_ressource(s->map);
         s->fieldTime = time(NULL);
     }
+    return s;
 }
 
 /**
@@ -88,7 +89,7 @@ static int start_server(server_t *s, client_t *c, team_list_t team_list,
     s->foodTime = time(NULL);
     s->fieldTime = time(NULL);
     while (1) {
-        run_clock(s, &team_list);
+        s = run_clock(s);
         c->read_fd = c->active_fd;
         if (select(FD_SETSIZE, &c->read_fd, NULL, NULL, NULL) < 0) {
             perror("select");
