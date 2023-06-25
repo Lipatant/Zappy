@@ -6,6 +6,7 @@
 */
 
 #include "server.h"
+#include "resources.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -59,10 +60,10 @@ static int init_server(server_t *s, args_t args, team_list_t team_list,
     return 0;
 }
 
-static void run_clock(server_t *s)
+static void run_clock(server_t *s, team_list_t *team)
 {
     if (time(NULL) - s->foodTime >= 1260 / s->freq) {
-        printf("it's foodin time\n");//change print by the function that
+        consume_food(team);
         s->foodTime = time(NULL);//consumes the food for each trantorians
     }
     if (time(NULL) - s->fieldTime >= 20 / s->freq) {
@@ -87,7 +88,7 @@ static int start_server(server_t *s, client_t *c, team_list_t team_list,
     s->foodTime = time(NULL);
     s->fieldTime = time(NULL);
     while (1) {//blocking read, the print does not run at each seconds
-        run_clock(s);
+        run_clock(s, &team_list);
         c->read_fd = c->active_fd;
         if (select(FD_SETSIZE, &c->read_fd, NULL, NULL, NULL) < 0) {
             perror("select");
