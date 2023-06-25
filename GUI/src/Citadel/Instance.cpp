@@ -33,6 +33,10 @@
 #define INSTANCECMD_FUNCTION(NAME) \
     static void NAME(INSTANCE &instance, std::vector<std::string> const &av)
 
+#define LOAD_FROM_FILE(OBJECT, PATH) \
+    (OBJECT.loadFromFile(std::string("GUI/") + PATH) || \
+    OBJECT.loadFromFile(PATH))
+
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList);
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleGround);
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu);
@@ -339,6 +343,24 @@ INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
         portraitLevelTextureRect.width = portraitLevelTextureRect.height;
         portraitLevel.setTextureRect(portraitLevelTextureRect);
         isPortraitLevelTextureLoaded = true;
+    }
+    if (LOAD_FROM_FILE(_font, "fonts/AileronBold.otf"))
+        _isFontLoaded = true;
+    if (_isFontLoaded) {
+        portraitText.setFont(_font);
+        portraitText.setString("");
+        portraitText.setCharacterSize(36);
+        portraitText.setOutlineThickness(4);
+        portraitText.setFillColor(sf::Color::White);
+        portraitText.setOutlineColor(sf::Color::Black);
+        portraitTextString = "";
+        portraitTextTeam.setFont(_font);
+        portraitTextTeam.setString("");
+        portraitTextTeam.setCharacterSize(36);
+        portraitTextTeam.setOutlineThickness(4);
+        portraitTextTeam.setFillColor(sf::Color::White);
+        portraitTextTeam.setOutlineColor(sf::Color::Black);
+        portraitTextTeamString = "";
     }
 }
 

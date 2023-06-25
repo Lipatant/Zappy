@@ -22,6 +22,10 @@ struct Variance_s {
     int weigth;
     bool forceVariance;
 };
+using PathPair = struct PathPair_s {
+    std::string name;
+    std::string path;
+};
 
 static const Variance_s VARIANCES[] = {
     {"Rick", "Rick/", 55, false},
@@ -43,8 +47,9 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
     bool variant = true;
     int varianceWeigth = rand() % VARIANCES_TOTAL_WEIGTH;
     int varianceWeigthCumulated = 0;
-    std::vector<std::string> paths = {};
+    std::vector<PathPair> paths = {};
     std::string portraitPath = "";
+    size_t choosen;
 
     for (Variance_s const &selectedVariance: VARIANCES) {
         variance = selectedVariance;
@@ -59,7 +64,7 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
             "graphics/charact/" + variance.path)) {
             if (variant || file.path() == "graphics/charact/" + variance.path \
                 + "Base.png")
-                paths.push_back(file.path());
+                paths.push_back({variance.name, file.path()});
         }
     } catch (...) { }
     try {
@@ -67,11 +72,13 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
             "GUI/graphics/charact/" + variance.path)) {
             if (variant || file.path() == "GUI/graphics/charact/" + \
                 variance.path + "Base.png")
-                paths.push_back(file.path());
+                paths.push_back({variance.name, file.path()});
         }
     } catch (...) { }
     if (paths.size() >= 1) {
-        _filepath = paths[rand() % paths.size()];
+        choosen = rand() % paths.size();
+        _name = paths[choosen].name;
+        _filepath = paths[choosen].path;
         sprite = Mortymere::createSprite<Mortymere::Sprites::Character>( \
             _filepath);
         portraitPath = _filepath;
@@ -83,6 +90,7 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
     } else {
         std::cerr << "No file found for a character sprite" << std::endl;
         sprite = nullptr;
+        _name = "-";
     }
     setLevel(l);
     setNumber(n);
@@ -96,6 +104,11 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
 Citadel::CharacterLevel CHARACTER::getLevel(void)
 {
     return _level;
+}
+
+std::string const &CHARACTER::getName(void)
+{
+    return _name;
 }
 
 Citadel::CharacterTeam CHARACTER::getTeam(void)

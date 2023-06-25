@@ -12,6 +12,8 @@
 
 #include <map>
 #include <vector>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Clock.hpp>
 #include "Citadel/Character.hpp"
 #include "Citadel/Ground.hpp"
@@ -30,6 +32,10 @@ enum class InstanceCurrentMenu {
 class Instance {
 
 private: // PROTECTED MEMBERS
+    /// @brief Font used for texts
+    sf::Font _font;
+    /// @brief If _font is loaded
+    bool _isFontLoaded = false;
     /// @brief Texture of mainMenuCover
     sf::Texture _mainMenuCoverTexture;
     /// @brief Texture of mainMenuTitle
@@ -88,6 +94,14 @@ public: // PUBLIC MEMBERS
     sf::Sprite portraitLevel;
     /// @brief Default TextureRect of portraitLevel
     sf::IntRect portraitLevelTextureRect;
+    /// @brief Text used for displaying a name
+    sf::Text portraitText;
+    /// @brief String contained inside portraitText
+    std::string portraitTextString;
+    /// @brief Text used for displaying a team
+    sf::Text portraitTextTeam;
+    /// @brief String contained inside portraitTextTeam
+    std::string portraitTextTeamString;
     /// @brief Currently selected character. If no cbaracter is
     ///     selected, selectedCharacter should be equal to 0
     Citadel::CharacterNumber selectedCharacter = 0;

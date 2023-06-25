@@ -205,6 +205,8 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
     float scale;
     std::size_t characterListPosition = 0;
     std::size_t charactersSize = citadel->characters.size();
+    std::string portraitTextString = "";
+    std::string portraitTextTeamString = "";
     sf::Color color;
     sf::FloatRect bounds;
     sf::Sprite items;
@@ -263,6 +265,9 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
         if (citadel->selectedPortrait == character.first) {
             scale = 0.4;
             SET_SPRITE_POSITION;
+            portraitTextString = character.second.getName();
+            portraitTextTeamString = std::string("| ") + \
+                character.second.getTeam();
         }
         instance.window.draw(SPRITE_PORTRAIT);
         if (citadel->isPortraitLevelTextureLoaded) {
@@ -307,6 +312,25 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
                 itemsTextureRect.width * itemsScale * 0.2 * 0.5;
             position.y -= itemsTextureRect.height * itemsScale * 0.5;
         }
+    }
+    if (citadel->portraitTextString != portraitTextString) {
+        citadel->portraitText.setString(portraitTextString);
+        citadel->portraitTextString = portraitTextString;
+    }
+    if (citadel->portraitTextTeamString != portraitTextTeamString) {
+        citadel->portraitTextTeam.setString(portraitTextTeamString);
+        citadel->portraitTextTeamString = portraitTextTeamString;
+    }
+    if (!portraitTextString.empty()) {
+        citadel->portraitText.setPosition( \
+            -citadel->portraitText.getGlobalBounds().width - 1, \
+            windowSize.y * 0.15);
+        instance.window.draw(citadel->portraitText);
+    }
+    if (!portraitTextTeamString.empty()) {
+        citadel->portraitTextTeam.setPosition(1, \
+            windowSize.y * 0.15);
+        instance.window.draw(citadel->portraitTextTeam);
     }
     citadel->selectedPortrait = newSelectedPortrait;
     if (instance.window.hasFocus && \

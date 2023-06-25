@@ -29,6 +29,8 @@ namespace Citadel {
 class Character {
 
 private: // PRIVATE MEMBERS
+    /// @brief Name of the character
+    std::string _name;
     /// @brief Filepath of the character sprite
     std::string _filepath;
     /// @brief Clock measuring time since the last movement
@@ -55,6 +57,8 @@ public: // PUBLIC MEMBERS
 public: // PUBLIC FUNCTIONS
     /// @return Value of _level
     Citadel::CharacterLevel getLevel(void);
+    /// @return Value of _name
+    std::string const &getName(void);
     /// @return Value of _team
     Citadel::CharacterTeam getTeam(void);
     /// @return Value of _positionX
