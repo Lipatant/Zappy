@@ -134,7 +134,6 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu)
         textureRect.height = windowSize.x;
         textureRect.width = windowSize.y;
         position = {windowSize.x / 2, windowSize.y / 2};
-//        position.y -= windowSize.y * 0.18;
         if (!isCurrentMenu)
             position.y += windowSize.y * citadel->menuTransition / 2;
         else if (!isLastMenu)
@@ -221,6 +220,8 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
         itemsTextureRect = items.getTextureRect();
         itemsTextureRect.width = itemsTextureRect.height;
     }
+//    if (citadel->isPortraitLevelTextureLoaded) {
+//    }
     for (auto &character: citadel->characters) {
         if (SPRITE_PORTRAIT_TEXTURES.empty())
             continue;
@@ -264,6 +265,20 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
             SET_SPRITE_POSITION;
         }
         instance.window.draw(SPRITE_PORTRAIT);
+        if (citadel->isPortraitLevelTextureLoaded) {
+            itemsScale = scale * 1.2;
+            citadel->portraitLevel.setScale(itemsScale, itemsScale);
+            citadel->portraitLevelTextureRect.left = \
+                citadel->portraitLevelTextureRect.width * \
+                (character.second.getLevel() - 1);
+            citadel->portraitLevel.setTextureRect( \
+                citadel->portraitLevelTextureRect);
+            citadel->portraitLevel.setPosition({position.x + \
+                SPRITE_PORTRAIT.getGlobalBounds().width / 2 - \
+                citadel->portraitLevel.getGlobalBounds().width / 2, \
+                position.y});
+            instance.window.draw(citadel->portraitLevel);
+        }
         characterListPosition++;
         if (!citadel->ground.hasItemTexture)
             continue;

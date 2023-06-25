@@ -17,7 +17,7 @@
 #define REGEX_UNINT "^-?([1-9]\\d*|\\d)$"
 
 #define REGEX_EGG_NUMBER REGEX_UNINT
-#define REGEX_LEVEL REGEX_UNINT
+#define REGEX_LEVEL "^[1-8]$"
 #define REGEX_MESSAGE ""
 #define REGEX_NUMBER REGEX_UNINT
 #define REGEX_ORIENTATION "^[1-4]$"
@@ -109,7 +109,7 @@ INSTANCECMD_FUNCTION(instanceCmdPnw)
         toNumber<Citadel::CharacterPosition>(av[2]),
         toNumber<Citadel::CharacterPosition>(av[3]),
         toRotation<Citadel::CharacterRotation>(av[4]),
-        characterNumber,
+        toNumber<Citadel::CharacterLevel>(av[5]),
         av[6]
     ));
     instance.engine().addObject( \
@@ -331,6 +331,14 @@ INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
         mainMenuTitle.setTexture(&_mainMenuTitleTexture);
         mainMenuTitleTextureRect = mainMenuTitle.getTextureRect();
         isMainMenuTitleTextureLoaded = true;
+    }
+    if (_portraitLevelTexture.loadFromFile("GUI/graphics/Levels.png") || \
+        _portraitLevelTexture.loadFromFile("graphics/Levels.png")) {
+        portraitLevel.setTexture(_portraitLevelTexture);
+        portraitLevelTextureRect = portraitLevel.getTextureRect();
+        portraitLevelTextureRect.width = portraitLevelTextureRect.height;
+        portraitLevel.setTextureRect(portraitLevelTextureRect);
+        isPortraitLevelTextureLoaded = true;
     }
 }
 

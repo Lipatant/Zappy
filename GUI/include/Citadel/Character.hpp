@@ -53,6 +53,8 @@ public: // PUBLIC MEMBERS
     std::vector<std::string> spritePortraitTextures;
 
 public: // PUBLIC FUNCTIONS
+    /// @return Value of _level
+    Citadel::CharacterLevel getLevel(void);
     /// @return Value of _team
     Citadel::CharacterTeam getTeam(void);
     /// @return Value of _positionX
