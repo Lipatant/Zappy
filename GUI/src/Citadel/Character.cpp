@@ -87,6 +87,7 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
     setLevel(l);
     setNumber(n);
     setPosition(x, y);
+    setPosition(x, y);
     setRotation(o);
     setTeam(t);
 }
@@ -119,12 +120,12 @@ void CHARACTER::setNumber(Citadel::CharacterNumber const number)
 void CHARACTER::setPosition(Citadel::CharacterPosition const positionX, \
     Citadel::CharacterPosition const positionY)
 {
+    _positionXOld = sprite->anchor().x;
+    _positionYOld = sprite->anchor().z;
     _positionX = positionX;
     _positionY = positionY;
-    if (sprite) {
-        sprite->anchor().x = positionX;
-        sprite->anchor().z = positionY;
-    }
+    _movementTransitionClock.restart();
+    _isInMovementTransition = true;
 }
 
 void CHARACTER::setRotation(Citadel::CharacterRotation const rotation)
@@ -152,4 +153,27 @@ void CHARACTER::setRotation(Citadel::CharacterRotation const rotation)
 void CHARACTER::setTeam(Citadel::CharacterTeam const &team)
 {
     _team = team;
+}
+
+void CHARACTER::update(void)
+{
+    float movementTransition;
+
+    if (_isInMovementTransition) {
+        movementTransition = static_cast<double>( \
+            _movementTransitionClock.getElapsedTime().asMilliseconds()) / \
+            1000 * 4;
+        if (movementTransition >= 1.0)
+            _isInMovementTransition = false;
+        else {
+            sprite->anchor().x = static_cast<double>(_positionXOld) + \
+                movementTransition * (_positionX - _positionXOld);
+            sprite->anchor().z = static_cast<double>(_positionYOld) + \
+                movementTransition * (_positionY - _positionYOld);
+        }
+    }
+    if (!_isInMovementTransition && sprite) {
+        sprite->anchor().x = _positionX;
+        sprite->anchor().z = _positionY;
+    }
 }

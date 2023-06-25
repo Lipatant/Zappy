@@ -406,6 +406,8 @@ bool INSTANCE::udpate(void)
         currentMenu = _nextMenu;
         isInMenuTransition = true;
     }
+    for (auto &character: characters)
+        character.second.update();
     return returned;
 }
 
