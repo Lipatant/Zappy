@@ -62,27 +62,12 @@ def trantorian_lives(client: client, args: arguments):
                 and not attr.startswith('_')]
 
     while 1:
-
-#        # Test Cyprien Bastien for Broadcast
-#        getattr(trant, functions[0])("coucou") #broadcast
-#        time.sleep(0.2)
-#        client.check_client()
-
-        result = algo_search_stone(trant, functions, client) #no return 42 <=> No break <=> Check_client
+        result = algo_search_stone(trant, functions, client)
 
         if (result == 0):
             trant.bag[0] += 1
-        time.sleep(2)
-
-#        getattr(trant, functions[1])()
-#        if client.data != "0\n":
-#            duplicate_ai(args, client)
-#            time.sleep(2)
-#        else:
-#            getattr(trant, functions[3])()
 
         getattr(trant, functions[11])("food") #take food
-        time.sleep(2)
         client.check_client()
 
         #incantation
@@ -90,11 +75,9 @@ def trantorian_lives(client: client, args: arguments):
             for i in range(6):
                 while(trant.bag[i] != 0):
                     getattr(trant, functions[10])(trantorians.RESOURCES[i]) #set
-                    time.sleep(2)
                     client.check_client()
                     trant.bag[i] -= 1
             getattr(trant, functions[5])() #incantation
-            time.sleep(2)
             client.check_client()
             if (client.data == "Elevation underway\n"):
                 client.data = client.socket.recv(1024).decode()
@@ -128,6 +111,3 @@ def main(argc: int, argv: list[str]) -> int:
     msg = client_m.communicate()
     client_m.parsing_data(msg)
     trantorian_lives(client_m, args)
-
-# PARTIE AI ===================================================================
-
