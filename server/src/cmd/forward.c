@@ -31,6 +31,8 @@ static data_t *forward_west(data_t *d)
         }
         break;
     }
+    usleep(7 / d->freq * CONVERT_SEC);
+    dprintf(d->fd, "ok\n");
     return d;
 }
 
@@ -58,6 +60,8 @@ static data_t *forward_south(data_t *d)
         d = forward_west(d);
         break;
     }
+    usleep(7 / d->freq * CONVERT_SEC);
+    dprintf(d->fd, "ok\n");
     return d;
 }
 
@@ -85,6 +89,8 @@ static data_t *forward_east(data_t *d)
         d = forward_south(d);
         break;
     }
+    usleep(7 / d->freq * CONVERT_SEC);
+    dprintf(d->fd, "ok\n");
     return d;
 }
 
