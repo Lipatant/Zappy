@@ -8,6 +8,8 @@
 ## @file trantorians.py
 
 from ai.client import client
+from ai.arguments import arguments
+import os
 
 ## @author Damien
 ## @brief lists of the resources
@@ -139,14 +141,22 @@ class Trantorians:
     ## @brief
     ## @param self Contains trantorian values
     ## @return None
-    def fork(self) -> None:###creer un oeuf
+    def fork(self, args) -> None:###creer un oeuf
         try:
             self.client_t.write_to_server("Fork\n")
             self.client_t.read_server()
         except:
             print("error reading")
             exit(84)
-
+        if self.client_t.data == "ok\n":
+            pid = os.fork()
+            if pid == 0:
+                cmd = f"./zappy_ai -p {args.port} -n {args.team} -h {args.ip}"
+                os.system(cmd)
+                self.client_t.disconnect_from_server()
+                exit(0)
+            else:
+                return pid
     ## @author Damien
     ## @brief
     ## @param self Contains trantorian values

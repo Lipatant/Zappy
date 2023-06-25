@@ -40,17 +40,6 @@ def error_handling(argc: int, argv: list[str]) -> int:
     if argc != 4 and argc != 6:
         print_error_exit("error: invalid number of arguments")
 
-## @author Damien and Pierre-Louis
-## @brief create a new ai when there is a place
-def duplicate_ai(args: arguments, client):
-    pid = os.fork()
-
-    if pid == 0:
-        cmd = f"./zappy_ai -p {args.port} -n {args.team} -h {args.ip}"
-        os.system(cmd)
-        client.disconnect_from_server()
-    else:
-        return pid
 
 ## @author Damien
 ## @brief create a trantorian and then loop
@@ -60,6 +49,10 @@ def trantorian_lives(client: client, args: arguments):
     attributes = dir(trant)
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
                 and not attr.startswith('_')]
+
+    getattr(trant, functions[1])()
+    if int(client.data[0]) >= 0:
+        getattr(trant, functions[3])(args)
 
     while 1:
         result = algo_search_stone(trant, functions, client)
