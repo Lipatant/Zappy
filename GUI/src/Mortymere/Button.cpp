@@ -11,7 +11,7 @@
 
 BUTTON::Button(std::string const &filepath)
 {
-    if (!_texture.loadFromFile("GUI" + filepath))
+    if (!_texture.loadFromFile("GUI/" + filepath))
         if (!_texture.loadFromFile(filepath))
             return;
     setTexture(_texture);
