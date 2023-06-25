@@ -34,6 +34,26 @@ def error_handling(argc: int, argv: list[str]) -> int:
     if argc != 4 and argc != 6:
         print_error_exit("error: invalid number of arguments")
 
+## @author Pierre-Louis
+def check_nb_food(trant, functions, client) -> bool:
+    getattr(trant, functions[6])() #inventory
+    client.check_client()
+    chaine = client.data
+
+    if (chaine != "ok\n" and chaine != "ko\n"):
+        elements = chaine.strip('[ ]').split(',')
+        nombre_food = None
+        for element in elements:
+            nom, quantite = element.strip().split()
+            if nom == "food":
+                nombre_food = int(quantite)
+                break
+        if nombre_food.isdigit() and nombre_food < 30:
+            return True
+        else:
+            return False
+    return False
+
 ## @author Damien
 ## @brief create a trantorian and then loop
 ## @return always 0
