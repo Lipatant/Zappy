@@ -74,6 +74,10 @@ public: // PUBLIC MEMBERS
     float menuTransition = 1.0f;
     /// @brief Button for re-entering the main menu
     Mortymere::Button noneButtonSettings;
+    /// @brief Button for zooming
+    Mortymere::Button noneButtonZoomIn;
+    /// @brief Button for de-zooming
+    Mortymere::Button noneButtonZoomOut;
     /// @brief Playlist managing everything related to music
     Citadel::Playlist playlist;
     /// @brief Currently selected character. If no cbaracter is

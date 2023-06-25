@@ -166,18 +166,35 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUINone)
     Citadel::Instance *citadel = reinterpret_cast<Citadel::Instance *>(data);
     sf::Vector2f const windowSize = instance.window.getView().getSize();
 
+    citadel->noneButtonSettings.setScale(0.8f, 0.8f);
+    citadel->noneButtonZoomIn.setScale(0.5f, 0.5f);
+    citadel->noneButtonZoomOut.setScale(0.5f, 0.5f);
     citadel->noneButtonSettings.setPosition(windowSize.x / -2 + 1, \
         windowSize.y / -2 + 1);
-    citadel->noneButtonSettings.setScale(0.8f, 0.8f);
+    citadel->noneButtonZoomOut.setPosition(windowSize.x / -2 + 1, \
+        citadel->noneButtonZoomOut.getGlobalBounds().height);
+    citadel->noneButtonZoomIn.setPosition(windowSize.x / -2 + 1, 0);
     if (citadel->currentMenu != Citadel::InstanceCurrentMenu::None) {
         citadel->noneButtonSettings.reset();
+        citadel->noneButtonZoomIn.reset();
+        citadel->noneButtonZoomOut.reset();
     } else {
         if (citadel->noneButtonSettings.update(instance.window.mouseUI, \
             instance.window.hasFocus && \
             sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
             citadel->changeCurrentMenu(Citadel::InstanceCurrentMenu::MainMenu);
+        if (citadel->noneButtonZoomIn.update(instance.window.mouseUI, \
+            instance.window.hasFocus && \
+            sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
+            instance.camera.zoomIn();
+        if (citadel->noneButtonZoomOut.update(instance.window.mouseUI, \
+            instance.window.hasFocus && \
+            sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
+            instance.camera.zoomOut();
     }
     instance.window.draw(citadel->noneButtonSettings);
+    instance.window.draw(citadel->noneButtonZoomIn);
+    instance.window.draw(citadel->noneButtonZoomOut);
 }
 
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)

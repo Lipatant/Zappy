@@ -302,10 +302,17 @@ static void convertCommand(std::string const &cmd, size_t &ac, \
 
 INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
     mainMenuButtonPlay("graphics/buttons/Play.png"), \
-    noneButtonSettings("graphics/buttons/Settings.png")
+    noneButtonSettings("graphics/buttons/Settings.png"), \
+    noneButtonZoomIn("graphics/buttons/Plus.png"), \
+    noneButtonZoomOut("graphics/buttons/Less.png")
 {
+    sf::Color zoomInOutColor(sf::Color::White);
+
     srand(time(NULL));
     playlist.next();
+    zoomInOutColor.a = 200;
+    noneButtonZoomIn.setColor(zoomInOutColor);
+    noneButtonZoomOut.setColor(zoomInOutColor);
     _engine.addDisplayModule("preobj", citadelDisplayModuleGround);
     _engine.addDisplayModule("ui", citadelDisplayModuleCharacterList, this);
     _engine.addDisplayModule("ui", citadelDisplayModuleUINone, this);
