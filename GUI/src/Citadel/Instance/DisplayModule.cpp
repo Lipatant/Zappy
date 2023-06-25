@@ -134,7 +134,6 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu)
         textureRect.height = windowSize.x;
         textureRect.width = windowSize.y;
         position = {windowSize.x / 2, windowSize.y / 2};
-//        position.y -= windowSize.y * 0.18;
         if (!isCurrentMenu)
             position.y += windowSize.y * citadel->menuTransition / 2;
         else if (!isLastMenu)
@@ -166,18 +165,35 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUINone)
     Citadel::Instance *citadel = reinterpret_cast<Citadel::Instance *>(data);
     sf::Vector2f const windowSize = instance.window.getView().getSize();
 
+    citadel->noneButtonSettings.setScale(0.8f, 0.8f);
+    citadel->noneButtonZoomIn.setScale(0.5f, 0.5f);
+    citadel->noneButtonZoomOut.setScale(0.5f, 0.5f);
     citadel->noneButtonSettings.setPosition(windowSize.x / -2 + 1, \
         windowSize.y / -2 + 1);
-    citadel->noneButtonSettings.setScale(0.8f, 0.8f);
+    citadel->noneButtonZoomOut.setPosition(windowSize.x / -2 + 1, \
+        citadel->noneButtonZoomOut.getGlobalBounds().height);
+    citadel->noneButtonZoomIn.setPosition(windowSize.x / -2 + 1, 0);
     if (citadel->currentMenu != Citadel::InstanceCurrentMenu::None) {
         citadel->noneButtonSettings.reset();
+        citadel->noneButtonZoomIn.reset();
+        citadel->noneButtonZoomOut.reset();
     } else {
         if (citadel->noneButtonSettings.update(instance.window.mouseUI, \
             instance.window.hasFocus && \
             sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
             citadel->changeCurrentMenu(Citadel::InstanceCurrentMenu::MainMenu);
+        if (citadel->noneButtonZoomIn.update(instance.window.mouseUI, \
+            instance.window.hasFocus && \
+            sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
+            instance.camera.zoomIn();
+        if (citadel->noneButtonZoomOut.update(instance.window.mouseUI, \
+            instance.window.hasFocus && \
+            sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
+            instance.camera.zoomOut();
     }
     instance.window.draw(citadel->noneButtonSettings);
+    instance.window.draw(citadel->noneButtonZoomIn);
+    instance.window.draw(citadel->noneButtonZoomOut);
 }
 
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
@@ -189,6 +205,8 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
     float scale;
     std::size_t characterListPosition = 0;
     std::size_t charactersSize = citadel->characters.size();
+    std::string portraitTextString = "";
+    std::string portraitTextTeamString = "";
     sf::Color color;
     sf::FloatRect bounds;
     sf::Sprite items;
@@ -204,6 +222,8 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
         itemsTextureRect = items.getTextureRect();
         itemsTextureRect.width = itemsTextureRect.height;
     }
+//    if (citadel->isPortraitLevelTextureLoaded) {
+//    }
     for (auto &character: citadel->characters) {
         if (SPRITE_PORTRAIT_TEXTURES.empty())
             continue;
@@ -245,8 +265,25 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
         if (citadel->selectedPortrait == character.first) {
             scale = 0.4;
             SET_SPRITE_POSITION;
+            portraitTextString = character.second.getName();
+            portraitTextTeamString = std::string("| ") + \
+                character.second.getTeam();
         }
         instance.window.draw(SPRITE_PORTRAIT);
+        if (citadel->isPortraitLevelTextureLoaded) {
+            itemsScale = scale * 1.2;
+            citadel->portraitLevel.setScale(itemsScale, itemsScale);
+            citadel->portraitLevelTextureRect.left = \
+                citadel->portraitLevelTextureRect.width * \
+                (character.second.getLevel() - 1);
+            citadel->portraitLevel.setTextureRect( \
+                citadel->portraitLevelTextureRect);
+            citadel->portraitLevel.setPosition({position.x + \
+                SPRITE_PORTRAIT.getGlobalBounds().width / 2 - \
+                citadel->portraitLevel.getGlobalBounds().width / 2, \
+                position.y});
+            instance.window.draw(citadel->portraitLevel);
+        }
         characterListPosition++;
         if (!citadel->ground.hasItemTexture)
             continue;
@@ -276,8 +313,28 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
             position.y -= itemsTextureRect.height * itemsScale * 0.5;
         }
     }
+    if (citadel->portraitTextString != portraitTextString) {
+        citadel->portraitText.setString(portraitTextString);
+        citadel->portraitTextString = portraitTextString;
+    }
+    if (citadel->portraitTextTeamString != portraitTextTeamString) {
+        citadel->portraitTextTeam.setString(portraitTextTeamString);
+        citadel->portraitTextTeamString = portraitTextTeamString;
+    }
+    if (!portraitTextString.empty()) {
+        citadel->portraitText.setPosition( \
+            -citadel->portraitText.getGlobalBounds().width - 1, \
+            windowSize.y * 0.15);
+        instance.window.draw(citadel->portraitText);
+    }
+    if (!portraitTextTeamString.empty()) {
+        citadel->portraitTextTeam.setPosition(1, \
+            windowSize.y * 0.15);
+        instance.window.draw(citadel->portraitTextTeam);
+    }
     citadel->selectedPortrait = newSelectedPortrait;
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+    if (instance.window.hasFocus && \
+         sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
         citadel->selectedCharacter = newSelectedPortrait;
 }
 

@@ -22,6 +22,10 @@ struct Variance_s {
     int weigth;
     bool forceVariance;
 };
+using PathPair = struct PathPair_s {
+    std::string name;
+    std::string path;
+};
 
 static const Variance_s VARIANCES[] = {
     {"Rick", "Rick/", 55, false},
@@ -43,8 +47,9 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
     bool variant = true;
     int varianceWeigth = rand() % VARIANCES_TOTAL_WEIGTH;
     int varianceWeigthCumulated = 0;
-    std::vector<std::string> paths = {};
+    std::vector<PathPair> paths = {};
     std::string portraitPath = "";
+    size_t choosen;
 
     for (Variance_s const &selectedVariance: VARIANCES) {
         variance = selectedVariance;
@@ -59,7 +64,7 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
             "graphics/charact/" + variance.path)) {
             if (variant || file.path() == "graphics/charact/" + variance.path \
                 + "Base.png")
-                paths.push_back(file.path());
+                paths.push_back({variance.name, file.path()});
         }
     } catch (...) { }
     try {
@@ -67,11 +72,13 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
             "GUI/graphics/charact/" + variance.path)) {
             if (variant || file.path() == "GUI/graphics/charact/" + \
                 variance.path + "Base.png")
-                paths.push_back(file.path());
+                paths.push_back({variance.name, file.path()});
         }
     } catch (...) { }
     if (paths.size() >= 1) {
-        _filepath = paths[rand() % paths.size()];
+        choosen = rand() % paths.size();
+        _name = paths[choosen].name;
+        _filepath = paths[choosen].path;
         sprite = Mortymere::createSprite<Mortymere::Sprites::Character>( \
             _filepath);
         portraitPath = _filepath;
@@ -83,12 +90,25 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
     } else {
         std::cerr << "No file found for a character sprite" << std::endl;
         sprite = nullptr;
+        _name = "-";
     }
     setLevel(l);
     setNumber(n);
+    sprite->anchor().x = x;
+    sprite->anchor().z = y;
     setPosition(x, y);
     setRotation(o);
     setTeam(t);
+}
+
+Citadel::CharacterLevel CHARACTER::getLevel(void)
+{
+    return _level;
+}
+
+std::string const &CHARACTER::getName(void)
+{
+    return _name;
 }
 
 Citadel::CharacterTeam CHARACTER::getTeam(void)
@@ -119,12 +139,12 @@ void CHARACTER::setNumber(Citadel::CharacterNumber const number)
 void CHARACTER::setPosition(Citadel::CharacterPosition const positionX, \
     Citadel::CharacterPosition const positionY)
 {
+    _positionXOld = sprite->anchor().x;
+    _positionYOld = sprite->anchor().z;
     _positionX = positionX;
     _positionY = positionY;
-    if (sprite) {
-        sprite->anchor().x = positionX;
-        sprite->anchor().z = positionY;
-    }
+    _movementTransitionClock.restart();
+    _isInMovementTransition = true;
 }
 
 void CHARACTER::setRotation(Citadel::CharacterRotation const rotation)
@@ -152,4 +172,27 @@ void CHARACTER::setRotation(Citadel::CharacterRotation const rotation)
 void CHARACTER::setTeam(Citadel::CharacterTeam const &team)
 {
     _team = team;
+}
+
+void CHARACTER::update(void)
+{
+    float movementTransition;
+
+    if (_isInMovementTransition) {
+        movementTransition = static_cast<double>( \
+            _movementTransitionClock.getElapsedTime().asMilliseconds()) / \
+            1000 * 4;
+        if (movementTransition >= 1.0)
+            _isInMovementTransition = false;
+        else {
+            sprite->anchor().x = static_cast<double>(_positionXOld) + \
+                movementTransition * (_positionX - _positionXOld);
+            sprite->anchor().z = static_cast<double>(_positionYOld) + \
+                movementTransition * (_positionY - _positionYOld);
+        }
+    }
+    if (!_isInMovementTransition && sprite) {
+        sprite->anchor().x = _positionX;
+        sprite->anchor().z = _positionY;
+    }
 }

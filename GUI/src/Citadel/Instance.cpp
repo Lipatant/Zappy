@@ -17,7 +17,7 @@
 #define REGEX_UNINT "^-?([1-9]\\d*|\\d)$"
 
 #define REGEX_EGG_NUMBER REGEX_UNINT
-#define REGEX_LEVEL REGEX_UNINT
+#define REGEX_LEVEL "^[1-8]$"
 #define REGEX_MESSAGE ""
 #define REGEX_NUMBER REGEX_UNINT
 #define REGEX_ORIENTATION "^[1-4]$"
@@ -32,6 +32,10 @@
 #define INSTANCECMD Citadel::InstanceCmd
 #define INSTANCECMD_FUNCTION(NAME) \
     static void NAME(INSTANCE &instance, std::vector<std::string> const &av)
+
+#define LOAD_FROM_FILE(OBJECT, PATH) \
+    (OBJECT.loadFromFile(std::string("GUI/") + PATH) || \
+    OBJECT.loadFromFile(PATH))
 
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList);
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleGround);
@@ -109,7 +113,7 @@ INSTANCECMD_FUNCTION(instanceCmdPnw)
         toNumber<Citadel::CharacterPosition>(av[2]),
         toNumber<Citadel::CharacterPosition>(av[3]),
         toRotation<Citadel::CharacterRotation>(av[4]),
-        characterNumber,
+        toNumber<Citadel::CharacterLevel>(av[5]),
         av[6]
     ));
     instance.engine().addObject( \
@@ -302,10 +306,17 @@ static void convertCommand(std::string const &cmd, size_t &ac, \
 
 INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
     mainMenuButtonPlay("graphics/buttons/Play.png"), \
-    noneButtonSettings("graphics/buttons/Settings.png")
+    noneButtonSettings("graphics/buttons/Settings.png"), \
+    noneButtonZoomIn("graphics/buttons/Plus.png"), \
+    noneButtonZoomOut("graphics/buttons/Less.png")
 {
+    sf::Color zoomInOutColor(sf::Color::White);
+
     srand(time(NULL));
     playlist.next();
+    zoomInOutColor.a = 200;
+    noneButtonZoomIn.setColor(zoomInOutColor);
+    noneButtonZoomOut.setColor(zoomInOutColor);
     _engine.addDisplayModule("preobj", citadelDisplayModuleGround);
     _engine.addDisplayModule("ui", citadelDisplayModuleCharacterList, this);
     _engine.addDisplayModule("ui", citadelDisplayModuleUINone, this);
@@ -324,6 +335,32 @@ INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
         mainMenuTitle.setTexture(&_mainMenuTitleTexture);
         mainMenuTitleTextureRect = mainMenuTitle.getTextureRect();
         isMainMenuTitleTextureLoaded = true;
+    }
+    if (_portraitLevelTexture.loadFromFile("GUI/graphics/Levels.png") || \
+        _portraitLevelTexture.loadFromFile("graphics/Levels.png")) {
+        portraitLevel.setTexture(_portraitLevelTexture);
+        portraitLevelTextureRect = portraitLevel.getTextureRect();
+        portraitLevelTextureRect.width = portraitLevelTextureRect.height;
+        portraitLevel.setTextureRect(portraitLevelTextureRect);
+        isPortraitLevelTextureLoaded = true;
+    }
+    if (LOAD_FROM_FILE(_font, "fonts/AileronBold.otf"))
+        _isFontLoaded = true;
+    if (_isFontLoaded) {
+        portraitText.setFont(_font);
+        portraitText.setString("");
+        portraitText.setCharacterSize(36);
+        portraitText.setOutlineThickness(4);
+        portraitText.setFillColor(sf::Color::White);
+        portraitText.setOutlineColor(sf::Color::Black);
+        portraitTextString = "";
+        portraitTextTeam.setFont(_font);
+        portraitTextTeam.setString("");
+        portraitTextTeam.setCharacterSize(36);
+        portraitTextTeam.setOutlineThickness(4);
+        portraitTextTeam.setFillColor(sf::Color::White);
+        portraitTextTeam.setOutlineColor(sf::Color::Black);
+        portraitTextTeamString = "";
     }
 }
 
@@ -406,6 +443,8 @@ bool INSTANCE::udpate(void)
         currentMenu = _nextMenu;
         isInMenuTransition = true;
     }
+    for (auto &character: characters)
+        character.second.update();
     return returned;
 }
 
