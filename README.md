@@ -2,9 +2,9 @@
 
 The repository for the Zappy project.
 
-<img src=".github/ressource/Zappy_picture.jpg" alt="picture zappy" width="540" height="360">
+<img src=".github/assets_readme/Zappy_picture.jpg" alt="picture zappy" width="540" height="360">
 
-<img src=".github/ressource/Epitech_logo.png" alt="logo Epitech">
+<img src=".github/assets_readme/Epitech_logo.png" alt="logo Epitech">
 
 ---
 
