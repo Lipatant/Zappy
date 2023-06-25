@@ -14,8 +14,6 @@
  * @return true if nothing happen during the incantation
  * @return false if a eject cmd is use during the incantation
  */
-
-//d->map->tile[d->player->posx][d->player->posy].linemate == 1
 bool check_lvl2(data_t *d)
 {
     if (d->map->tile[d->player->posx][d->player->posy].linemate < 1
