@@ -10,7 +10,7 @@
 import random
 
 ## @author Pierre-Louis
-def algo_search_stone(trant, functions, client):
+def search_stone(trant, functions, client):
     stone_need = "linemate"
 
     getattr(trant, functions[8])() #look
@@ -80,18 +80,3 @@ def go_to_stone(trant, functions, client, stone_need, stone_case):
         getattr(trant, functions[11])(stone_need) #take
         client.check_client()
         return (0)
-
-'''
-0 Broadcast "Text"
-1 Connect_nbr
-2 Eject
-3 Fork
-4 Forward
-5 Incantation
-6 Inventory
-7 Left
-8 Look
-9 Right
-10 Set "Text"
-11 Take "Text"
-'''

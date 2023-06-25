@@ -8,16 +8,10 @@
 ## @file main.py
 
 from ai.arguments import arguments
-from ai.trantorians import trantorians
 from ai.client import client
 from ai.error import print_error_exit
-
-# Remove * and put list of final functions
-from ai.parser_look import *
-
-import os
-import time
-#import random not use
+from ai.parser_look import search_stone
+from ai.trantorians import trantorians
 
 ## @author Damien and Pierre-Louis
 ## @brief Print the message explaining how to use it
@@ -40,7 +34,6 @@ def error_handling(argc: int, argv: list[str]) -> int:
     if argc != 4 and argc != 6:
         print_error_exit("error: invalid number of arguments")
 
-
 ## @author Damien
 ## @brief create a trantorian and then loop
 ## @return always 0
@@ -50,12 +43,12 @@ def trantorian_lives(client: client, args: arguments):
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
                 and not attr.startswith('_')]
 
-    getattr(trant, functions[1])()
+    getattr(trant, functions[1])() #connect nbr
     if int(client.data[0]) > 0:
-        getattr(trant, functions[3])(args)
+        getattr(trant, functions[3])(args) #fork
 
     while 1:
-        result = algo_search_stone(trant, functions, client)
+        result = search_stone(trant, functions, client)
 
         if (result == 0):
             trant.bag[0] += 1
