@@ -36,3 +36,4 @@ map_t *spawn_ressource(map_t *map)
             map->tile[i][j] = add_ressource_tile(map->tile[i][j]);
     return map;
 }
+
