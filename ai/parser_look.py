@@ -10,42 +10,22 @@
 import random
 
 ## @author Pierre-Louis
-def search_stone(trant, functions, client):
+def search_stone(trant, functions, client) -> bool:
     stone_need = "linemate"
-
     getattr(trant, functions[8])() #look
     client.check_client()
+    look = client.data
 
-    # Send look and stone for parsing
-    result = parser_look(client.data, stone_need)
-
-    # if Stone isn't in look, move random
-    if (result == "ABSENT"):
-        getattr(trant, functions[4])() #forward
-        client.check_client()
-
-        rdm = random.randint(0,3)
-
-        if rdm == 0:
-            getattr(trant, functions[9])() #left
-            client.check_client()
-        elif rdm == 1:
-            getattr(trant, functions[7])() #right
-            client.check_client()
-
-    else: # STONE IN LOOK
-        return (go_to_stone(trant, functions, client, stone_need, result))
-
-## @author Pierre-Louis
-def parser_look(look, stone_need):
     if stone_need in look:
         stone_case = look[:look.index(stone_need)].count(",")
-        return (stone_case)
+        go_to_stone(trant, functions, client, stone_need, stone_case)
+        return (True)
     else:
-        return ("ABSENT")
+        random_move(trant, functions, client)
+        return (False)
 
 ## @author Pierre-Louis
-def go_to_stone(trant, functions, client, stone_need, stone_case):
+def go_to_stone(trant, functions, client, stone_need, stone_case) -> None:
     bot_case = 0
     counter = 0
     tab_max_case = [0, 3, 8, 15]
@@ -79,4 +59,17 @@ def go_to_stone(trant, functions, client, stone_need, stone_case):
 
         getattr(trant, functions[11])(stone_need) #take
         client.check_client()
-        return (0)
+
+## @author Pierre-Louis
+def random_move(trant, functions, client) -> None:
+    rdm = random.randint(0,1)
+
+    getattr(trant, functions[4])() #forward
+    client.check_client()
+
+    if rdm == 0:
+        getattr(trant, functions[9])() #left
+        client.check_client()
+    elif rdm == 1:
+        getattr(trant, functions[7])() #right
+        client.check_client()

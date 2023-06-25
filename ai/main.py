@@ -10,7 +10,7 @@
 from ai.arguments import arguments
 from ai.client import client
 from ai.error import print_error_exit
-from ai.parser_look import search_stone
+from ai.parser_look import search_stone, random_move
 from ai.trantorians import trantorians
 
 ## @author Damien and Pierre-Louis
@@ -58,6 +58,7 @@ def check_nb_food(trant, functions, client) -> bool:
 ## @brief create a trantorian and then loop
 ## @return always 0
 def trantorian_lives(client: client, args: arguments):
+    linemate_found = False
     trant = trantorians.Trantorians(client)
     attributes = dir(trant)
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
@@ -68,28 +69,25 @@ def trantorian_lives(client: client, args: arguments):
         getattr(trant, functions[3])(args) #fork
 
     while 1:
-        result = search_stone(trant, functions, client)
-
-        if (result == 0):
-            trant.bag[0] += 1
-
         getattr(trant, functions[11])("food") #take food
         client.check_client()
 
-        #incantation
-        if trant.bag >= trantorians.UPGRADES[trant.level - 1]:
-            for i in range(6):
-                while(trant.bag[i] != 0):
-                    getattr(trant, functions[10])(trantorians.RESOURCES[i]) #set
-                    client.check_client()
-                    trant.bag[i] -= 1
+        if (trant.level == 1):
+            linemate_found = search_stone(trant, functions, client)
+
+        if (trant.level == 1 and linemate_found):
+            getattr(trant, functions[10])("linemate") #set
+            client.check_client()
             getattr(trant, functions[5])() #incantation
             client.check_client()
             if (client.data == "Elevation underway\n"):
                 client.data = client.socket.recv(1024).decode()
                 print("Received from server:", client.data)
-                trant.bag = [0 for i in range(6)]
-                trant.level += 1
+                trant.level = 2
+                linemate_found = False
+
+        if (trant.level == 2):
+            random_move(trant, functions, client)
 
     # disconnect
     client.disconnect_from_server()
