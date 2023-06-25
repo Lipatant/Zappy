@@ -41,7 +41,7 @@ jobs:
     needs : check_coding_style
     steps:
     - uses : actions/checkout@v3
-    - run : make server
+    - run : make zappy_server
       timeout-minutes: 2
     - run : |
         make clean
