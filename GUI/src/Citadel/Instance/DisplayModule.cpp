@@ -277,7 +277,8 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
         }
     }
     citadel->selectedPortrait = newSelectedPortrait;
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+    if (instance.window.hasFocus && \
+         sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
         citadel->selectedCharacter = newSelectedPortrait;
 }
 

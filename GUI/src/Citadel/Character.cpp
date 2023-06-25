@@ -86,7 +86,8 @@ CHARACTER::Character(MORTYMERE_CHARACTER_CONSTRUCTOR_ARGS(n, x, y, o, l, t))
     }
     setLevel(l);
     setNumber(n);
-    setPosition(x, y);
+    sprite->anchor().x = x;
+    sprite->anchor().z = y;
     setPosition(x, y);
     setRotation(o);
     setTeam(t);
