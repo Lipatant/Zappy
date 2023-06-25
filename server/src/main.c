@@ -121,7 +121,6 @@ static args_t check_args(int argc, char **argv, args_t args)
                 break;
         }
     }
-    args.freq = 100;
     return args;
 }
 

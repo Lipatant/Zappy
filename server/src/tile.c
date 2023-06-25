@@ -43,27 +43,27 @@ static tile_t init_tile_2(tile_t tile, density_t *den)
  * @param den the structure density
  * @return tile_t return the tile
  */
-static tile_t init_tile(tile_t tile, density_t *den, map_t *map)
+static tile_t init_tile(tile_t tile, density_t *d, map_t *m)
 {
-    if (((double)rand() / RAND_MAX) > 0.5 && den->player_d) {
+    if (((double)rand() / RAND_MAX) > 0.5 && d->player_d) {
         tile.player += 1;
-        map->player_pos[den->player_d].x = tile.x;
-        map->player_pos[den->player_d].y = tile.y;
-        den->player_d--;
+        m->player_pos[d->player_d].x = tile.x;
+        m->player_pos[d->player_d].y = tile.y;
+        d->player_d--;
     }
-    if (((double)rand() / RAND_MAX) > 0.5 && den->food_d > 0) {
+    if (((double)rand() / RAND_MAX) > 0.5 && d->food_d > 0) {
         tile.food += 1;
-        den->food_d--;
+        d->food_d--;
     }
-    if (((double)rand() / RAND_MAX) > 0.5 && den->deraumere_d > 0) {
+    if (((double)rand() / RAND_MAX) > 0.5 && d->deraumere_d > 0) {
         tile.deraumere += 1;
-        den->deraumere_d--;
+        d->deraumere_d--;
     }
-    if (((double)rand() / RAND_MAX) > 0.5 && den->linemate_d > 0) {
+    if (((double)rand() / RAND_MAX) > 0.5 && d->linemate_d > 0) {
         tile.linemate += 1;
-        den->linemate_d--;
+        d->linemate_d--;
     }
-    return init_tile_2(tile, den);
+    return init_tile_2(tile, d);
 }
 
 /**

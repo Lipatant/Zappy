@@ -12,4 +12,5 @@
 
     //value to convert our seconds into microseconds
     #define CONVERT_SEC 1000000
+
 #endif /* !OUR_TIME_H_ */
