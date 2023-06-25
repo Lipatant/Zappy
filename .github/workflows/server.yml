@@ -44,6 +44,6 @@ jobs:
     - run : make server
       timeout-minutes: 2
     - run : |
-        make server_clean
+        make clean
         find -name "$SERVER" | grep -q . && exit 0 || exit 1
       timeout-minutes: 2
