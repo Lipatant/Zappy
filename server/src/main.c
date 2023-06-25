@@ -30,7 +30,7 @@ static int help(void)
     printf("\tclientsNb\tis the number of authorized clients per team\n");
     printf("\tfreq\t\tis the reciprocal of time unit for execution of ");
     printf("actions\n");
-    return 0;
+    exit (0);
 }
 
 /**
@@ -137,7 +137,7 @@ int main(int argc, char **argv)
 {
     map_t map;
     args_t args;
-    team_list_t team_list = {0, 0, NULL};
+    team_list_t team_list = {0, 0};
 
     if (argc == 2 && strcmp(argv[1], "-help") == 0)
         return help();

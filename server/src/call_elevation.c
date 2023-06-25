@@ -12,20 +12,21 @@
  *
  * @param team the struct containing info about the team
  */
-void make_elevation(team_t *team)
+data_t *make_elevation(data_t *data)
 {
-    if (team->player->lvl == 1)
-        elevation_lvl2(team);
-    if (team->player->lvl == 2)
-        elevation_lvl3(team);
-    if (team->player->lvl == 3)
-        elevation_lvl4(team);
-    if (team->player->lvl == 4)
-        elevation_lvl5(team);
-    if (team->player->lvl == 5)
-        elevation_lvl6(team);
-    if (team->player->lvl == 6)
-        elevation_lvl7(team);
-    if (team->player->lvl == 7)
-        elevation_lvl8(team);
+    if (data->player->lvl == 1)
+        elevation_lvl2(data);
+    if (data->player->lvl == 2)
+        elevation_lvl3(data);
+    if (data->player->lvl == 3)
+        elevation_lvl4(data);
+    if (data->player->lvl == 4)
+        elevation_lvl5(data);
+    if (data->player->lvl == 5)
+        elevation_lvl6(data);
+    if (data->player->lvl == 6)
+        elevation_lvl7(data);
+    if (data->player->lvl == 7)
+        elevation_lvl8(data);
+    return (data);
 }

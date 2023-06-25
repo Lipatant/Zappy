@@ -6,6 +6,7 @@
 */
 
 #include "server.h"
+#include "resources.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -55,7 +56,21 @@ static int init_server(server_t *s, args_t args, team_list_t team_list,
     s->map = &map;
     s->nb_team = i;
     s->nb_player = args.clients * i;
+    s->freq = args.freq;
     return 0;
+}
+
+static server_t *run_clock(server_t *s)
+{
+    if (time(NULL) - s->foodTime >= 1260 / s->freq) {
+        printf("consume food\n");
+        s->foodTime = time(NULL);
+    }
+    if (time(NULL) - s->fieldTime >= 20) {
+        s->map = spawn_ressource(s->map);
+        s->fieldTime = time(NULL);
+    }
+    return s;
 }
 
 /**
@@ -71,7 +86,10 @@ static int start_server(server_t *s, client_t *c, team_list_t team_list,
     c->data = NULL;
     FD_ZERO(&c->active_fd);
     FD_SET(s->fd, &c->active_fd);
+    s->foodTime = time(NULL);
+    s->fieldTime = time(NULL);
     while (1) {
+        s = run_clock(s);
         c->read_fd = c->active_fd;
         if (select(FD_SETSIZE, &c->read_fd, NULL, NULL, NULL) < 0) {
             perror("select");

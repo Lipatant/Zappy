@@ -10,65 +10,110 @@
 /**
  * @brief the function for making the elevation lvl 2
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl2(team_t *team)
+data_t *elevation_lvl2(data_t *d)
 {
-    if (team->player->linemate >= 1 && team->player->deraumere >= 1
-    && team->player->sibur >= 1) {
-        team->player->linemate -= 1;
-        team->player->deraumere -= 1;
-        team->player->sibur -= 1;
-        team->player->lvl = 2;
+    float i = 0;
+    bool check = true;
+
+    if ((d->map->tile[d->player->posx][d->player->posy].linemate >= 1
+        && d->map->tile[d->player->posx][d->player->posy].player >= 1)) {
+        dprintf(d->fd, "Elevation underway\n");
+        for (float i = 0; i <= 3 || check == true; i += 0.5)
+            check = check_lvl2(d);
+        if (i >= 3 && check == true) {
+            d->map->tile[d->player->posx][d->player->posy].linemate -= 1;
+            d->player->lvl = 2;
+            dprintf(d->fd, "Current level: %ld\n", d->player->lvl);
+        } else
+            dprintf(d->fd, "ko\n");
     }
+    return (d);
 }
 
 /**
  * @brief the function for making the elevation lvl 3
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl3(team_t *team)
+data_t *elevation_lvl3(data_t *d)
 {
-    if (team->player->linemate >= 2 && team->player->sibur >= 1
-    && team->player->phiras >= 2) {
-        team->player->linemate -= 2;
-        team->player->sibur -= 1;
-        team->player->phiras -= 2;
-        team->player->lvl = 3;
+    bool check = true;
+    float i = 0;
+
+    if (d->map->tile[d->player->posx][d->player->posy].linemate >= 1
+        && d->map->tile[d->player->posx][d->player->posy].deraumere >= 1
+        && d->map->tile[d->player->posx][d->player->posy].sibur >= 1
+        && d->map->tile[d->player->posx][d->player->posy].player >= 2) {
+        dprintf(d->fd, "Elevation underway\n");
+        for (i = 0; i <= 3 || check_lvl3(d) == true; i += 0.5)
+            check = check_lvl3(d);
+        if (i >= 3 && check == true) {
+            d->map->tile[d->player->posx][d->player->posy].linemate -= 1;
+            d->map->tile[d->player->posx][d->player->posy].deraumere -= 1;
+            d->map->tile[d->player->posx][d->player->posy].sibur -= 1;
+            d->player->lvl = 3;
+            dprintf(d->fd, "Current level: %ld\n", d->player->lvl);
+        } else
+            dprintf(d->fd, "ko\n");
     }
+    return (d);
 }
 
 /**
  * @brief the function for making the elevation lvl 4
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl4(team_t *team)
+data_t *elevation_lvl4(data_t *d)
 {
-    if (team->player->linemate >= 1 && team->player->deraumere >= 1
-    && team->player->sibur >= 2 && team->player->phiras >= 1) {
-        team->player->linemate -= 1;
-        team->player->deraumere -= 1;
-        team->player->sibur -= 2;
-        team->player->phiras -= 1;
-        team->player->lvl = 4;
+    float i = 0;
+    bool check = true;
+
+    if (check_ressource_lvl4(d)) {
+        dprintf(d->fd, "Elevation underway\n");
+        for (float i = 0; i <= 3 || check == true; i += 0.5)
+            check = check_lvl4(d);
+        if (i >= 3 && check == true) {
+            d->map->tile[d->player->posx][d->player->posy].linemate -= 2;
+            d->map->tile[d->player->posx][d->player->posy].phiras -= 2;
+            d->map->tile[d->player->posx][d->player->posy].sibur -= 1;
+            d->player->lvl = 4;
+            dprintf(d->fd, "Current level: %ld\n", d->player->lvl);
+        } else
+            dprintf(d->fd, "ko\n");
     }
+    return (d);
 }
 
 /**
  * @brief the function for making the elevation lvl 5
  *
- * @param team the struct containing info about the team
+ * @param data the struct containing info about list of data
+ * @return data_t* the struct containing info about list of data
  */
-void elevation_lvl5(team_t *team)
+data_t *elevation_lvl5(data_t *d)
 {
-    if (team->player->linemate >= 1 && team->player->deraumere >= 2
-    && team->player->sibur >= 1 && team->player->mendiane >= 3) {
-        team->player->linemate -= 1;
-        team->player->deraumere -= 2;
-        team->player->sibur -= 1;
-        team->player->mendiane -= 3;
-        team->player->lvl = 5;
+    float i = 0;
+    bool check = true;
+
+    if (check_ressource_lvl5(d)) {
+        dprintf(d->fd, "Elevation underway\n");
+        for (i = 0; i <= 3 || check == true; i += 0.5)
+            check = check_lvl5(d);
+        if (i >= 3 && check == true) {
+            d->map->tile[d->player->posx][d->player->posy].linemate -= 1;
+            d->map->tile[d->player->posx][d->player->posy].deraumere -= 1;
+            d->map->tile[d->player->posx][d->player->posy].sibur -= 2;
+            d->map->tile[d->player->posx][d->player->posy].phiras -= 1;
+            d->player->lvl = 5;
+            dprintf(d->fd, "Current level: %ld\n", d->player->lvl);
+        } else
+            dprintf(d->fd, "ko\n");
     }
+    return (d);
 }

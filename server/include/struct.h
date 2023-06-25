@@ -11,13 +11,14 @@
     #include <netinet/in.h>
     #include <stdbool.h>
     #include <stddef.h>
+    #include <time.h>
 
 typedef struct player_s {
-    size_t food;
+    int food;
+    int id;
+    int fd;
     int posx;
     int posy;
-    size_t level;
-    size_t life;
     size_t linemate;
     size_t deraumere;
     size_t sibur;
@@ -25,7 +26,6 @@ typedef struct player_s {
     size_t phiras;
     size_t thystame;
     size_t lvl;
-    size_t id;
     int orientation;
 } player_t;
 
@@ -37,13 +37,22 @@ typedef struct tile_s {
     int phiras;
     int thystame;
     int food;
+    int egg;
     int player;
+    int x;
+    int y;
 } tile_t;
+
+typedef struct pos_s {
+    int x;
+    int y;
+} pos_t;
 
 typedef struct map_s {
     int max_x;
     int max_y;
     tile_t **tile;
+    pos_t *player_pos;
 } map_t;
 
 typedef struct team_s {
@@ -53,15 +62,9 @@ typedef struct team_s {
     player_t *player;
 } team_t;
 
-typedef struct pos_s {
-    int x;
-    int y;
-} pos_t;
-
 typedef struct team_list_s {
     size_t length;
     team_t *team;
-    pos_t *pos;
 } team_list_t;
 
 typedef struct data_s {
@@ -71,8 +74,12 @@ typedef struct data_s {
     char **args;
     char *ip;
     bool connect;
+    int freq;
     player_t *player;
     map_t *map;
+    team_t *team;
+    team_list_t *team_list;
+    int nb_client;
 } data_t;
 
 typedef struct server_s {
@@ -87,6 +94,10 @@ typedef struct server_s {
     map_t *map;
     int nb_team;
     int nb_player;
+    int freq;
+    time_t fieldTime;
+    time_t foodTime;
+
 } server_t;
 
 typedef struct client_s {
@@ -97,8 +108,11 @@ typedef struct client_s {
     data_t **data;
     bool GUI;
     int team_nb;
+    int nb_client;
     player_t *player;
     map_t *map;
+    team_t *team;
+    team_list_t *team_list;
 } client_t;
 
 typedef struct args_s {

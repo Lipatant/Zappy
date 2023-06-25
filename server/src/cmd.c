@@ -74,9 +74,11 @@ static char **get_splitted(char *command)
 int cmd(data_t *data, char *command, client_t *c)
 {
     int ret = -1;
-
     data->player = c->player;
     data->map = c->map;
+    data->team = c->team;
+    data->team_list = c->team_list;
+    data->player->fd = c->fd;
     data->args = get_splitted(command);
     if (data->args == NULL)
         return 84;

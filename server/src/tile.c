@@ -19,19 +19,19 @@
 static tile_t init_tile_2(tile_t tile, density_t *den)
 {
     if (((double)rand() / RAND_MAX) > 0.5 && den->mendiane_d > 0) {
-        tile.mendiane = 1;
+        tile.mendiane += 1;
         den->mendiane_d--;
     }
     if (((double)rand() / RAND_MAX) > 0.5 && den->phiras_d > 0) {
-        tile.phiras = 1;
+        tile.phiras += 1;
         den->phiras_d--;
     }
     if (((double)rand() / RAND_MAX) > 0.5 && den->sibur_d > 0) {
-        tile.sibur = 1;
+        tile.sibur += 1;
         den->sibur_d--;
     }
     if (((double)rand() / RAND_MAX) > 0.5 && den->thystame_d > 0) {
-        tile.thystame = 1;
+        tile.thystame += 1;
         den->thystame_d--;
     }
     return tile;
@@ -43,25 +43,27 @@ static tile_t init_tile_2(tile_t tile, density_t *den)
  * @param den the structure density
  * @return tile_t return the tile
  */
-static tile_t init_tile(tile_t tile, density_t *den)
+static tile_t init_tile(tile_t tile, density_t *d, map_t *m)
 {
-    if (((double)rand() / RAND_MAX) > 0.5 && den->player_d) {
-        tile.player = 1;
-        den->player_d--;
+    if (((double)rand() / RAND_MAX) > 0.5 && d->player_d) {
+        tile.player += 1;
+        m->player_pos[d->player_d].x = tile.x;
+        m->player_pos[d->player_d].y = tile.y;
+        d->player_d--;
     }
-    if (((double)rand() / RAND_MAX) > 0.5 && den->food_d > 0) {
-        tile.food = 1;
-        den->food_d--;
+    if (((double)rand() / RAND_MAX) > 0.5 && d->food_d > 0) {
+        tile.food += 1;
+        d->food_d--;
     }
-    if (((double)rand() / RAND_MAX) > 0.5 && den->deraumere_d > 0) {
-        tile.deraumere = 1;
-        den->deraumere_d--;
+    if (((double)rand() / RAND_MAX) > 0.5 && d->deraumere_d > 0) {
+        tile.deraumere += 1;
+        d->deraumere_d--;
     }
-    if (((double)rand() / RAND_MAX) > 0.5 && den->linemate_d > 0) {
-        tile.linemate = 1;
-        den->linemate_d--;
+    if (((double)rand() / RAND_MAX) > 0.5 && d->linemate_d > 0) {
+        tile.linemate += 1;
+        d->linemate_d--;
     }
-    return init_tile_2(tile, den);
+    return init_tile_2(tile, d);
 }
 
 /**
@@ -98,14 +100,18 @@ static density_t *init_density(density_t *den, int max_x, int max_y,
 map_t *init_map(map_t *map, int nb_player)
 {
     density_t *den = NULL;
-    map->tile = malloc(sizeof(tile_t *) * map->max_x + 1);
+    map->tile = (tile_t **)malloc(sizeof(tile_t *) * map->max_x);
+    map->player_pos = malloc(sizeof(pos_t ) * nb_player);
 
     srand(time(NULL));
     den = init_density(den, map->max_x, map->max_y, nb_player);
-    for (int i = 0; i <= map->max_x; i++)
-        map->tile[i] = malloc(sizeof(tile_t) * map->max_y + 1);
-    for (int i = 0; i <= map->max_x; i++)
-        for (int j = 0; j <= map->max_y; j++)
-            map->tile[i][j] = init_tile(map->tile[i][j], den);
+    for (int i = 0; i < map->max_x; i++)
+        map->tile[i] = (tile_t *)malloc(sizeof(tile_t) * map->max_y);
+    for (int i = 0; i < map->max_x; i++)
+        for (int j = 0; j < map->max_y; j++) {
+            map->tile[i][j].x = i;
+            map->tile[i][j].y = j;
+            map->tile[i][j] = init_tile(map->tile[i][j], den, map);
+        }
     return map;
 }

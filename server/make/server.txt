@@ -6,6 +6,9 @@ init.c
 call_elevation.c
 elevation_firstpart.c
 elevation_secondpart.c
+check_elevation1.c
+check_elevation2.c
+check_ressource.c
 utils_client.c
 utils_server.c
 cmd/forward.c
@@ -19,7 +22,12 @@ utils.c
 cmd/inventory.c
 init_player.c
 tile.c
+resources.c
 cmd/take.c
 cmd/take2.c
 cmd/add_tile.c
 cmd/look.c
+cmd/set.c
+cmd/set2.c
+cmd/connect_nbr.c
+spawn.c

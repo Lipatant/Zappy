@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 /**
  * @brief the function to read the input
@@ -55,9 +56,13 @@ static int handle_new_ia(server_t *s, client_t *c, char *input)
         dprintf(c->fd, "%d\n%d %d\n", s->team_list->team[nb].nb_clients,
             s->map->max_x, s->map->max_y);
         c->team_nb = nb;
+        c->team = &s->team_list->team[nb];
         c->player = &s->team_list->team[nb].
             player[s->team_list->team[nb].player_use];
-        c->player = init_player(c->player, s->team_list->pos, s);
+        s->team_list->team[nb].player_use++;
+        c->team_list = s->team_list;
+        c->nb_client = s->client;
+        c->player = init_player(c->player, s);
     } else {
         dprintf(c->fd, "ko\n");
     }
@@ -75,6 +80,7 @@ static int handle_new_connection(server_t *s, client_t *c)
 {
     char *input = NULL;
 
+    c->GUI = false;
     c->fd = accept(s->fd, (struct sockaddr *)&c->addr, &s->size_sock);
     if (c->fd == -1) {
         perror("accept");
@@ -86,7 +92,6 @@ static int handle_new_connection(server_t *s, client_t *c)
         c->GUI = true;
     else {
         handle_new_ia(s, c, input);
-        c->player = init_player(c->player, s->team_list->pos, s);
     }
     c->map = s->map;
     FD_SET(c->fd, &c->active_fd);
@@ -107,7 +112,7 @@ static int handle_existing_connection(server_t *s, client_t *c, int i)
         return 84;
     }
     int current = find_client(c->data, s->client, i);
-    printf("current: %d\n", current);
+    c->data[current]->freq = s->freq;
     return command(s, c, c->data[current]);
 }
 

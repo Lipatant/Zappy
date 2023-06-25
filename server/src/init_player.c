@@ -13,15 +13,15 @@
  * @param player the player struct
  * @return player stuct
  */
-player_t *init_player(player_t *player, pos_t *pos, server_t *server)
+player_t *init_player(player_t *player,server_t *server)
 {
     player = malloc(sizeof(player_t));
     int i = server->nb_player;
 
+    player->posx = server->map->player_pos[i].x;
+    player->posy = server->map->player_pos[i].y;
+    player->id = i;
     server->nb_player--;
-    player->posx = pos[i].x;
-    player->posy = pos[i].y;
-    pos[i] = pos[i - 1];
     player->food = 10;
     player->linemate = 0;
     player->deraumere = 0;
