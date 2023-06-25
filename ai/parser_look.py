@@ -31,28 +31,29 @@ def go_to_stone(trant, functions, client, stone_need, stone_case) -> None:
     tab_max_case = [0, 3, 8, 15]
     tab_mid_case = [2, 6, 12, 20]
 
-    for i in tab_max_case:
-        if (stone_case > i):
-            bot_case = tab_mid_case[counter]
-            getattr(trant, functions[4])() #forward
-            client.check_client()
-        counter += 1
-
     if (bot_case != stone_case):
-        if (bot_case > stone_case):
-            getattr(trant, functions[7])() #left
-            client.check_client()
-        else:
-            getattr(trant, functions[9])() #right
-            client.check_client()
+        for i in tab_max_case:
+            if (stone_case > i):
+                bot_case = tab_mid_case[counter]
+                getattr(trant, functions[4])() #forward
+                client.check_client()
+            counter += 1
 
-        while (bot_case != stone_case):
+        if (bot_case != stone_case):
             if (bot_case > stone_case):
-                bot_case -= 1
+                getattr(trant, functions[7])() #left
+                client.check_client()
             else:
-                bot_case += 1
-            getattr(trant, functions[4])() #forward
-            client.check_client()
+                getattr(trant, functions[9])() #right
+                client.check_client()
+
+            while (bot_case != stone_case):
+                if (bot_case > stone_case):
+                    bot_case -= 1
+                else:
+                    bot_case += 1
+                getattr(trant, functions[4])() #forward
+                client.check_client()
 
 ## @author Pierre-Louis
 def random_move(trant, functions, client) -> None:
