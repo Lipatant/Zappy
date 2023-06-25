@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 /**
  * @brief the function to read the input
@@ -59,7 +60,8 @@ static int handle_new_ia(server_t *s, client_t *c, char *input)
         c->player = &s->team_list->team[nb].
             player[s->team_list->team[nb].player_use];
         s->team_list->team[nb].player_use++;
-        s->team_list = c->team_list;
+        c->team_list = s->team_list;
+        c->nb_client = s->client;
         c->player = init_player(c->player, s);
     } else {
         dprintf(c->fd, "ko\n");

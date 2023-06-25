@@ -18,13 +18,13 @@ static data_t *forward_west(data_t *d)
 {
     switch (d->player->orientation) {
     case LEFT:
-        if (d->player->posx == 0) {
+        if (d->player->posy == 0) {
             d->map->tile[d->player->posx][d->player->posy].player--;
-            d->player->posx = d->map->max_x - 1;
+            d->player->posy = d->map->max_y - 1;
             d->map->tile[d->player->posx][d->player->posy].player++;
         } else {
             d->map->tile[d->player->posx][d->player->posy].player--;
-            d->player->posx -= 1;
+            d->player->posy -= 1;
             d->map->tile[d->player->posx][d->player->posy].player++;
         }
         break;
@@ -42,13 +42,13 @@ static data_t *forward_south(data_t *d)
 {
     switch (d->player->orientation) {
     case DOWN:
-        if (d->player->posy == d->map->max_y - 1) {
+        if (d->player->posy == d->map->max_x - 1) {
             d->map->tile[d->player->posx][d->player->posy].player--;
-            d->player->posy = 0;
+            d->player->posx = 0;
             d->map->tile[d->player->posx][d->player->posy].player++;
         } else {
             d->map->tile[d->player->posx][d->player->posy].player--;
-            d->player->posy += 1;
+            d->player->posx += 1;
             d->map->tile[d->player->posx][d->player->posy].player++;
         }
         break;
@@ -69,13 +69,13 @@ static data_t *forward_east(data_t *d)
 {
     switch (d->player->orientation) {
     case RIGHT:
-        if (d->player->posx == d->map->max_x - 1) {
-            d->map->tile[d->player->posy][d->player->posx].player--;
-            d->player->posx = 0;
+        if (d->player->posy == d->map->max_y - 1) {
+            d->map->tile[d->player->posx][d->player->posy].player--;
+            d->player->posy = 0;
             d->map->tile[d->player->posx][d->player->posy].player++;
         } else {
             d->map->tile[d->player->posx][d->player->posy].player--;
-            d->player->posx += 1;
+            d->player->posy += 1;
             d->map->tile[d->player->posx][d->player->posy].player++;
         }
         break;
@@ -96,13 +96,13 @@ data_t *forward(data_t *d)
 {
     switch (d->player->orientation) {
     case UP:
-        if (d->player->posy == 0) {
+        if (d->player->posx == 0) {
             d->map->tile[d->player->posx][d->player->posy].player--;
-            d->player->posy = d->map->max_y - 1;
+            d->player->posx = d->map->max_x - 1;
             d->map->tile[d->player->posx][d->player->posy].player++;
         } else {
             d->map->tile[d->player->posx][d->player->posy].player--;
-            d->player->posy -= 1;
+            d->player->posx -= 1;
             d->map->tile[d->player->posx][d->player->posy].player++;
         }
         break;

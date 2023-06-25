@@ -79,6 +79,7 @@ int cmd(data_t *data, char *command, client_t *c)
     data->map = c->map;
     data->team = c->team;
     data->team_list = c->team_list;
+    data->player->fd = c->fd;
     data->args = get_splitted(command);
     if (data->args == NULL)
         return 84;
@@ -92,5 +93,6 @@ int cmd(data_t *data, char *command, client_t *c)
     if (ret == -1)
         dprintf(data->fd, "ko\n");
     free_split(data->args);
+    print_map(data);
     return 0;
 }

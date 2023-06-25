@@ -7,6 +7,7 @@
 
 #include "server.h"
 #include <string.h>
+#include <stdio.h>
 
 /**
  * @brief the function to get the number of a team

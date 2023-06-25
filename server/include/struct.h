@@ -15,6 +15,7 @@
 typedef struct player_s {
     size_t food;
     int id;
+    int fd;
     int posx;
     int posy;
     size_t level;
@@ -78,6 +79,7 @@ typedef struct data_s {
     map_t *map;
     team_t *team;
     team_list_t *team_list;
+    int nb_client;
 } data_t;
 
 typedef struct server_s {
@@ -102,6 +104,7 @@ typedef struct client_s {
     data_t **data;
     bool GUI;
     int team_nb;
+    int nb_client;
     player_t *player;
     map_t *map;
     team_t *team;
