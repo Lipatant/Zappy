@@ -5,105 +5,35 @@
 ## Makefile of Zappy
 ##
 
-SR	=	src/
+GUI_DIRECTORY	=	GUI
+GUI_EXECUTABLE	=	zappy_gui
 
-SRC	=	$(shell cat make/zappy.txt | tr '\n' ' ')						\
+SERVER_DIRECTORY	=	server
+SERVER_EXECUTABLE	=	zappy_server
 
-SRC_UT		=	tests/Unit_tests.cpp									\
+all:	$(GUI_EXECUTABLE) $(SERVER_EXECUTABLE)
 
-BUILDDIR = build
+$(GUI_EXECUTABLE):
+	make $(GUI_EXECUTABLE) -C $(GUI_DIRECTORY)
+	cp $(GUI_DIRECTORY)/$(GUI_EXECUTABLE) .
 
-OBJ = $(patsubst %.cpp, $(BUILDDIR)/%.o, $(SRC))
-
-$(BUILDDIR)/%.o: 	$(SR)%.cpp
-	@mkdir -p $(@D)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
-
-NAME	=	zappy
-
-LDFLAGS	=	-lconfig++
-
-IDIR	=	include
-
-CPPFLAGS	=	-I./$(IDIR)
-
-CFLAGS	=	-W -Wall -Wextra
-
-GCCFLAG	=	g++ -o
-
-FDEBUG	=	-g3
-
-LOGSFILE	=	logs.txt
-
-CC			=	g++
-
-UT 			=	unit_tests
-
-CFLAGS_UT		=	-std=c++17  -Wall -Wextra -Werror
-
-CPPFLAGS_UT	+=	-I./include
-
-LCRITERION	=	-lcriterion --coverage
-
-all:	$(NAME)
-
-$(NAME):	$(OBJ)
-	$(GCCFLAG) $(NAME) $(OBJ) $(LDFLAGS) > $(LOGSFILE)
-
-debug:	$(OBJ)
-	$(GCCFLAG) $(NAME) $(OBJ) $(LDFLAGS) $(FDEBUG) > $(LOGSFILE)
-
-debug_play:	fclean debug
-	clear
-	valgrind --track-origins=yes ./$(NAME)
+$(SERVER_EXECUTABLE):
+	make $(SERVER_EXECUTABLE) -C $(SERVER_DIRECTORY)
 
 clean:
-	$(RM) -f $(OBJ) > $(LOGSFILE)
+	@make clean -C $(GUI_DIRECTORY)
+	@make clean -C $(SERVER_DIRECTORY)
 
-fclean: clean
-	$(RM) -f $(NAME) >> $(LOGSFILE)
-	@$(RM) -f $(NAME)
-	@$(RM) -f $(UT)
-	@$(RM) -f unit_tests
-	@$(RM) -f vgcore*
-	@$(RM) -f *.gcda
-	@$(RM) -f *.gcno
-	@$(RM) -f *~
-	@$(RM) -f *.a
-	@$(RM) -f *.o
-	@$(RM) -f *.gch
-	@$(RM) -f a.out
-	@$(RM) -f coding-style-reports.log
-
-play:	$(NAME)
-	./$(NAME)
+fclean:
+	@rm -f $(GUI_EXECUTABLE)
+	@rm -f $(SERVER_EXECUTABLE)
+	@make fclean -C $(GUI_DIRECTORY)
+	@make fclean -C $(SERVER_DIRECTORY)
 
 re:	fclean all
 
-play_re: re
-	./$(NAME)
-
-tests_run: fclean
-		$(CC) -o $(UT) $(SRC_UT) $(CFLAGS_UT) $(CPPFLAGS_UT) \
-			$(LCRITERION) $(CPPFLAGS_UT)
-		./$(UT)
-#		find ai -name "*.py" -exec cp {} tests/ai/ \;
-	    pytest tests/
-
-server:
-	@cd server && make
-
-server_re:
-	@cd server && make re
-
-server_fclean:
-	@cd server && make fclean
-
-server_clean:
-	@cd server && make clean
-
 server_debug:
-	@cd server && make debug
+	@cd $(SERVER_DIRECTORY) && make debug
 
-.PHONY: all debug debug_play fclean clean play re play_re tests_run server
-.PHONY: server_re server_fclean server_clean server_debug
+.PHONY: all fclean clean re server server_debug
+.PHONY: $(GUI_EXECUTABLE) $(SERVER_EXECUTABLE)
