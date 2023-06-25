@@ -305,6 +305,8 @@ static void convertCommand(std::string const &cmd, size_t &ac, \
 }
 
 INSTANCE::Instance(Mortymere::Instance &engine) : _engine(engine), \
+    mainMenuButtonExit("graphics/buttons/Exit.png"), \
+    mainMenuButtonFullscreen("graphics/buttons/Fullscreen.png"), \
     mainMenuButtonPlay("graphics/buttons/Play.png"), \
     noneButtonSettings("graphics/buttons/Settings.png"), \
     noneButtonZoomIn("graphics/buttons/Plus.png"), \
