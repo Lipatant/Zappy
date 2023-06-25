@@ -100,6 +100,8 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu)
         citadel->lastMenu == Citadel::InstanceCurrentMenu::MainMenu;
 
     if (!isCurrentMenu) {
+        citadel->mainMenuButtonExit.reset();
+        citadel->mainMenuButtonFullscreen.reset();
         citadel->mainMenuButtonPlay.reset();
         if (!isLastMenu)
             return;
@@ -157,6 +159,29 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu)
         sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
         citadel->changeCurrentMenu(Citadel::InstanceCurrentMenu::None);
     instance.window.draw(citadel->mainMenuButtonPlay);
+    // Exit
+    buttonPlayColor.a *= 0.9;
+    citadel->mainMenuButtonExit.setScale(0.5, 0.5);
+    citadel->mainMenuButtonExit.setColor(buttonPlayColor);
+    position.y = windowSize.y * -0.5 + \
+        citadel->noneButtonSettings.getGlobalBounds().height;
+    citadel->mainMenuButtonExit.setPosition(windowSize.x * -0.5, position.y);
+    if (isCurrentMenu && citadel->mainMenuButtonExit.update( \
+        instance.window.mouseUI, instance.window.hasFocus && \
+        sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
+        instance.window.close();
+    instance.window.draw(citadel->mainMenuButtonExit);
+    // Fullscreen
+    citadel->mainMenuButtonFullscreen.setScale(0.5, 0.5);
+    citadel->mainMenuButtonFullscreen.setColor(buttonPlayColor);
+    position.y += citadel->mainMenuButtonExit.getGlobalBounds().height;
+    citadel->mainMenuButtonFullscreen.setPosition(windowSize.x * -0.5, \
+        position.y);
+    if (isCurrentMenu && citadel->mainMenuButtonFullscreen.update( \
+        instance.window.mouseUI, instance.window.hasFocus && \
+        sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
+        instance.window.setFullscreen();
+    instance.window.draw(citadel->mainMenuButtonFullscreen);
 }
 
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUINone)

@@ -78,6 +78,10 @@ public: // PUBLIC MEMBERS
     sf::RectangleShape mainMenuTitle;
     /// @brief Default TextureRect of mainMenuTitle
     sf::IntRect mainMenuTitleTextureRect;
+    /// @brief Button for exiting the game
+    Mortymere::Button mainMenuButtonExit;
+    /// @brief Button for using the fullscreen mode
+    Mortymere::Button mainMenuButtonFullscreen;
     /// @brief Button for leaving the main menu
     Mortymere::Button mainMenuButtonPlay;
     /// @brief Time since the last menu (from 0.0f to 1.0f)
