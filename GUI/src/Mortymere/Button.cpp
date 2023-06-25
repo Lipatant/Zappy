@@ -23,12 +23,18 @@ BUTTON::Button(std::string const &filepath)
 
 bool BUTTON::hasBeenPressed(void) const
 {
-    return _value == -1;
+    return _value == -1 && _selected;
 }
 
 void BUTTON::reset(void)
 {
+    _hovered = false;
+    _selected = false;
     _value = -2;
+    if (_textureRect.top == 0)
+        return;
+    _textureRect.top = 0;
+    setTextureRect(_textureRect);
 }
 
 Mortymere::Button const &BUTTON::update(sf::Vector2f const &mouseUI, bool \
@@ -37,12 +43,14 @@ Mortymere::Button const &BUTTON::update(sf::Vector2f const &mouseUI, bool \
     bool pressed = false;
     sf::FloatRect bounds = getGlobalBounds();
 
-    if (input && _value > 0)
+    if (bounds.left <= mouseUI.x && \
+        mouseUI.x <= bounds.left + bounds.width && \
+        bounds.top <= mouseUI.y && mouseUI.y <= bounds.top + bounds.height)
+        _hovered += (_hovered < 10) ? 1 : 0;
+    else
+        _hovered = 0;
+    if (input)
         pressed = true;
-    else if (input)
-        pressed = bounds.left <= mouseUI.x && \
-            mouseUI.x <= bounds.left + bounds.width && \
-            bounds.top <= mouseUI.y && mouseUI.y <= bounds.top + bounds.height;
     if (!pressed) {
         if (_value > -1)
             _value = -1;
@@ -54,7 +62,12 @@ Mortymere::Button const &BUTTON::update(sf::Vector2f const &mouseUI, bool \
         else if (_value < 10)
             _value++;
     }
-    _textureRect.top = (_value > 1) ? _textureRect.height : 0;
+    if (_value < 0 && !_hovered)
+        _selected = false;
+    if (_value == 1 && _hovered)
+        _selected = true;
+    _textureRect.top = (_selected && _hovered && _value > 0) ? \
+        _textureRect.height : 0;
     setTextureRect(_textureRect);
     return *this;
 }

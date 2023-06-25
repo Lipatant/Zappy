@@ -10,7 +10,7 @@
 
 #define GROUND Citadel::Ground
 #define GROUND_TILE_COLOR \
-    sf::Color::Blue, sf::Color::White, -2
+    sf::Color(150, 167, 167), sf::Color(183, 196, 196), -2
 
 GROUND::Ground(void)
 {

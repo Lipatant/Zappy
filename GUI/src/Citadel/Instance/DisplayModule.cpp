@@ -58,29 +58,52 @@ static sf::Color getTeamColor(Citadel::Instance *citadel, \
 
     for (std::size_t i = 0; i < teamsSize; i++)
         if (citadel->teams[i] == team)
-            return teamsSize < 2 ? COLORS_DEFAULT : COLORS[i % COLORS_LENGTH];
+            return COLORS[i % COLORS_LENGTH];
     citadel->teams.push_back(team);
-    return teamsSize < 2 ? COLORS_DEFAULT : COLORS[teamsSize % COLORS_LENGTH];
+    return COLORS[teamsSize % COLORS_LENGTH];
 }
 
-MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleMenu)
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMenu)
 {
     if (!data) return;
     Citadel::Instance *citadel = reinterpret_cast<Citadel::Instance *>(data);
-
-    if (citadel->currentMenu != Citadel::InstanceCurrentMenu::MainMenu) {
-        citadel->mainMenuButtonPlay.reset();
-        return;
-    }
     sf::Color screenCoverColor = sf::Color::Black;
+    bool isCurrentMenu = \
+        citadel->currentMenu != Citadel::InstanceCurrentMenu::None;
+    bool isLastMenu = \
+        citadel->lastMenu != Citadel::InstanceCurrentMenu::None;
+
+    if (!isCurrentMenu && !isLastMenu)
+        return;
+    if (isCurrentMenu && isLastMenu)
+        screenCoverColor.a = 220;
+    else if (isLastMenu)
+        screenCoverColor.a = 220 - 220 * citadel->menuTransition;
+    else
+        screenCoverColor.a = 220 * citadel->menuTransition;
+    instance.screenCover.setFillColor(screenCoverColor);
+    instance.window.draw(instance.screenCover);
+}
+
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUIMainMenu)
+{
+    if (!data) return;
+    Citadel::Instance *citadel = reinterpret_cast<Citadel::Instance *>(data);
+    sf::Color buttonPlayColor = sf::Color::White;
     sf::IntRect textureRect;
     sf::IntRect textureRectOld;
     sf::Vector2f const windowSize = instance.window.getView().getSize();
     sf::Vector2f position;
+    bool isCurrentMenu = \
+        citadel->currentMenu == Citadel::InstanceCurrentMenu::MainMenu;
+    bool isLastMenu = \
+        citadel->lastMenu == Citadel::InstanceCurrentMenu::MainMenu;
 
-    screenCoverColor.a = 200;
-    instance.screenCover.setFillColor(screenCoverColor);
-    instance.window.draw(instance.screenCover);
+    if (!isCurrentMenu) {
+        citadel->mainMenuButtonPlay.reset();
+        if (!isLastMenu)
+            return;
+    }
     if (citadel->isMainMenuCoverTextureLoaded) {
         textureRectOld = citadel->mainMenuCoverTextureRect;
         textureRect = textureRectOld;
@@ -93,17 +116,68 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleMenu)
         textureRect.height = windowSize.x;
         textureRect.width = windowSize.y;
         position = {windowSize.x / 2, windowSize.y / 2};
-        position.y -= windowSize.y * 0.2;
+        position.y -= windowSize.y * 0.18;
+        if (!isCurrentMenu)
+            position.y -= windowSize.y * citadel->menuTransition / 2;
+        else if (!isLastMenu)
+            position.y -= windowSize.y * (1 - citadel->menuTransition) / 2;
         citadel->mainMenuCover.setTextureRect(textureRect);
         citadel->mainMenuCover.setSize(windowSize);
         citadel->mainMenuCover.setOrigin(position);
         instance.window.draw(citadel->mainMenuCover);
     }
-    if (citadel->mainMenuButtonPlay.update(instance.window.mouseUI, \
-        instance.window.hasFocus && \
+    if (citadel->isMainMenuTitleTextureLoaded) {
+        textureRectOld = citadel->mainMenuTitleTextureRect;
+        textureRect = textureRectOld;
+        textureRect.left = (textureRectOld.width - windowSize.x) / 2;
+        textureRect.top = (textureRectOld.height - windowSize.y) / 2;
+        textureRect.height = windowSize.x;
+        textureRect.width = windowSize.y;
+        position = {windowSize.x / 2, windowSize.y / 2};
+//        position.y -= windowSize.y * 0.18;
+        if (!isCurrentMenu)
+            position.y += windowSize.y * citadel->menuTransition / 2;
+        else if (!isLastMenu)
+            position.y += windowSize.y * (1 - citadel->menuTransition) / 2;
+        citadel->mainMenuTitle.setTextureRect(textureRect);
+        citadel->mainMenuTitle.setSize(windowSize);
+        citadel->mainMenuTitle.setOrigin(position);
+        instance.window.draw(citadel->mainMenuTitle);
+    }
+    if (!isCurrentMenu)
+        buttonPlayColor.a = 255 * (1 - citadel->menuTransition);
+    else if (!isLastMenu)
+        buttonPlayColor.a = 255 * citadel->menuTransition;
+    citadel->mainMenuButtonPlay.setColor(buttonPlayColor);
+    citadel->mainMenuButtonPlay.setPosition( \
+        citadel->mainMenuButtonPlay.getGlobalBounds().width * -0.5, \
+        citadel->mainMenuButtonPlay.getGlobalBounds().height * -0.5 + \
+        windowSize.y * -0.05);
+    if (isCurrentMenu && citadel->mainMenuButtonPlay.update( \
+        instance.window.mouseUI, instance.window.hasFocus && \
         sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
-        citadel->currentMenu = Citadel::InstanceCurrentMenu::None;
+        citadel->changeCurrentMenu(Citadel::InstanceCurrentMenu::None);
     instance.window.draw(citadel->mainMenuButtonPlay);
+}
+
+MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleUINone)
+{
+    if (!data) return;
+    Citadel::Instance *citadel = reinterpret_cast<Citadel::Instance *>(data);
+    sf::Vector2f const windowSize = instance.window.getView().getSize();
+
+    citadel->noneButtonSettings.setPosition(windowSize.x / -2 + 1, \
+        windowSize.y / -2 + 1);
+    citadel->noneButtonSettings.setScale(0.8f, 0.8f);
+    if (citadel->currentMenu != Citadel::InstanceCurrentMenu::None) {
+        citadel->noneButtonSettings.reset();
+    } else {
+        if (citadel->noneButtonSettings.update(instance.window.mouseUI, \
+            instance.window.hasFocus && \
+            sf::Mouse::isButtonPressed(sf::Mouse::Left)).hasBeenPressed())
+            citadel->changeCurrentMenu(Citadel::InstanceCurrentMenu::MainMenu);
+    }
+    instance.window.draw(citadel->noneButtonSettings);
 }
 
 MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
@@ -205,4 +279,12 @@ MORTYMERE_INSTANCE_DISPLAY_MODULE(citadelDisplayModuleCharacterList)
     citadel->selectedPortrait = newSelectedPortrait;
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
         citadel->selectedCharacter = newSelectedPortrait;
+}
+
+MORTYMERE_INSTANCE_DISPLAY_MODULE_NODATA(citadelDisplayModuleGround)
+{
+    sf::Color screenCoverColor(183, 196, 196);
+
+    instance.screenCover.setFillColor(screenCoverColor);
+    instance.window.draw(instance.screenCover);
 }

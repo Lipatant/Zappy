@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2023
-** Mortymere/Exception.hpp
+** Citadel/Exception.hpp
 ** File description:
 ** -
 */

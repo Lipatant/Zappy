@@ -12,6 +12,7 @@
 
 #include <list>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include "Flags.hpp"
 #include "Mortymere/Camera.hpp"
 #include "Mortymere/Ground.hpp"
 #include "Mortymere/SpritePtr.hpp"
@@ -19,6 +20,8 @@
 
 #define MORTYMERE_INSTANCE_DISPLAY_MODULE(FUNCTION) \
     void FUNCTION(Mortymere::Instance &instance, void *data)
+#define MORTYMERE_INSTANCE_DISPLAY_MODULE_NODATA(FUNCTION) \
+    void FUNCTION(Mortymere::Instance &instance, FLAG_UNUSED void *data)
 
 namespace Mortymere {
 

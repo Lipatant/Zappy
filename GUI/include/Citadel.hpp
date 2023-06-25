@@ -15,4 +15,5 @@
 #include "Citadel/Ground.hpp"
 #include "Citadel/Instance.hpp"
 #include "Citadel/Inventory.hpp"
+#include "Citadel/Playlist.hpp"
 #include "Citadel/Sprites.hpp"
