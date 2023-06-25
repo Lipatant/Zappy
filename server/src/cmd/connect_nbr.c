@@ -5,9 +5,9 @@
 ** connect_nbr
 */
 
+#include <stdio.h>
 #include "struct.h"
 #include "cmd.h"
-#include <stdio.h>
 
 /**
  * @brief the function for the connect_nbr command

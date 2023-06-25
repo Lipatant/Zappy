@@ -111,6 +111,8 @@ static int handle_existing_connection(server_t *s, client_t *c, int i)
         return 84;
     }
     int current = find_client(c->data, s->client, i);
+    c->data[current]->freq = s->freq;
+    printf("freq = %d\n", c->data[current]->freq);
     return command(s, c, c->data[current]);
 }
 

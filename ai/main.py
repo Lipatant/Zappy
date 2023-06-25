@@ -61,6 +61,7 @@ def trantorian_lives(client: client, args: arguments):
     functions = [attr for attr in attributes if callable(getattr(trant, attr))
                 and not attr.startswith('_')]
 
+#    getattr(trant, functions[0])("hello")
     while 1:
 
 #        # Test Cyprien Bastien for Broadcast
@@ -74,10 +75,10 @@ def trantorian_lives(client: client, args: arguments):
             trant.bag[0] += 1
         time.sleep(2)
 
-#        getattr(trant, functions[1])()
-#        if client.data != "0\n":
-#            duplicate_ai(args, client)
-#            time.sleep(2)
+        getattr(trant, functions[1])()
+        if client.data != "0\n":
+            duplicate_ai(args, client)
+            time.sleep(2)
 #        else:
 #            getattr(trant, functions[3])()
 
@@ -128,6 +129,3 @@ def main(argc: int, argv: list[str]) -> int:
     msg = client_m.communicate()
     client_m.parsing_data(msg)
     trantorian_lives(client_m, args)
-
-# PARTIE AI ===================================================================
-

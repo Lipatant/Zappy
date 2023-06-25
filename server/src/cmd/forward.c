@@ -7,6 +7,8 @@
 
 #include "my.h"
 #include "cmd.h"
+#include "our_time.h"
+
 
 /**
  * @brief the function for the forward command
@@ -110,6 +112,7 @@ data_t *forward(data_t *d)
         d = forward_east(d);
         break;
     }
+    usleep(7 / d->freq * CONVERT_SEC);
     dprintf(d->fd, "ok\n");
     return d;
 }

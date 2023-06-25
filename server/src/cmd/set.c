@@ -5,10 +5,12 @@
 ** set
 */
 
-#include "cmd.h"
-#include "struct.h"
+
 #include <string.h>
 #include <stdio.h>
+#include "cmd.h"
+#include "struct.h"
+#include "our_time.h"
 
 /**
  * @brief the set command for the mendiane
@@ -21,9 +23,11 @@ static data_t *set_mendiane(data_t *d)
         if (d->player->mendiane > 0) {
             d->map->tile[d->player->posx][d->player->posy].mendiane += 1;
             d->player->mendiane -= 1;
+            usleep(7 / d->freq * CONVERT_SEC);
             dprintf(d->fd, "ok\n");
             return d;
         } else {
+            usleep(7 / d->freq * CONVERT_SEC);
             dprintf(d->fd, "ko\n");
             return NULL;
         }
@@ -42,9 +46,11 @@ static data_t *set_sibur(data_t *d)
         if (d->player->sibur > 0) {
             d->map->tile[d->player->posx][d->player->posy].sibur += 1;
             d->player->sibur -= 1;
+            usleep(7 / d->freq * CONVERT_SEC);
             dprintf(d->fd, "ok\n");
             return d;
         } else {
+            usleep(7 / d->freq * CONVERT_SEC);
             dprintf(d->fd, "ko\n");
             return NULL;
         }
@@ -63,9 +69,11 @@ static data_t *set_deraumere(data_t *d)
         if (d->player->deraumere > 0) {
             d->map->tile[d->player->posx][d->player->posy].deraumere += 1;
             d->player->deraumere -= 1;
+            usleep(7 / d->freq * CONVERT_SEC);
             dprintf(d->fd, "ok\n");
             return d;
         } else {
+            usleep(7 / d->freq * CONVERT_SEC);
             dprintf(d->fd, "ko\n");
             return NULL;
         }
@@ -84,9 +92,11 @@ static data_t *set_linemate(data_t *d)
         if (d->player->linemate > 0) {
             d->map->tile[d->player->posx][d->player->posy].linemate += 1;
             d->player->linemate -= 1;
+            usleep(7 / d->freq * CONVERT_SEC);
             dprintf(d->fd, "ok\n");
             return d;
         } else {
+            usleep(7 / d->freq * CONVERT_SEC);
             dprintf(d->fd, "ko\n");
             return NULL;
         }
@@ -105,9 +115,11 @@ data_t *set(data_t *d)
         if (d->player->food > 0) {
             d->map->tile[d->player->posx][d->player->posy].food += 1;
             d->player->food -= 1;
+            usleep(7 / d->freq * CONVERT_SEC);
             dprintf(d->fd, "ok\n");
             return d;
         } else {
+            usleep(7 / d->freq * CONVERT_SEC);
             dprintf(d->fd, "ko\n");
             return NULL;
         }

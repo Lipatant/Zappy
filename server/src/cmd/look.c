@@ -8,6 +8,7 @@
 #include "my.h"
 #include "server.h"
 #include "cmd.h"
+#include "our_time.h"
 
 /**
  * @brief look up
@@ -135,6 +136,7 @@ data_t *look(data_t *data)
         to_send = look_right(data, to_send);
     to_send[strlen(to_send) - 1] = ']';
     to_send[strlen(to_send)] = '\n';
+    usleep(7 / data->freq * CONVERT_SEC);
     send(data->fd, to_send, strlen(to_send), 0);
     return data;
 }

@@ -19,6 +19,7 @@ class Client:
     x: int
     y: int
     data: str
+    broadcast_msg: str
     socket: socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def __init__(self, args: arguments):

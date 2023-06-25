@@ -11,6 +11,7 @@
     #include <netinet/in.h>
     #include <stdbool.h>
     #include <stddef.h>
+    #include <time.h>
 
 typedef struct player_s {
     size_t food;
@@ -75,6 +76,7 @@ typedef struct data_s {
     char **args;
     char *ip;
     bool connect;
+    int freq;
     player_t *player;
     map_t *map;
     team_t *team;
@@ -94,6 +96,10 @@ typedef struct server_s {
     map_t *map;
     int nb_team;
     int nb_player;
+    int freq;
+    time_t fieldTime;
+    time_t foodTime;
+
 } server_t;
 
 typedef struct client_s {

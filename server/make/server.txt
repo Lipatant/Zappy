@@ -19,6 +19,7 @@ utils.c
 cmd/inventory.c
 init_player.c
 tile.c
+resources.c
 cmd/take.c
 cmd/take2.c
 cmd/add_tile.c

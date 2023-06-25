@@ -60,7 +60,7 @@ class Trantorians:
             self.client_t.write_to_server("Forward\n")
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
     ## @author Damien
     ## @brief
@@ -71,7 +71,7 @@ class Trantorians:
             self.client_t.write_to_server("Left\n")
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
 
     ## @author Damien
@@ -83,7 +83,7 @@ class Trantorians:
             self.client_t.write_to_server("Right\n")
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
 
     ## @author Damien
@@ -95,7 +95,7 @@ class Trantorians:
             self.client_t.write_to_server("Look\n")
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
 
     ## @author Damien
@@ -107,7 +107,7 @@ class Trantorians:
             self.client_t.write_to_server("Inventory\n")
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
 
     ## @author Damien
@@ -120,7 +120,7 @@ class Trantorians:
             self.client_t.write_to_server(to_send)
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
 
     ## @author Damien
@@ -132,7 +132,7 @@ class Trantorians:
             self.client_t.write_to_server("Connect_nbr\n")
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
 
     ## @author Damien
@@ -144,7 +144,7 @@ class Trantorians:
             self.client_t.write_to_server("Fork\n")
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
 
     ## @author Damien
@@ -156,7 +156,7 @@ class Trantorians:
             self.client_t.write_to_server("Eject\n")
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
 
     ## @author Damien
@@ -169,7 +169,7 @@ class Trantorians:
             self.client_t.write_to_server(to_send)
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
 
     ## @author Damien
@@ -182,7 +182,7 @@ class Trantorians:
             self.client_t.write_to_server(to_send)
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
 
     ## @author Damien
@@ -194,5 +194,5 @@ class Trantorians:
             self.client_t.write_to_server("Incantation\n")
             self.client_t.read_server()
         except:
-            print("servor dead")
+            print("error reading")
             exit(84)
