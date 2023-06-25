@@ -51,7 +51,7 @@ def trantorian_lives(client: client, args: arguments):
                 and not attr.startswith('_')]
 
     getattr(trant, functions[1])()
-    if int(client.data[0]) >= 0:
+    if int(client.data[0]) > 0:
         getattr(trant, functions[3])(args)
 
     while 1:
