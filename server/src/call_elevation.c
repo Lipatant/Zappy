@@ -6,6 +6,7 @@
 */
 
 #include "my.h"
+#include "our_time.h"
 
 /**
  * @brief the function for checking if the player can level up
@@ -28,5 +29,7 @@ data_t *make_elevation(data_t *data)
         elevation_lvl7(data);
     if (data->player->lvl == 7)
         elevation_lvl8(data);
+    usleep(300 / data->freq * CONVERT_SEC);
+    dprintf(data->fd, "ok\n");
     return (data);
 }
