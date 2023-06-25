@@ -76,8 +76,6 @@ def trantorian_lives(client: client, args: arguments):
             linemate_found = search_stone(trant, functions, client)
 
         if (trant.level == 1 and linemate_found):
-            getattr(trant, functions[10])("linemate") #set
-            client.check_client()
             getattr(trant, functions[5])() #incantation
             client.check_client()
             if (client.data == "Elevation underway\n"):

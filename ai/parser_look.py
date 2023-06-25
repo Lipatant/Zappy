@@ -38,10 +38,7 @@ def go_to_stone(trant, functions, client, stone_need, stone_case) -> None:
             client.check_client()
         counter += 1
 
-    if (bot_case == stone_case):
-        getattr(trant, functions[11])(stone_need) #take
-        client.check_client()
-    else:
+    if (bot_case != stone_case):
         if (bot_case > stone_case):
             getattr(trant, functions[7])() #left
             client.check_client()
@@ -56,9 +53,6 @@ def go_to_stone(trant, functions, client, stone_need, stone_case) -> None:
                 bot_case += 1
             getattr(trant, functions[4])() #forward
             client.check_client()
-
-        getattr(trant, functions[11])(stone_need) #take
-        client.check_client()
 
 ## @author Pierre-Louis
 def random_move(trant, functions, client) -> None:
