@@ -30,7 +30,7 @@ static int help(void)
     printf("\tclientsNb\tis the number of authorized clients per team\n");
     printf("\tfreq\t\tis the reciprocal of time unit for execution of ");
     printf("actions\n");
-    return 0;
+    exit (0);
 }
 
 /**
