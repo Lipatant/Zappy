@@ -73,8 +73,6 @@ std::string Connect::receive()
     flags = fcntl(_sockfd, F_GETFL, 0);
     fcntl(_sockfd, F_SETFL, flags & (~O_NONBLOCK));
     message = buffer;
-    if (!message.empty() && message.back() == '\n')
-        message.pop_back();
     return message;
 }
 
