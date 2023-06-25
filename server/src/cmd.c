@@ -74,7 +74,6 @@ static char **get_splitted(char *command)
 int cmd(data_t *data, char *command, client_t *c)
 {
     int ret = -1;
-
     data->player = c->player;
     data->map = c->map;
     data->team = c->team;
@@ -93,6 +92,5 @@ int cmd(data_t *data, char *command, client_t *c)
     if (ret == -1)
         dprintf(data->fd, "ko\n");
     free_split(data->args);
-    print_map(data);
     return 0;
 }
